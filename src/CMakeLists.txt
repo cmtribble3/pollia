@@ -9,6 +9,12 @@ add_subdirectory(core)
 add_subdirectory(render)
 
 add_library(mitsuba SHARED)
+if (CMAKE_GENERATOR STREQUAL "Xcode")
+  # Xcode skips the link step for a shared target made only of object libraries.
+  set(MI_XCODE_ANCHOR "${CMAKE_CURRENT_BINARY_DIR}/mitsuba_xcode_anchor.cpp")
+  file(WRITE "${MI_XCODE_ANCHOR}" "extern \"C\" void mitsuba_xcode_anchor() {}\n")
+  target_sources(mitsuba PRIVATE "${MI_XCODE_ANCHOR}")
+endif()
 target_link_libraries(mitsuba PUBLIC mitsuba-core)
 target_link_libraries(mitsuba PUBLIC mitsuba-render)
 set_target_properties(mitsuba PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)

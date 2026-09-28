@@ -4,6 +4,16 @@ This branch tests whether Mitsuba's C++ and Dr.Jit extension points can carry
 PolRAY's Jarecki material and reduced PIS transport on Apple Silicon. It is a
 meeting prototype, not a paper benchmark or final integrator.
 
+## Xcode project
+
+Run `./generate-xcode-project.sh` from this checkout, then open
+`build-xcode/mitsuba.xcodeproj` in Xcode. Set `POLLIA_PYTHON` to the desired
+Python executable if `python3` is not the interpreter used for Mitsuba's Python
+dependencies. The project includes `pollia_jarecki`, `pollia_pis`, and
+`pollia_mueller` schemes. Use the Release configuration for benchmark builds.
+The generated project is local and ignored by Git because CMake embeds absolute
+paths; regenerate it in each checkout.
+
 ## Fixed setup
 
 - Base: Mitsuba commit `fd9c9ceb38deb511a5c3f8479c8b14c0b552167e`

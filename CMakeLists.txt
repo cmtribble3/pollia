@@ -305,6 +305,12 @@ set(CMAKE_INSTALL_RPATH "${MI_ORIGIN};${MI_ORIGIN}/../drjit")
 # Build the dependencies
 add_subdirectory(ext)
 
+# Dr.Jit's stub targets share generated files. Xcode's new build system
+# requires an explicit ordering when multiple targets reference one output.
+if (CMAKE_GENERATOR STREQUAL "Xcode" AND TARGET drjit-auto-stub)
+  add_dependencies(drjit-auto-stub drjit-stubs)
+endif()
+
 # Always add the include directories for tinyformat, nanobind, Dr.Jit and Eigen
 include_directories(include
   ${TINYFORMAT_INCLUDE_DIRS}
@@ -423,6 +429,9 @@ function(add_plugin)
   list(REMOVE_AT ARGV 0)
   add_library(${TARGET} SHARED ${ARGV})
   target_link_libraries(${TARGET} PRIVATE mitsuba)
+  if (CMAKE_GENERATOR STREQUAL "Xcode")
+    add_dependencies(${TARGET} mitsuba)
+  endif()
   set_target_properties(${TARGET} PROPERTIES
     PREFIX ""
     LIBRARY_OUTPUT_DIRECTORY ${MI_BINARY_DIR}/plugins
