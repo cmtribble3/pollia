@@ -21,6 +21,7 @@ add_plugin(retarder             retarder.cpp)
 add_plugin(circular             circular.cpp)
 add_plugin(measured_polarized   measured_polarized.cpp)
 add_plugin(pplastic             pplastic.cpp)
+add_plugin(pollia_jarecki       pollia_jarecki.cpp)
 add_plugin(principled           principled.cpp)
 add_plugin(principledthin       principledthin.cpp)
 
