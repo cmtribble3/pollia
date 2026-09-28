@@ -1,0 +1,333 @@
+{
+  "hardware": {
+    "machine_name": "MacBook Pro",
+    "machine_model": "Mac16,6",
+    "chip_type": "Apple M4 Max",
+    "number_processors": "proc 16:12:4:0",
+    "physical_memory": "128 GB"
+  },
+  "variant": "metal_ad_mono_polarized",
+  "channel": "green",
+  "size": 512,
+  "spp": 64,
+  "kernels": {
+    "path": [
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.00254100002348423
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002498999936506152
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002873999997973442
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002248999895527959
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0024999999441206455
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002498999936506152
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0026660000439733267
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1572864,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.014374000020325184
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0026660000439733267
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0024580000899732113
+      },
+      {
+        "type": "KernelType.Aggregate",
+        "size": 93,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0027489999774843454
+      },
+      {
+        "type": "KernelType.JIT",
+        "size": 16777216,
+        "input_count": 34,
+        "output_count": 1,
+        "operation_count": 4193,
+        "execution_time_ms": 97.15328979492188
+      },
+      {
+        "type": "KernelType.JIT",
+        "size": 1310720,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 18,
+        "execution_time_ms": 0.022873999550938606
+      }
+    ],
+    "pollia_mueller": [
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002124000107869506
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002498999936506152
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.00254100002348423
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002583000110462308
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.00216599996201694
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002498999936506152
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002583000110462308
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1572864,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.014374000020325184
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.00216599996201694
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0022499999031424522
+      },
+      {
+        "type": "KernelType.Aggregate",
+        "size": 153,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0028329999186098576
+      },
+      {
+        "type": "KernelType.JIT",
+        "size": 16777216,
+        "input_count": 34,
+        "output_count": 1,
+        "operation_count": 2131,
+        "execution_time_ms": 74.74400329589844
+      },
+      {
+        "type": "KernelType.JIT",
+        "size": 1310720,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 18,
+        "execution_time_ms": 0.025748999789357185
+      }
+    ],
+    "pollia_pis": [
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0024580000899732113
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002583000110462308
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0024160000029951334
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002623999956995249
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002623999956995249
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002248999895527959
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002374999923631549
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1572864,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.014208000153303146
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0023330000694841146
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0023330000694841146
+      },
+      {
+        "type": "KernelType.Aggregate",
+        "size": 124,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002873999997973442
+      },
+      {
+        "type": "KernelType.JIT",
+        "size": 16777216,
+        "input_count": 34,
+        "output_count": 1,
+        "operation_count": 2252,
+        "execution_time_ms": 79.60087585449219
+      },
+      {
+        "type": "KernelType.JIT",
+        "size": 1310720,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 18,
+        "execution_time_ms": 0.022499000653624535
+      }
+    ]
+  }
+}

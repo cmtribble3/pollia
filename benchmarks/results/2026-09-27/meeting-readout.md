@@ -5,6 +5,11 @@ benchmark. Pollia started from Mitsuba commit `fd9c9ceb38deb511a5c3f8479c8b14c0b
 (`3.10.0.dev1`) on the `pis-port` branch. Abhi's Mitsuba commit and matched mesh
 scene were not yet available.
 
+For the corrected red/green/blue channel rerun with matching PolRAY albedos
+and a three-way stock-path / custom-Mueller / PIS comparison, see
+`rgb-channel-meeting-note.md` in this directory. That newer note should be
+used for the meeting's integrator comparison.
+
 ## What was implemented
 
 - `pollia_jarecki`: a C++ BSDF with PolRAY's normalized Jarecki Jones plus
