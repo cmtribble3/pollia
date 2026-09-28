@@ -1,0 +1,295 @@
+{
+  "mitsuba_version": "3.10.0.dev1",
+  "variant": "metal_ad_mono_polarized",
+  "mueller_integrator": "pollia_mueller",
+  "material_profile": "nylon",
+  "scene": "Mitsuba built-in Cornell box, not PolRAY mesh matched",
+  "size": 512,
+  "spp": 64,
+  "max_depth": 4,
+  "warmups": 1,
+  "repeats": 4,
+  "quality_spp": 64,
+  "first_render_seconds": {
+    "mueller": 0.10518729197792709,
+    "pis": 0.07796604098984972
+  },
+  "changed_material_seconds": {
+    "mueller": 0.08033066699863411,
+    "pis": 0.07749891697312705
+  },
+  "steady_seconds": {
+    "mueller": [
+      0.0789560419798363,
+      0.08034787498763762,
+      0.0802558750147,
+      0.07977504099835642
+    ],
+    "pis": [
+      0.0781488330103457,
+      0.07806341597461142,
+      0.07849316697684117,
+      0.0780107919999864
+    ]
+  },
+  "steady_median_seconds": {
+    "mueller": 0.0800154580065282,
+    "pis": 0.07810612449247856
+  },
+  "steady_million_samples_per_second": {
+    "mueller": 209.67468559176655,
+    "pis": 214.80026193868582
+  },
+  "steady_speedup_pis_vs_mueller": 1.0244453751412734,
+  "stokes_mae_by_channel": [
+    5.0682119763223454e-06,
+    0.00011419020302128047,
+    0.00014340534107759595,
+    1.1651889508357272e-05
+  ],
+  "stokes_rms_difference_by_channel": [
+    1.453232835046947e-05,
+    0.0002304272638866678,
+    0.0002839566150214523,
+    2.6453020836925134e-05
+  ],
+  "mueller_stokes_rms_signal_by_channel": [
+    1.0846869945526123,
+    0.003098835004493594,
+    0.005213592667132616,
+    0.00025900715263560414
+  ],
+  "rms_difference_over_signal_by_channel": [
+    1.3397716044768697e-05,
+    0.07435932005173788,
+    0.054464672089088124,
+    0.1021323950622389
+  ],
+  "stokes_channel_order": [
+    "I",
+    "Q",
+    "U",
+    "V"
+  ],
+  "limitations": [
+    "The two quality renders use the same seed but different random streams.",
+    "PIS is expected to have higher variance; RMS difference is not bias.",
+    "Only mono polarized, diffuse Jarecki surfaces, unpolarized emission.",
+    "Mitsuba's stock Stokes wrapper develops duplicate intensity; both paths share this cost.",
+    "First render order is Mueller then PIS, so cache effects may differ."
+  ],
+  "kernel_history": {
+    "mueller": [
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.003000000026077032
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0026660000439733267
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002374999923631549
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002248999895527959
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0022909999825060368
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002583000110462308
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0024580000899732113
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1572864,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.014248999767005444
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0023739999160170555
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0023330000694841146
+      },
+      {
+        "type": "KernelType.Aggregate",
+        "size": 171,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.003082999959588051
+      },
+      {
+        "type": "KernelType.JIT",
+        "size": 16777216,
+        "input_count": 34,
+        "output_count": 1,
+        "operation_count": 2131,
+        "execution_time_ms": 77.77666473388672
+      },
+      {
+        "type": "KernelType.JIT",
+        "size": 1310720,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 18,
+        "execution_time_ms": 0.01924999989569187
+      }
+    ],
+    "pis": [
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0022499999031424522
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0024160000029951334
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002498999936506152
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0024999999441206455
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002623999956995249
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002248999895527959
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0020000000949949026
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1572864,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.014041000045835972
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0023739999160170555
+      },
+      {
+        "type": "KernelType.Memset",
+        "size": 1,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.002623999956995249
+      },
+      {
+        "type": "KernelType.Aggregate",
+        "size": 171,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 0,
+        "execution_time_ms": 0.0027910000644624233
+      },
+      {
+        "type": "KernelType.JIT",
+        "size": 16777216,
+        "input_count": 34,
+        "output_count": 1,
+        "operation_count": 2252,
+        "execution_time_ms": 75.83637237548828
+      },
+      {
+        "type": "KernelType.JIT",
+        "size": 1310720,
+        "input_count": 1,
+        "output_count": 1,
+        "operation_count": 18,
+        "execution_time_ms": 0.01883300021290779
+      }
+    ]
+  }
+}

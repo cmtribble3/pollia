@@ -1,0 +1,93 @@
+{
+  "mitsuba_version": "3.10.0.dev1",
+  "variant": "metal_ad_mono_polarized",
+  "mueller_integrator": "pollia_mueller",
+  "material_profile": "nylon",
+  "scene": "Mitsuba built-in Cornell box, not PolRAY mesh matched",
+  "size": 512,
+  "spp": 64,
+  "max_depth": 8,
+  "warmups": 2,
+  "repeats": 10,
+  "quality_spp": 256,
+  "first_render_seconds": {
+    "mueller": 0.3481384170008823,
+    "pis": 0.2901563330087811
+  },
+  "changed_material_seconds": {
+    "mueller": 0.14959783299127594,
+    "pis": 0.14426295799785294
+  },
+  "steady_seconds": {
+    "mueller": [
+      0.14723441598471254,
+      0.14788729199790396,
+      0.14683674997650087,
+      0.14727887499611825,
+      0.1470711249858141,
+      0.14738762498018332,
+      0.1469865000108257,
+      0.14702754199970514,
+      0.14674512500641868,
+      0.14693041701684706
+    ],
+    "pis": [
+      0.14227329101413488,
+      0.14210016699507833,
+      0.14227004200802185,
+      0.1421151669928804,
+      0.14213291599298827,
+      0.14264949999051169,
+      0.14173945898073725,
+      0.14305608300492167,
+      0.14203016698593274,
+      0.1423189579800237
+    ]
+  },
+  "steady_median_seconds": {
+    "mueller": 0.14704933349275962,
+    "pis": 0.14220147900050506
+  },
+  "steady_million_samples_per_second": {
+    "mueller": 114.09243144122155,
+    "pis": 117.98200776758736
+  },
+  "steady_speedup_pis_vs_mueller": 1.0340914491630382,
+  "stokes_mae_by_channel": [
+    5.593472451437265e-06,
+    7.98265973571688e-05,
+    9.737113578012213e-05,
+    8.399373655265663e-06
+  ],
+  "stokes_rms_difference_by_channel": [
+    1.0926188224402722e-05,
+    0.00013826646318193525,
+    0.000166142635862343,
+    1.541879646538291e-05
+  ],
+  "mueller_stokes_rms_signal_by_channel": [
+    1.0858155488967896,
+    0.003169312374666333,
+    0.005211593117564917,
+    0.00025841849856078625
+  ],
+  "rms_difference_over_signal_by_channel": [
+    1.0062655886171412e-05,
+    0.04362664415384174,
+    0.031879433431282925,
+    0.05966599353860126
+  ],
+  "stokes_channel_order": [
+    "I",
+    "Q",
+    "U",
+    "V"
+  ],
+  "limitations": [
+    "The two quality renders use the same seed but different random streams.",
+    "PIS is expected to have higher variance; RMS difference is not bias.",
+    "Only mono polarized, diffuse Jarecki surfaces, unpolarized emission.",
+    "Mitsuba's stock Stokes wrapper develops duplicate intensity; both paths share this cost.",
+    "First render order is Mueller then PIS, so cache effects may differ."
+  ]
+}
