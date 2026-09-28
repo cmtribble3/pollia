@@ -18,7 +18,9 @@ import numpy as np
 
 
 MATERIALS = {
-    # Middle wavelength channel of PolRAY's nylon presets.
+    # Green RGB-channel Jarecki coefficients from three PolRAY presets.
+    # Original Cornell reflectances remain in place in this mono scene.
+    # This is not a wavelength-specific material comparison.
     "white": dict(a=0.26, b=2.0, n_real=1.25, n_imag=0.08, xi0_max=0.26),
     "green": dict(a=0.17, b=2.5, n_real=1.23, n_imag=0.08, xi0_max=0.43),
     "red": dict(a=0.09, b=2.4, n_real=1.23, n_imag=0.19, xi0_max=1.00),

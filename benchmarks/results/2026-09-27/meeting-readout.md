@@ -35,15 +35,21 @@ after warmups. Entries are median wall time per render. The matched control
 is the relevant test of PIS state cost. Detailed per-run times and parameters
 are in the JSON files beside this report.
 
+The runs labeled `nylon` in the raw JSON used only the green RGB-channel
+Jarecki coefficients from PolRAY's white, green, and red nylon presets. The
+original Mitsuba Cornell wall reflectances were retained and evaluated in a
+monochrome variant. No wavelength was specified, so these are implementation
+probes, not wavelength-specific nylon measurements.
+
 | Material / depth / SPP | Full Mueller | PIS | PIS speedup |
 | --- | ---: | ---: | ---: |
-| Nylon presets / 4 / 64 | 78.97 ms | 77.28 ms | 2.18% |
-| Nylon presets / 4 / 1,024 | 1,255.56 ms | 1,226.86 ms | 2.34% |
+| Cornell with green-channel Jarecki coefficients / 4 / 64 | 78.97 ms | 77.28 ms | 2.18% |
+| Cornell with green-channel Jarecki coefficients / 4 / 1,024 | 1,255.56 ms | 1,226.86 ms | 2.34% |
 | Coherent-leaning stress preset / 4 / 64 | 73.51 ms | 71.27 ms | 3.13% |
-| Nylon presets / 8 / 64 | 147.05 ms | 142.20 ms | 3.41% |
+| Cornell with green-channel Jarecki coefficients / 8 / 64 | 147.05 ms | 142.20 ms | 3.41% |
 
 As a separate reference, Mitsuba's **stock** path integrator with the Jarecki
-BSDF took 99.04 ms in the nylon/depth-four/64-SPP setup, while PIS took
+BSDF took 99.04 ms in the Cornell/depth-four/64-SPP setup, while PIS took
 77.71 ms (27.45% faster). That comparison includes the effect of specializing
 the entire integrator; it does **not** isolate the PIS representation.
 
@@ -56,7 +62,7 @@ memory traffic.
 
 ## Output and latency observations
 
-At 256 SPP in the nylon scene, pixelwise RMS PIS-minus-Mueller differences
+At 256 SPP in that Cornell scene, pixelwise RMS PIS-minus-Mueller differences
 relative to each full-Mueller channel's RMS signal were approximately 0.001%
 for I, 3.8% for Q, 2.7% for U, and 5.1% for V. These differences include
 Monte Carlo variance and cannot establish bias or equal-error speed. The
@@ -65,7 +71,7 @@ was tiny compared with I. This preset was intended to exercise coherent
 transport; it does not establish a large degree of polarization in the image.
 
 After editing a material reflectance value, the next-frame time was close to
-steady time: about 80/77 ms for Mueller/PIS at 64 SPP in the nylon scene. The
+steady time: about 80/77 ms for Mueller/PIS at 64 SPP in that Cornell scene. The
 first render of each integrator varied with process and cache state, and the
 benchmark always loaded Mueller first. No defensible cold-start comparison is
 available yet.
