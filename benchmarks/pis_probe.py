@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import statistics
+import subprocess
 import time
 from pathlib import Path
 
@@ -26,6 +27,20 @@ MATERIALS = {
     "red": dict(a=0.09, b=2.4, n_real=1.23, n_imag=0.19, xi0_max=1.00),
 }
 STRESS_MATERIAL = dict(a=0.0, b=2.0, n_real=1.5, n_imag=0.25, xi0_max=1.0)
+
+
+def hardware_metadata() -> dict[str, str]:
+    """Read the actual Mac model; never infer it from another benchmark."""
+    output = subprocess.check_output(
+        ["system_profiler", "SPHardwareDataType", "-json"], text=True
+    )
+    overview = json.loads(output)["SPHardwareDataType"][0]
+    keys = ("machine_name", "machine_model", "chip_type",
+            "number_processors", "physical_memory")
+    hardware = {key: overview[key] for key in keys}
+    if not hardware["chip_type"]:
+        raise RuntimeError("Unable to identify benchmark chip")
+    return hardware
 
 
 def make_scene(integrator: str, size: int, profile: str,
@@ -71,6 +86,7 @@ def main() -> None:
            args.max_depth) < 1:
         parser.error("size, spp, repeats, quality-spp, and max-depth must be positive")
 
+    hardware = hardware_metadata()
     mi.set_variant("metal_ad_mono_polarized")
     scenes = {
         "mueller": make_scene(args.mueller_integrator, args.size,
@@ -124,6 +140,7 @@ def main() -> None:
     medians = {name: statistics.median(values) for name, values in times.items()}
     samples = args.size * args.size * args.spp
     report = {
+        "hardware": hardware,
         "mitsuba_version": mi.MI_VERSION,
         "variant": mi.variant(),
         "mueller_integrator": args.mueller_integrator,

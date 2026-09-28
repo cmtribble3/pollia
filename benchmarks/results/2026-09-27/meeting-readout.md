@@ -97,6 +97,8 @@ analysis.
 
 Abhi's reported cross-engine Cornell timings were on an Apple M5. Absolute
 times from this M4 Max probe should not be compared with his M5 times.
+The archived JSON files predate hardware logging; the benchmark script now
+records the machine name, model, chip, core layout, and memory for future runs.
 
 Prototype limits: monochrome polarized only; diffuse `pollia_jarecki` surfaces
 only; unpolarized emitters; no media, general materials, or gradients. Although
