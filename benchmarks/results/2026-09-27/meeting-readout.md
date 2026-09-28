@@ -39,7 +39,7 @@ are in the JSON files beside this report.
 | --- | ---: | ---: | ---: |
 | Nylon presets / 4 / 64 | 78.97 ms | 77.28 ms | 2.18% |
 | Nylon presets / 4 / 1,024 | 1,255.56 ms | 1,226.86 ms | 2.34% |
-| Strong-polarization stress / 4 / 64 | 73.51 ms | 71.27 ms | 3.13% |
+| Coherent-leaning stress preset / 4 / 64 | 73.51 ms | 71.27 ms | 3.13% |
 | Nylon presets / 8 / 64 | 147.05 ms | 142.20 ms | 3.41% |
 
 As a separate reference, Mitsuba's **stock** path integrator with the Jarecki
@@ -60,8 +60,9 @@ At 256 SPP in the nylon scene, pixelwise RMS PIS-minus-Mueller differences
 relative to each full-Mueller channel's RMS signal were approximately 0.001%
 for I, 3.8% for Q, 2.7% for U, and 5.1% for V. These differences include
 Monte Carlo variance and cannot establish bias or equal-error speed. The
-strong-polarization setting gave about 1.8% for Q, 2.4% for U, and 14% for V;
-its V signal was tiny compared with I.
+stress preset gave about 1.8% for Q, 2.4% for U, and 14% for V; its V signal
+was tiny compared with I. This preset was intended to exercise coherent
+transport; it does not establish a large degree of polarization in the image.
 
 After editing a material reflectance value, the next-frame time was close to
 steady time: about 80/77 ms for Mueller/PIS at 64 SPP in the nylon scene. The
@@ -90,6 +91,5 @@ analysis.
 Prototype limits: monochrome polarized only; diffuse `pollia_jarecki` surfaces
 only; unpolarized emitters; no media, general materials, or gradients. Although
 the variant is AD-capable, the custom integrators do not implement derivatives.
-Xcode project generation failed because Dr.Jit assigned one generated file to
-two targets; command-line CMake Makefiles worked, and Xcode remains available
-for source editing.
+Xcode project generation and a Release build of `pollia_pis` now succeed with
+the CMake workarounds in this branch.
