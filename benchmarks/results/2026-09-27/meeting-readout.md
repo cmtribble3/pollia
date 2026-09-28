@@ -20,8 +20,9 @@ scene were not yet available.
   wrapper. The wrapper develops duplicate intensity, so the film has five
   monochrome channels. This cost is shared in the within-Mitsuba comparison.
 
-All three plugins compiled and rendered in `metal_ad_mono_polarized` on an Apple
-M5. The Jarecki BSDF's normalized Mueller matrix matched 15 PolRAY reference
+All three plugins compiled and rendered in `metal_ad_mono_polarized` on this
+MacBook Pro (Apple M4 Max, 16 CPU cores, 128 GB RAM; model Mac16,6). The
+Jarecki BSDF's normalized Mueller matrix matched 15 PolRAY reference
 cases with maximum absolute entry error `4.31e-7`, including Stokes V and basis
 rotation cases. An initial 16×16, 4,096-SPP scene had mean intensity within
 `0.028%` between stock path and PIS; this is a convergence check, not an
@@ -93,6 +94,9 @@ that a Mitsuba backend is technically workable; it is not enough by itself to
 choose the long-term engine. The next decisive comparison needs Abhi's exact
 commit and matched triangle scene, plus output-channel parity and equal-error
 analysis.
+
+Abhi's reported cross-engine Cornell timings were on an Apple M5. Absolute
+times from this M4 Max probe should not be compared with his M5 times.
 
 Prototype limits: monochrome polarized only; diffuse `pollia_jarecki` surfaces
 only; unpolarized emitters; no media, general materials, or gradients. Although
