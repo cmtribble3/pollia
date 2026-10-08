@@ -3,7 +3,8 @@ import math
 
 
 def build_scene(mi, *, preset="cornell", size=512, max_depth=4, rr_depth=8,
-                integrator="path", light_scale=1.0, yaw=0.0, pitch=0.0, distance=1.0):
+                integrator="path", light_scale=1.0, yaw=0.0, pitch=0.0, distance=1.0,
+                source_dop=0.0, source_aolp=0.0, source_ellipticity=0.0):
     if preset not in ("cornell", "glass", "conductor", "jarecki"):
         raise ValueError("Unknown scene preset")
     if type(size) is not int or not 16 <= size <= 4096:
@@ -14,17 +15,22 @@ def build_scene(mi, *, preset="cornell", size=512, max_depth=4, rr_depth=8,
         raise ValueError("RR depth must be between 1 and 128")
     if integrator not in ("path", "volpath", "pollia_pis", "pollia_mueller"):
         raise ValueError("Unknown integrator")
-    if integrator.startswith("pollia_") and mi.variant() != "metal_ad_mono_polarized":
-        raise ValueError("Custom PIS/Mueller RGB transport is pending; select monochrome")
-    for value in (light_scale, yaw, pitch, distance):
+    for value in (light_scale, yaw, pitch, distance, source_dop, source_aolp, source_ellipticity):
         if not isinstance(value, (int, float)) or not math.isfinite(value):
             raise ValueError("Scene controls must be finite numbers")
     if not 0 <= light_scale <= 100 or not 0.25 <= distance <= 4 or not -80 <= pitch <= 80:
         raise ValueError("Light or camera controls are out of range")
+    if not 0 <= source_dop <= 1 or not -90 <= source_aolp <= 90 or not -1 <= source_ellipticity <= 1:
+        raise ValueError("Source DoP, AoLP or ellipticity is out of range")
     T = mi.ScalarTransform4f
     if preset == "cornell":
         scene = mi.cornell_box()
-        # Keep Mitsuba's Cornell geometry and light spectrum intact.
+        # Preserve Mitsuba's Cornell geometry, transforms and reflectance colors.
+        # Every surface, including the emitter shape, uses our material type.
+        for name in ("white", "green", "red"):
+            scene[name]["type"] = "pollia_jarecki"
+        scene["light"]["emitter"].update(type="pollia_polarized", dop=source_dop,
+                                      aolp=source_aolp, ellipticity=source_ellipticity)
         scene["light"]["emitter"]["radiance"]["value"] = [18.387 * light_scale, 13.9873 * light_scale, 6.75357 * light_scale]
         radius, target = 3.9 * distance, [0, 0, 0]
     else:

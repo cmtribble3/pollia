@@ -15,9 +15,7 @@ struct PolliaApp: App {
         }
         .defaultSize(width: 1280, height: 850)
         .commands {
-            CommandGroup(replacing: .newItem) {
-                Button("Open Scene…") { model.openScene() }.keyboardShortcut("o")
-            }
+            CommandGroup(replacing: .newItem) {}
             CommandMenu("Render") {
                 Button("Fresh Estimate") { model.requestFresh() }.keyboardShortcut("r")
                 Button("Continue Estimate") { model.render(fresh: false) }.disabled(!model.canContinue)

@@ -39,26 +39,22 @@ struct ContentView: View {
         .onChange(of: model.display.filter) { _, _ in model.changeFilter() }
         .onChange(of: model.display) { _, _ in model.displayChanged() }
         .onChange(of: model.variant) { _, variant in
-            if variant == .rgbPolarized, model.scene.integrator.requiresMono { model.scene.integrator = .path }
             model.display.filter = variant == .rgbPolarized ? .rgbIntensity : .intensity
             model.requestFresh()
         }
+
     }
 
     private var sceneControls: some View {
         GroupBox("Scene") {
             VStack(alignment: .leading, spacing: 10) {
-                Picker("Scene", selection: $model.sceneChoice) {
-                    ForEach(ScenePreset.allCases, id: \.rawValue) { Text($0.title).tag($0.rawValue) }
-                    if let file = model.importedScene { Text(file.lastPathComponent).tag("file") }
-                }
-                Button("Open XML Scene…") { model.openScene() }
+                Text("Cornell Box")
                 Picker("Channels", selection: $model.variant) {
                     Text("RGB polarized").tag(MetalVariant.rgbPolarized)
                     Text("Monochrome polarized").tag(MetalVariant.monoPolarized)
                 }
                 Picker("Integrator", selection: $model.scene.integrator) {
-                    ForEach(SceneIntegrator.allCases.filter { !$0.requiresMono || model.variant == .monoPolarized }, id: \.self) {
+                    ForEach(SceneIntegrator.allCases, id: \.self) {
                         Text($0.title).tag($0)
                     }
                 }.disabled(model.isFileScene)
@@ -73,6 +69,12 @@ struct ContentView: View {
                     Stepper("RR starts at: \(model.scene.rrDepth)", value: $model.scene.rrDepth, in: 1...128)
                     Text(String(format: "Light scale: %.2f", model.scene.lightScale))
                     Slider(value: $model.scene.lightScale, in: 0...10)
+                    Text(String(format: "Source DoP: %.2f", model.scene.sourceDoP))
+                    Slider(value: $model.scene.sourceDoP, in: 0...1)
+                    Text(String(format: "Source AoLP: %.1f°", model.scene.sourceAoLP))
+                    Slider(value: $model.scene.sourceAoLP, in: -90...90)
+                    Text(String(format: "Source ellipticity: %+.2f", model.scene.sourceEllipticity))
+                    Slider(value: $model.scene.sourceEllipticity, in: -1...1)
                 }
             }.frame(maxWidth: .infinity, alignment: .leading)
         }.disabled(model.isRendering || model.isStarting)

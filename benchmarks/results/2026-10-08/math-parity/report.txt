@@ -1,0 +1,61 @@
+Pollia / PolRAY numerical math parity — 2026-10-08
+
+Executed 10,122 identical float32 fixtures: 10,000 reproducible random cases
+(seed 20261008) plus 122 analytic/geometric/Fresnel/scale edge cases.
+PolRAY: actual source headers compiled at runtime and executed on Apple M4 Max
+Metal; fast math disabled. Pollia: actual C++ scalar templates compiled with
+clang++ -O2 -ffp-contract=off. Temporary Jarecki instrumentation only adds the
+existing computed angles to the result. No production source edits.
+Harness and generated input/output binaries: /tmp/pollia-parity.
+
+All 10,000 random cases pass the recorded combined absolute/relative tolerance.
+Random-case maximum absolute errors:
+  Jones-to-Mueller, M00, first column, first row: 4.7684e-7
+  Jones application, adjoint, emission: 4.7684e-7
+  Jones multiplication: exactly equal
+  Implicit basis: 2.4587e-7
+  Source basis: 3.1404e-6
+  Stokes rotation: 7.7486e-7
+  Fresnel amplitudes: 2.3842e-7
+  Geometry angles: 6.5584e-6; geometry axis: 1.1772e-6
+  Geometry status: exactly equal
+  Normalized local Jarecki Jones: 1.8001e-5; gamma: 1.6019e-6
+  World Jones: 1.9431e-5; Mueller mixture: 8.7917e-6
+  Mono/RGB Stokes adapters and eight-scalar packing round trips: exactly equal
+  Mueller composition: 1.4305e-6
+  Ordinary Jones normalization: 2.3842e-7
+
+Independent double-precision C'=J C J-adjoint reference, all Mueller columns:
+  Pollia maximum absolute error 2.9874e-7, matrix-scale relative error 1.5625e-7
+  PolRAY maximum absolute error 2.5271e-7, matrix-scale relative error 1.4899e-7
+Application vs full Mueller: 7.4364e-7; adjoint vs transposed Mueller: 4.9488e-7.
+
+Edge-case differences:
+1. Signed-zero equatorial direction (-1,0,-0): Mitsuba basis (0,0,-1),
+   PolRAY basis (0,0,+1). This is a 180-degree axis reversal. One related
+   world Jones result differs by a global minus sign; Mueller transport agrees.
+   Gauge-aware world-Jones maximum absolute error remains 1.9431e-5.
+2. Very near the critical angle, n=0.4, cosine=0.9165151, k=0 or 1e-8:
+   Fresnel maximum amplitude component error 0.001218765. Tiny differences
+   in the nearly-zero square-root argument are amplified here. The same
+   imaginary signs are retained; this is not an observed conjugation error.
+3. Normalization stress check uses Pollia's actual Jarecki normalization
+   expression on arbitrary Jones matrices and PolRAY normalizeJonesToUnitM00.
+   At amplitude scale 1e-20, Pollia's floor at M00=1e-30 prevents unit-M00
+   normalization (relative output-amplitude discrepancy ~0.999986).
+   At scale 1e20, Pollia's raw squared magnitudes overflow while PolRAY's
+   power-of-two rescaling still returns a finite unit-M00 matrix.
+   This is a numerical robustness gap, not a sign/sine mismatch. These scale
+   checks do not establish the frequency of such inputs in rendered scenes.
+4. Both production validity paths reject nonfinite Jarecki gamma; harness
+   respects this. Zero-transport and retroreflection status cases agree.
+
+Coverage limits:
+Pollia executed scalar templates, not its Metal JIT rendering path. Projection
+and storage checks use known layout expectations where PolRAY has no equivalent
+Mitsuba spectrum adapter. Different camera/source conventions were reconciled
+using the same physical input/output axes. NaN/overflow cases are not reported
+as ordinary-input numerical agreement. No claim of exhaustive equivalence.
+
+No fixes or commits made. Per AGENTS.md, normalization behavior requires user
+input before choosing to preserve prototype limits or port robust rescaling.

@@ -75,9 +75,9 @@ public:
             Vector3f wi_light = ctx.mode == TransportMode::Radiance ? wo : si.wi;
             Vector3f wo_camera = ctx.mode == TransportMode::Radiance ? si.wi : wo;
             Vector3f n(0.f, 0.f, 1.f);
-            auto local = pollia::evaluate_jarecki(
-                wi_light, wo_camera, n, Float(m_a), Float(m_b),
-                Float(m_n_real), Float(m_n_imag), Float(m_xi0_max));
+            pollia::JareckiParams<Float> jareckiParams {
+                Float(m_a), Float(m_b), Float(m_n_real), Float(m_n_imag), Float(m_xi0_max) };
+            auto local = pollia::evaluate_jarecki(wi_light, wo_camera, n, jareckiParams);
             auto j = pollia::world_jones(local, wi_light, wo_camera);
             auto m = pollia::mixture_mueller(j, local.gamma);
             Spectrum result = dr::zeros<Spectrum>();
@@ -107,10 +107,18 @@ public:
     }
 
     Mask has_attribute(const std::string &name, Mask active) const override {
-        if (name == "pollia_ab_xi" || name == "pollia_n" ||
+        if (name == "pollia_jarecki_params" || name == "pollia_optical_constants" ||
             name == "pollia_reflectance")
             return active;
         return Base::has_attribute(name, active);
+    }
+
+    UnpolarizedSpectrum eval_attribute(const std::string &name,
+                                        const SurfaceInteraction3f &si,
+                                        Mask active) const override {
+        if (name == "pollia_reflectance")
+            return m_reflectance->eval(si, active);
+        return Base::eval_attribute(name, si, active);
     }
 
     Float eval_attribute_1(const std::string &name,
@@ -124,9 +132,9 @@ public:
     Color3f eval_attribute_3(const std::string &name,
                              const SurfaceInteraction3f &si,
                              Mask active) const override {
-        if (name == "pollia_ab_xi")
+        if (name == "pollia_jarecki_params")
             return Color3f(Float(m_a), Float(m_b), Float(m_xi0_max)) & active;
-        if (name == "pollia_n")
+        if (name == "pollia_optical_constants")
             return Color3f(Float(m_n_real), Float(m_n_imag), Float(0.f)) & active;
         return Base::eval_attribute_3(name, si, active);
     }

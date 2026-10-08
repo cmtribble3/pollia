@@ -1,0 +1,174 @@
+POLLIA CONTEXT HANDOFF — 2026-10-08
+
+Task and scope
+Polarization scene rendering is migrating from PolRAY to Pollia, using
+Mitsuba/Dr.Jit with exclusively Metal rendering. Ocular rendering stays in
+PolRAY. Work only in /Users/cmtribble3/Documents/pollia. PolRAY may be inspected
+for reference but must not be modified. The shell may initially start in
+/Users/cmtribble3/Documents/PolRay; specify Pollia as the working directory.
+
+User constraints
+Read Pollia AGENTS.md before work. Stop for user input when a critical-path
+issue or consequential decision arises. Do not commit unless explicitly asked.
+Do not launch/open Xcode unless a required task cannot be done through CLI/file
+tools. Direct editing with Xcode open previously caused editor/disk conflicts.
+Do not start Xcode merely for verification. Do not close or kill the user's
+existing app instances. Do not spawn subagents without explicit authorization.
+Navigation must be functional and human-friendly, organized around editable
+code. Avoid language-based groups, internal setup notes and empty plugin groups.
+
+Startup sequence
+1. Toolchain/environment: complete.
+2. Workspace/navigation/Metal variants: complete.
+3. Python versus C++ benchmark harnesses: complete.
+4. Backend architecture: selected and implemented, persistent Python worker
+   with shared-memory frames. Python is the working choice unless meaningful
+   C++ performance advantage is demonstrated. User values Python scene API and
+   familiarity. Worker versus embedding was evaluated; worker is current design.
+5. Basic SwiftUI port: in progress. First app is implemented and verified;
+   remaining source-polarization controls require a scientific modeling choice.
+6. Scientific validation: pending; UI formula checks do not replace it.
+
+Current decision — WAIT FOR USER INPUT
+Source DoP/AoLP/ellipticity controls are not implemented. Current presets use
+stock Mitsuba area/constant emitters, which explicitly depolarize their output:
+  src/emitters/area.cpp:109 (also 149, 208, 265)
+  src/emitters/constant.cpp:106 (also 129, 166, 182)
+Options presented to the user:
+A. Custom polarized emitter (recommended): directly specifies emitted Stokes
+   state from source controls, matching their existing intent. Validate basis,
+   handedness and physical constraints before scientific claims.
+B. Explicit polarizer/retarder objects: simulates polarization through optical
+   components, changing geometry and throughput.
+The user has NOT chosen yet. Their latest request was to prepare this handoff,
+not to authorize either source model. Do not implement source physics silently.
+
+Repository state
+Branch: pis-port.
+HEAD b95cf3d4 — Port Pollia scene UI and organize sources by function.
+Previous 315839ba — Set up Pollia Metal workspace and persistent Python rendering backend.
+Previously requested commit-all work was committed. Latest verification refresh
+is uncommitted, and no new commit is authorized. Modified files:
+  benchmarks/results/2026-10-08/ui-display-check.txt
+  benchmarks/results/2026-10-08/ui-launch.json
+  docs/pollia-app.txt
+  docs/pollia-xcode.txt
+This handoff adds docs/context-handoff.txt, also uncommitted.
+
+Latest verified results
+Backend compilation has finished. No active clang/xcodebuild jobs were found.
+Runtime libmitsuba.dylib and libjpeg-mitsuba.dylib signatures verify.
+Four actual Metal Python worker tests pass: CPU variant rejection, direct/worker
+frame equality and recoverable errors/resize, custom mono PIS, all presets and
+SPP-weighted progressive accumulation.
+Both Swift tests pass: corrupt frame metadata and stalled-worker timeout.
+Expanded display checks pass: signed ellipticity ratio, imported palettes,
+seismic map and colorbar/image parity; intensity, DoP, AoLP, Q/I, U/I, V/I,
+analyzer projection, dark pixels and PNG export; actual Cornell worker pipeline.
+Release app build and temporary native launch check pass:
+  device Apple M4 Max; metal_rgb_polarized; shape [512,512,15]; 64 SPP;
+  8 successful Metal viewport presentations; status Ready; no error.
+Saved results are in benchmarks/results/2026-10-08/ui-display-check.txt and
+ui-launch.json. Also /private/tmp/pollia-stable-launch.json and
+/private/tmp/pollia-display-verification.txt were available at handoff time.
+Interactive clicking/gesture automation remains unverified: native automation
+connection failed earlier. Native window/Metal presentation IS verified via
+app self-check. Do not claim complete interactive UI testing.
+
+Resolved runtime problem
+An earlier concurrent backend build overwrote shared runtime libraries while
+workers loaded them, producing invalid-signature imports and a misleading
+Dr.Jit NameError. The latest recheck succeeds after compilation finished. No
+isolated-runtime architecture change was made. Avoid concurrent builds/tests
+that mutate the same runtime/scratch directory.
+
+Environment
+Apple M4 Max (40 GPU cores), arm64; Xcode 27.0/macOS 27 SDK.
+Active runtime/build directory:
+  /Users/cmtribble3/Library/Developer/Xcode/DerivedData/pollia-runtime
+Local .venv uses Python 3.12.14 from cached Codex runtime. Mitsuba 3.10.dev1 and
+Dr.Jit 1.6.dev1 local forks. Runtime staging outside Documents avoids earlier
+macOS permission issues. GPU checks and writes to DerivedData require approved
+shell escalation in this environment; default sandbox cannot access host GPU.
+Variants:
+  metal_rgb_polarized — forward RGB, no AD
+  metal_ad_mono_polarized — existing monochrome polarized variant
+Scalar variants are compiled dependencies, not a rendering fallback.
+Custom pollia_pis/pollia_mueller currently accept mono only; RGB support is an
+explicit future task. User accepts non-AD RGB now but wants gradients eventually.
+
+Architecture and editable files (relative to Pollia repository)
+rendering/pollia/session.py: Metal-only RenderSession; scene loading; full film
+channels; weighted progressive accumulation on GPU; render/readback timings.
+rendering/pollia/scenes.py: Cornell, glass, conductor and Jarecki presets;
+resolution, depth, roulette, light scale and camera settings.
+rendering/pollia/worker.py: persistent JSON-lines worker, protocol version 1;
+load/preset/render/publish/ping/shutdown. Protocol stdout is isolated from native
+plugin logging. Shared mmap file with capacity/generation checks. Recoverable
+scene/argument errors; fatal Metal failure exits.
+rendering/tests/test_worker.py: real Metal integration tests.
+
+swift/Sources/PolliaRendering/PythonRenderSession.swift: asynchronous Swift
+session, one persistent subprocess; serial IO off main thread; deadlines;
+bounded stderr; mmap; immutable Data snapshots; reconnect/reload after failure.
+RenderFrame.swift: variants, metadata validation and owned frame bytes.
+SceneSettings.swift: scene/integrator/control settings.
+
+swift/Sources/PolliaDisplay/: MetalDisplayEngine.swift, DisplaySettings.swift,
+DisplayColorMap.swift and Shaders/Display.metal. GPU display filters and PNG
+export. Full film stays available for display updates without rerendering.
+Ellipticity is signed minor/major ratio [-1,1], not chi angle. AoLP degrees
+[-90,90]; Q/U/V normalized by I. Undefined polarization renders black.
+Palette data was imported from PolRAY; Swift colorbar and Metal use same tables.
+Physical renderer convention validation remains pending.
+
+swift/Sources/PolliaApp/: PolliaApp.swift, PolliaViewModel.swift,
+ContentView.swift, MetalViewport.swift. Split scene/control/viewport layout;
+XML loading; RGB/mono selection; integrator/resolution/depth/light controls;
+fresh/continue/stop estimates in batches up to 8 SPP; camera orbit/distance;
+display filters/exposure/analyzer/palettes/ranges/log/colorbar/zoom; PNG and
+raw channel exports with metadata. Imported XML scene controls are disabled
+where they cannot safely apply. Worker and display error states are separate;
+stale display updates are rejected; successful fresh loads reset accumulation.
+
+swift/Sources/WorkerCheck/: actual worker/frame ownership/failure/reconnect checks.
+swift/Sources/DisplayCheck/: expanded numerical and real Metal display checks.
+swift/Tests/PolliaRenderingTests/: metadata and timeout checks.
+
+Custom research code:
+  src/integrators/pollia_pis.cpp
+  src/integrators/pollia_mueller.cpp
+  src/bsdfs/pollia_jarecki.cpp
+  include/mitsuba/render/pollia_jarecki.h
+
+Build/navigation
+scripts/build-pollia-app.sh builds release Swift app and stages Python/module
+runtime; atomic executable replacement prevents overwriting a live executable.
+Development app is at the active runtime directory/Pollia.app. This is not yet
+a self-contained distribution installer; it depends on the base Python cache.
+scripts/pollia-env.sh sets venv/backend PYTHONPATH and POLLIA_BUILD_DIR.
+scripts/configure-pollia-xcode.py and scripts/pollia-xcode.cmake generate
+workspace/navigation/schemes. generate-xcode-project.sh regenerates without
+launching Xcode. Generated source navigator files are ignored build artifacts.
+Pollia navigation groups: Integrators, Materials, App, Display, Scenes,
+Rendering, Render Worker. Other roots: Mitsuba, Dr.Jit, Benchmarks, Tests.
+Notes/environment files are omitted from the curated navigator.
+Human docs: docs/pollia-app.txt, docs/pollia-xcode.txt, rendering/README.txt.
+
+Useful verification commands (run from Pollia; use appropriate escalation)
+  source scripts/pollia-env.sh
+  export PYTHONPATH="$PWD/rendering:$PYTHONPATH"
+  python -m unittest discover -s rendering/tests -v
+  swift test --package-path swift
+  swift run --package-path swift pollia-display-check "$PWD" "$POLLIA_BUILD_DIR" /tmp/pollia-preview.png
+  /bin/bash scripts/build-pollia-app.sh
+Optional native check starts only Pollia, not Xcode, and closes its own instance:
+  open -n "$POLLIA_BUILD_DIR/Pollia.app" --args --verify-report /tmp/pollia-ui-check.json --exit-after-check
+Read the JSON after completion; passed=true requires render completion and
+at least one successfully completed actual Metal drawable command.
+Latest checks already passed; do not rerun without a new change or concern.
+
+Next action
+Wait for the source-model decision, then implement the remaining source controls
+in Pollia and validate the chosen emitter/optics model. Continue UI port and
+scientific validation without touching PolRAY or launching Xcode unnecessarily.

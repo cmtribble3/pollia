@@ -1,0 +1,25 @@
+Simultaneous RGB transport verification — 2026-10-08
+
+Mueller, PIS and Jarecki backend builds: succeeded.
+Python/Metal suite: 7 tests passed, covering both RGB and monochrome source and
+transport checks, full shared-memory frames and previews for both integrators.
+Swift suite: 2 tests passed.
+Release app build and staging: succeeded.
+Native app self-check: passed on Apple M4 Max; metal_rgb_polarized;
+512x512x15 channels; 64 SPP; 8 completed Metal viewport presentations.
+Report: rgb-ui-launch.json.
+
+RGB tests compare Mueller against stock Mitsuba Path, compare PIS and Mueller
+with an intensity-scaled direct-light tolerance, test pure depolarizers and
+paired coherent multi-bounce estimates, isolate red/green/blue sources to check
+for channel leakage, and exercise early Russian roulette with colored throughput.
+Observed direct-light maximum absolute PIS/Mueller difference: 2.0740437e-5;
+maximum difference relative to S0: 1.1381411e-4. Mueller/Path maximum difference
+relative to S0: 2.3068937e-7. Q/U/V comparisons use S0 as the scale because the
+polarized components can vanish through cancellation.
+
+RGB shares geometry and the existing achromatic polarization operator/events,
+with per-channel reflectance, radiance, throughput and Stokes output. It does
+not introduce material wavelength dispersion or independent source-channel
+polarization controls. Monochrome rendering remains selectable in the GUI.
+No interactive gesture automation was performed. No commits were created.

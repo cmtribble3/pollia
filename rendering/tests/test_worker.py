@@ -88,8 +88,6 @@ class MetalWorkerTests(unittest.TestCase):
         self.assertEqual(combined.sample_count, 8)
         np.testing.assert_allclose(combined.pixels, first * 0.25 + second * 0.75, rtol=2e-5, atol=2e-6)
         self.assertEqual(direct.render(spp=3, output="full").sample_count, 3)
-        with self.assertRaisesRegex(ValueError, "monochrome"):
-            direct.load_preset(integrator="pollia_pis", size=32)
 
     def test_frames_match_direct_api_and_errors_preserve_session(self):
         worker = Worker()
@@ -132,6 +130,25 @@ class MetalWorkerTests(unittest.TestCase):
         self.assertEqual(pixels.shape, (32, 32, 5))
         self.assertEqual(metadata["variant"], "metal_ad_mono_polarized")
         self.assertTrue(np.isfinite(pixels).all())
+
+    def test_polarized_cornell_worker_controls(self):
+        for variant, count in (("metal_ad_mono_polarized", 5), ("metal_rgb_polarized", 15)):
+            worker = Worker(variant)
+            self.addCleanup(worker.close)
+            for integrator in ("pollia_mueller", "pollia_pis"):
+                reply = worker.request("preset", settings=dict(preset="cornell", size=32,
+                    integrator=integrator, source_dop=.8, source_aolp=31,
+                    source_ellipticity=-.4))
+                self.assertTrue(reply["ok"], reply)
+                pixels, metadata = worker.frame(spp=8, seed=7, output="full")
+                self.assertEqual(pixels.shape, (32, 32, count))
+                self.assertTrue(np.isfinite(pixels).all())
+                self.assertGreater(np.abs(pixels[..., 2:]).max(), 0)
+                if count == 15:
+                    for color in ("R", "G", "B"):
+                        self.assertIn(f"S3.{color}", metadata["channel_names"])
+                    preview, _ = worker.frame(spp=8, seed=7)
+                    np.testing.assert_allclose(preview, pixels[..., :3], rtol=2e-5, atol=2e-6)
 
     def test_cpu_variant_is_rejected(self):
         worker = Worker("scalar_rgb")

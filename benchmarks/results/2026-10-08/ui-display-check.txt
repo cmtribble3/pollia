@@ -1,0 +1,3 @@
+PASS: signed ellipticity [-1, 1], handedness, all imported palettes, seismic and colorbar/image parity
+PASS: Metal display I, DoP, AoLP, ellipticity, Q/I, U/I, V/I, analyzer projection, dark pixels and PNG export
+PASS: Python Cornell preset → progressive Metal rendering → Metal display → PNG

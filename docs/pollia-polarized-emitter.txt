@@ -1,0 +1,92 @@
+Pollia polarized surface emitter
+
+Mitsuba plugin: pollia_polarized (src/emitters/pollia_polarized.cpp).
+Attach it to a shape like Mitsuba's area emitter. All area sampling, texture
+sampling, visibility, two-sided emission and radiance units follow area.cpp.
+The normal-based source convention follows PolRAY's planar AreaLightObject;
+it extends that convention to other surface shapes using their sampled normal.
+PolRAY's separate sphere-light convention is not claimed to be reproduced.
+
+Source parameters
+  radiance: emitted S0, in power per area per steradian, using a spectrum/texture.
+  dop: degree of polarization [0,1], default 0.
+  aolp: orientation in degrees [-90,90], default 0.
+  ellipticity: signed minor/major ratio [-1,1], default 0.
+  twosided, sample_texture: inherited area-emitter sampling behavior.
+
+Let psi = radians(aolp), chi = atan(ellipticity), p = dop. The normalized state is
+  [1, p cos(2 psi) cos(2 chi), p sin(2 psi) cos(2 chi), p sin(2 chi)].
+Multiplying by radiance preserves S0; these controls do not simulate an optical
+polarizer or introduce an extra throughput loss. Positive ellipticity gives
+positive V (Mitsuba's right circular convention). Source parameters are finite
+and bounded at construction. Radiance may vary by channel, while the normalized
+polarization state is shared across channels. Independent per-channel Stokes
+input, as supported by PolRAY's PolarizedLightSpectrum, is not yet exposed.
+For a uniform one-sided source, integrated radiant flux is pi * area * radiance;
+the plugin accepts radiance rather than PolRAY's radiantFluxWatts field.
+
+Reference frame
+  PolRAY reference: Packages/PolRayRenderers/Sources/PolRayRenderers/MetalShared/
+  LightSampling.h, lightPSGReferenceBasis/projectPSGBasisToSegment.
+  Project world-up onto the surface plane; derive x from cross(y, normal).
+  Near the world-up pole, project world-right instead. Project that reference x
+  into each propagation plane, falling back to the projected y at degeneracy.
+  Rotate the Stokes state into Mitsuba's implicit world basis for the physical
+  direction of light travel: -ds.d for next-event samples, si.to_world(si.wi)
+  for emitter hits, and ray.d for emitted rays.
+  This intentionally uses world axes, matching the planar PolRAY source.
+
+Transport
+  Mueller applies its accumulated matrix to the complete source vector.
+  PIS applies the accumulated Jones product before a sampled depolarizer, and
+  uses the camera Stokes column times the source-adjoint dot product afterward.
+  Next-event evaluation mixes Jones-transformed emission and ideal-depolarized
+  emission. Both emitter-hit and direct-light paths retain Q/U/V, with no
+  normalization by S0 (zero-radiance sources remain well-defined).
+
+Cornell and GUI
+  rendering/pollia/scenes.py derives the custom Cornell from mi.cornell_box(),
+  preserving all eight shape transforms, primitive types and reflectance colors.
+  Every surface uses pollia_jarecki and the light uses pollia_polarized.
+  GUI: Cornell only, Mueller (default) or PIS. RGB polarized is the default;
+  monochrome remains selectable. Both custom integrators transport all RGB
+  channels in one render, retaining independent channel throughput and output.
+  The current Jarecki model uses achromatic Jones parameters and mixture
+  probability, so its Mueller/Jones payload and PIS event are shared across
+  colors. Spectral reflectance and source radiance are evaluated per channel.
+  Roulette uses the maximum channel throughput; a path stops when all channels
+  are dark. This adds no wavelength dispersion to the material model.
+  Source controls are serialized through the worker and included in channel
+  export metadata. Fresh Estimate applies changes and resets accumulation.
+  Other Python presets and stock Path remain available for research/validation.
+
+Verification
+  rendering/tests/polarized_check.py checks source formulas and reference-frame
+  geometry independently with NumPy, emission eval/sample consistency, both V
+  signs, U orientation, partial/zero polarization, invalid controls, unchanged
+  Cornell geometry, direct-light agreement with Mitsuba Path, pure-depolarizer
+  equality, statistically paired multi-bounce PIS/Mueller estimates, isolated
+  R/G/B source renders without channel leakage, early RGB roulette, dark
+  sources, and RGB/mono Metal execution. test_polarized.py runs fresh processes
+  for the two variants. test_worker.py checks both custom Cornell integrators
+  through the actual shared-memory protocol.
+  These numerical checks are not experimental validation of material parameters.
+
+RGB transport verification
+  Direct-light PIS/Mueller comparisons use a 2e-4 error bound relative to the
+  corresponding S0 plus 2e-6 absolute error, allowing Q/U/V cancellation near
+  zero. Observed maximum RGB error/S0 was 1.1382e-4; the Mueller/stock Path
+  comparison had maximum error/S0 of 2.3069e-7. These are numerical tolerances,
+  not experimental validation. RGB full films contain 15 channels: R/G/B,
+  followed by four RGB Stokes groups. The existing display supports combined
+  RGB intensity/analyzer images and individual color polarization filters.
+
+Shared math organization
+  General Jones/Mueller/Stokes math and source basis projection live in
+  include/mitsuba/render/pollia_polarization.h. Both integrators, the Jarecki
+  material and this emitter use that library, including its shared MIS helper.
+  Cosine sampling/PDFs use Mitsuba's core/warp.h directly. The shared header
+  appears directly under Pollia in the source navigator.
+  Mitsuba's complex Fresnel routine conjugates positive-imaginary eta. The
+  shared Fresnel helper preserves the existing PolRAY convention rather than
+  substituting that routine and changing material handedness.

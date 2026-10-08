@@ -1,0 +1,24 @@
+Polarized source implementation verification — 2026-10-08
+
+Backend build: pollia_polarized, pollia_pis, pollia_mueller — succeeded.
+Swift tests: 2 tests, 0 failures.
+Metal worker integration: 5 tests, 0 failures, including polarized Cornell
+  settings and shared-memory frames for both Mueller and PIS.
+Independent source and transport checks: passed for metal_ad_mono_polarized
+  and metal_rgb_polarized. Monochrome checks include direct-light agreement
+  with stock Path, exact pure-depolarizer PIS/Mueller agreement, paired
+  statistical multi-bounce comparison with increased coherent mixture,
+  zero-radiance sources and unchanged Cornell shape transforms/colors.
+Release Pollia app build and runtime staging: succeeded.
+Temporary native app self-check: passed, Apple M4 Max, monochrome polarized,
+  512 x 512 x 5 channels, 64 SPP, 8 Metal drawable presentations.
+  Report: polarized-ui-launch.json.
+No interactive clicking/gesture automation or experimental material validation
+was performed. No commits were created and PolRAY was not modified.
+
+Reproduce:
+  source scripts/pollia-env.sh
+  export PYTHONPATH="$PWD/rendering:$PYTHONPATH"
+  python -m unittest discover -s rendering/tests -v
+  swift test --package-path swift
+  /bin/bash scripts/build-pollia-app.sh

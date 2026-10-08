@@ -114,7 +114,9 @@ def navigator(root, build):
     worker = functional_group("Render Worker", [
         "rendering/pollia/worker.py", "swift/Sources/PolliaRendering/PythonRenderSession.swift",
     ], "pollia-worker")
-    pollia_sources = [integrators, materials]
+    emitters = functional_group("Emitters", ["src/emitters/pollia_polarized.cpp"], "pollia-emitters")
+    shared_math = file(Path("..") / "include/mitsuba/render/pollia_polarization.h")
+    pollia_sources = [integrators, materials, emitters, shared_math]
     for path, label in [("swift/Sources/PolliaApp", "App"),
                         ("swift/Sources/PolliaDisplay", "Display")]:
         entry = tree(Path(path), label)

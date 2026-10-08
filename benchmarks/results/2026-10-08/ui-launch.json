@@ -1,14 +1,14 @@
 {
-  "device": "Apple M4 Max",
-  "error": "",
-  "passed": true,
-  "presented_frames": 7,
-  "samples": 64,
-  "shape": [
+  "device" : "Apple M4 Max",
+  "error" : "",
+  "passed" : true,
+  "presented_frames" : 8,
+  "samples" : 64,
+  "shape" : [
     512,
     512,
     15
   ],
-  "status": "Ready \u00b7 64 SPP",
-  "variant": "metal_rgb_polarized"
+  "status" : "Ready · 64 SPP",
+  "variant" : "metal_rgb_polarized"
 }

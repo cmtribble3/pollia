@@ -1,0 +1,37 @@
+jones_to_mueller {"max_abs": 8796093022208.0, "max_relative": 2.341359983629211e-07, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 10120, "worst_label": "extreme_scale", "fail_indices": []}
+jones_m00 {"max_abs": 4.76837158203125e-07, "max_relative": 2.341359983629211e-07, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 4056, "worst_label": "random", "fail_indices": []}
+first_column {"max_abs": 4.76837158203125e-07, "max_relative": 2.341359983629211e-07, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 4056, "worst_label": "random", "fail_indices": []}
+apply_jones {"max_abs": 4398046511104.0, "max_relative": 1.7137246310487968e-06, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 10120, "worst_label": "extreme_scale", "fail_indices": []}
+adjoint {"max_abs": 4.76837158203125e-07, "max_relative": 9.212062173715038e-07, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 105, "worst_label": "random", "fail_indices": []}
+multiply {"max_abs": 0.0, "max_relative": 0.0, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 0, "worst_label": "random", "fail_indices": []}
+implicit_basis {"max_abs": 2.0, "max_relative": 2.0, "fail_count": 1, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 10034, "worst_label": "basis_edge", "fail_indices": [10034]}
+  10034 basis_edge pollia [ 0.  0. -1.] polray [0. 0. 1.]
+source_basis {"max_abs": 3.1404197216033936e-06, "max_relative": 4.292340822414177e-06, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 2701, "worst_label": "random", "fail_indices": []}
+stokes_rotation {"max_abs": 7.748603820800781e-07, "max_relative": 7.748603820800781e-07, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 3072, "worst_label": "random", "fail_indices": []}
+fresnel {"max_abs": 0.0012187646934762597, "max_relative": 0.0012187647661203007, "fail_count": 2, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 10041, "worst_label": "fresnel_edge", "fail_indices": [10041, 10046]}
+  10041 fresnel_edge pollia [9.9999988e-01 2.6637924e-04 9.9999863e-01 1.6648691e-03] polray [9.9999994e-01 4.6138241e-04 9.9999583e-01 2.8836338e-03]
+  10046 fresnel_edge pollia [ 9.9993086e-01 -2.7520390e-04  9.9956614e-01 -1.7193982e-03] polray [ 9.9995875e-01 -4.6319218e-04  9.9973875e-01 -2.8943196e-03]
+geometry_status {"max_abs": 0.0, "max_relative": 0.0, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 0, "worst_label": "random", "fail_indices": []}
+geometry_angles {"max_abs": 6.5583735704422e-06, "max_relative": 6.807023719452103e-06, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 2010, "worst_label": "random", "fail_indices": []}
+geometry_axis {"max_abs": 1.1771917343139648e-06, "max_relative": 1.4370311503969153e-06, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 1884, "worst_label": "random", "fail_indices": []}
+jarecki_local_normalized {"max_abs": 1.800060272216797e-05, "max_relative": 2.21784902866658e-05, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 607, "worst_label": "random", "fail_indices": []}
+gamma {"max_abs": 1.6093254089355469e-06, "max_relative": 0.005024973866301918, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 10038, "worst_label": "fresnel_edge", "fail_indices": []}
+world_jones {"max_abs": 1.9628098011016846, "max_relative": 2.0000001214680063, "fail_count": 1, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 10032, "worst_label": "basis_edge", "fail_indices": [10032]}
+  10032 basis_edge pollia [-0.98140496 -0.2820029   0.          0.          0.          0.
+  0.90487444  0.37218392] polray [ 0.98140484  0.28200284 -0.         -0.          0.         -0.
+ -0.9048744  -0.37218386]
+mixture {"max_abs": 8.791685104370117e-06, "max_relative": 8.791685104370117e-06, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 607, "worst_label": "random", "fail_indices": []}
+adapter_mono {"max_abs": 0.0, "max_relative": 0.0, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 0, "worst_label": "random", "fail_indices": []}
+adapter_rgb {"max_abs": 0.0, "max_relative": 0.0, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 0, "worst_label": "random", "fail_indices": []}
+first_row {"max_abs": 4398046511104.0, "max_relative": 2.341359983629211e-07, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 10120, "worst_label": "extreme_scale", "fail_indices": []}
+composition_mueller {"max_abs": 17592186044416.0, "max_relative": 1.8340458983741412e-06, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 10120, "worst_label": "extreme_scale", "fail_indices": []}
+emission {"max_abs": 4398046511104.0, "max_relative": 1.7137246310487968e-06, "fail_count": 0, "random_fail_count": 0, "finite_mismatch_count": 0, "worst_index": 10120, "worst_label": "extreme_scale", "fail_indices": []}
+normalization {"max_abs": 0.7076438733338364, "max_relative": 0.9999861118912614, "fail_count": 2, "random_fail_count": 0, "finite_mismatch_count": 1, "worst_index": 10118, "worst_label": "extreme_scale", "fail_indices": [10118, 10121]}
+  10118 extreme_scale pollia [-7.4872705e-06  9.4123461e-06  9.8279716e-06 -2.0677442e-06
+  5.2403007e-06 -7.8164076e-06 -3.2656546e-06 -6.4048122e-06] polray [-0.53911376  0.677727    0.7076537  -0.14888594  0.37732282 -0.562813
+ -0.23514034 -0.46117237]
+  10121 extreme_scale pollia [nan nan nan nan nan nan nan nan] polray [-0.53911376  0.6777269   0.7076537  -0.14888594  0.37732282 -0.5628129
+ -0.23514034 -0.46117237]
+packing roundtrip exact True
+pollia independent coherency max abs 2.9873121532020264e-07 max relative 1.562422646059489e-07
+polray independent coherency max abs 2.527077631597763e-07 max relative 1.4898864116330338e-07

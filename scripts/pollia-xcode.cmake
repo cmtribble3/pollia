@@ -52,10 +52,10 @@ endforeach()
 # Let Xcode launch its registered executable product; providing an external
 # executable here causes CMake to emit a second, redundant PathRunnable.
 set_property(TARGET mitsuba-bin PROPERTY XCODE_SCHEME_EXECUTABLE)
-# Custom transport plugins remain monochromatic.
+# Exercise RGB transport in both custom plugin schemes.
 foreach(target pollia_pis pollia_mueller)
   set_property(TARGET ${target} PROPERTY XCODE_SCHEME_ARGUMENTS
-    "-m;metal_ad_mono_polarized;-D;integrator=${target};${CMAKE_BINARY_DIR}/pollia-scenes/pollia-plugin-smoke.xml;-o;${CMAKE_BINARY_DIR}/${target}-smoke.exr")
+    "-m;metal_rgb_polarized;-D;integrator=${target};${CMAKE_BINARY_DIR}/pollia-scenes/pollia-plugin-smoke.xml;-o;${CMAKE_BINARY_DIR}/${target}-smoke.exr")
 endforeach()
 set_property(TARGET pollia_jarecki PROPERTY XCODE_SCHEME_ARGUMENTS
   "-m;metal_rgb_polarized;-D;integrator=path;${CMAKE_BINARY_DIR}/pollia-scenes/pollia-plugin-smoke.xml;-o;${CMAKE_BINARY_DIR}/pollia_jarecki-smoke.exr")

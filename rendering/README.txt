@@ -92,3 +92,31 @@ scene loads, CPU rejection, snapshot ownership, native crash detection/restart.
 Swift contract checks reject corrupt frame metadata and stop a stalled worker.
 Render comparisons allow small GPU floating-point reduction differences.
 These are correctness checks, not a new Swift integration performance benchmark.
+
+Custom Cornell RGB transport
+  session.load_preset(preset="cornell", integrator="pollia_mueller", size=512,
+                      source_dop=0.8, source_aolp=31, source_ellipticity=-0.4)
+  frame = session.render(spp=64, output="full")
+  # metal_rgb_polarized returns H x W x 15: RGB plus four RGB Stokes groups.
+  # Use integrator="pollia_pis" for the Jones/depolarizer estimator.
+  Both integrators evaluate source radiance and material reflectance per color
+  while sharing ray samples and the current achromatic polarization model.
+  Monochrome remains supported via metal_ad_mono_polarized in a fresh process.
+
+Shared polarization and sampling math
+  include/mitsuba/render/pollia_polarization.h is the common Jones/Mueller/
+  Stokes library for both integrators, the material and the polarized emitter.
+  It contains Jones packing/products, coherency and adjoint application,
+  Jones-to-Mueller conversion, ideal-depolarizer mixing, Mueller products and
+  application, spectral Stokes extraction/scaling/storage, source reference
+  projection and PolRAY-convention Fresnel amplitudes. Stokes V uses
+  C01 = (U - i V) / 2. Mitsuba's mueller::stokes_basis and rotate_stokes_basis
+  remain the native basis utilities.
+  pollia_jarecki.h retains material evaluation and its basis adapter. The PIS
+  and Mueller files retain estimator-specific path state/accumulation.
+  The same polarization header provides the shared MIS power heuristic,
+  matching Mitsuba's stock Path implementation. Cosine sampling and
+  PDF evaluation call warp::square_to_cosine_hemisphere and
+  warp::square_to_cosine_hemisphere_pdf directly from mitsuba/core/warp.h;
+  emitter sampling and visibility stay in Mitsuba's Scene/Shape APIs.
+  The curated source navigator places the shared header directly under Pollia.

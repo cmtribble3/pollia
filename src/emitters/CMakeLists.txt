@@ -1,5 +1,6 @@
 set(MI_PLUGIN_PREFIX "emitters")
 
+add_plugin(pollia_polarized pollia_polarized.cpp)
 add_plugin(area            area.cpp)
 add_plugin(point           point.cpp)
 add_plugin(constant        constant.cpp)

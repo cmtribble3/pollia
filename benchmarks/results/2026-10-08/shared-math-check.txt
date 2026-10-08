@@ -1,0 +1,16 @@
+Shared polarization/sampling refactor verification — 2026-10-08
+
+Backend builds succeeded: pollia_pis, pollia_mueller, pollia_jarecki,
+  pollia_polarized.
+All 7 existing Python/Metal numerical and worker integration tests passed.
+Fixed-seed before/after comparison was bit-for-bit identical for all four
+integrator/variant combinations: PIS and Mueller in metal_rgb_polarized
+(32x32x15) and metal_ad_mono_polarized (32x32x5).
+Baseline: Cornell geometry, xi0_max=1 on all materials, 64 SPP, seed 9,
+max_depth=4, source DoP=.8, AoLP=31 degrees, ellipticity=-.4.
+
+Native cosine sampling/PDFs were verified in mitsuba/core/warp.h. Both
+integrators and the material call those helpers directly. Stokes frame
+construction/rotation uses Mitsuba's mueller.h. Shared MIS matches the stock
+Path power heuristic. Polarization/Fresnel formulas and sampler consumption
+were preserved. No Swift/UI changes, Xcode launch or commits were needed.

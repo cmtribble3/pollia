@@ -22,12 +22,15 @@ connection. These groups combine related files across languages. Build dependenc
 Environment settings and these instructions are not placed in the source navigator.
 
 Rendering
-  Select Cornell Box, Glass Sphere, Aluminum Sphere or Jarecki Sphere. These are
-  Mitsuba scene presets, not numerically validated translations of PolRAY scenes.
-  RGB and monochrome polarized rendering both use Metal exclusively. Custom PIS
-  and Mueller transport are selectable in monochrome; RGB support is pending.
-  Open XML Scene loads a research scene using its own integrator, camera, lighting
-  and image dimensions. The corresponding preset controls are disabled for XML.
+  The GUI renders Pollia's custom Cornell Box: Mitsuba's original geometry and
+  reflectance colors, with pollia_jarecki on every surface and pollia_polarized
+  on the ceiling light. Choose Mueller (default) or PIS, and RGB polarized
+  (default) or monochrome polarized channels. RGB renders R/G/B simultaneously
+  through one set of sampled paths, preserving Stokes data for every color.
+  RGB uses metal_rgb_polarized; monochrome uses metal_ad_mono_polarized.
+  Source controls set DoP [0,1], AoLP [-90,90] degrees, and signed ellipticity
+  (minor/major ratio) [-1,1]. Use Fresh Estimate after changing these controls.
+  Python retains other scene presets, stock Path rendering and XML loading.
   Fresh Estimate discards the previous estimate. Continue adds the requested SPP
   to the current estimate; changing scene settings requires a fresh estimate.
   Estimates run in batches of at most 8 SPP. All film/AOV radiance channels are
@@ -60,13 +63,14 @@ Display
   scene-settings/source-file and seed/SPP-batch metadata.
 
 Port status
-  This first port covers the split layout, render/estimate controls, scene opening,
+  This port covers the split layout, Mueller/PIS selection, source polarization,
   camera orbit/distance, display filters/ranges, and image/raw-channel export.
-  PolRAY-specific geometry diagnostics, sweep tools, polariscope/lens scene models
-  and source DoP/AoLP/ellipticity controls are not yet ported. Ocular rendering stays in
-  PolRAY. Mitsuba's stock area/environment emitters emit depolarized light; source
-  polarization requires a custom emitter or explicit polarization optics. That
-  modeling choice needs agreement before adding those controls.
+  PolRAY-specific geometry diagnostics, sweep tools and polariscope/lens scene
+  models are not yet ported. Ocular rendering stays in PolRAY.
+  Source basis and Stokes signs are checked against an independent geometric
+  reference. Direct lighting matches Mitsuba Path; multiple-bounce PIS agrees
+  statistically with Mueller. These checks do not validate Jarecki's physical
+  material parameters against experimental measurements.
 
 Verification
   source scripts/pollia-env.sh
@@ -79,6 +83,25 @@ Real window/Metal presentation check (starts a temporary app instance, then exit
   open -n "$POLLIA_BUILD_DIR/Pollia.app" --args --verify-report /tmp/pollia-ui-check.json --exit-after-check
 Read the JSON after it is written. passed=true requires the startup estimate to
 finish and at least one actual Metal drawable command buffer to complete.
-The recorded 2026-10-08 check completed 512x512x15, 64 SPP, 7 drawable submissions
+The recorded 2026-10-08 check completed 512x512x15, 64 SPP, 8 drawable submissions
 on Apple M4 Max. Interactive clicking/gesture automation is unverified because
 the native UI automation connection failed; Xcode was never launched.
+
+Runtime stability recheck (2026-10-08)
+  Backend compilation has finished, runtime library signatures verify, and fresh
+  Python workers load successfully. All four real Metal worker tests, both Swift
+  frame/timeout tests, expanded display checks and the packaged app launch pass.
+  Reports: benchmarks/results/2026-10-08/ui-display-check.txt and ui-launch.json.
+
+Polarized Cornell update (2026-10-08)
+  The updated release app launch passed with 512x512x5 channels, 64 SPP and
+  8 completed Metal drawable presentations on Apple M4 Max. Source, transport,
+  worker and Swift checks passed. Results: benchmarks/results/2026-10-08/
+  polarized-source-check.txt and polarized-ui-launch.json. Source conventions
+  and API details: docs/pollia-polarized-emitter.txt.
+
+Simultaneous RGB update (2026-10-08)
+  RGB is now the default for both Mueller and PIS. The release app self-check
+  passed with 512x512x15 channels, 64 SPP and 8 Metal drawable presentations.
+  All 7 Python/Metal tests and both Swift tests passed. Reports:
+  benchmarks/results/2026-10-08/rgb-transport-check.txt and rgb-ui-launch.json.

@@ -1,0 +1,284 @@
+{
+  "seed": 20261008,
+  "count": 10122,
+  "random_count": 10000,
+  "device": "Apple M4 Max",
+  "metal_fast_math": false,
+  "pollia_execution": "C++ scalar float actual templates; Jarecki return instrumented solely to expose computed angles",
+  "sources_sha256": {
+    "/Users/cmtribble3/Documents/pollia/include/mitsuba/render/pollia_polarization.h": "5ada1b4e934838e4cc1bf22e5639f373c1e70e1da7b27d0a9bcd6a79bbc62049",
+    "/Users/cmtribble3/Documents/pollia/include/mitsuba/render/pollia_jarecki.h": "eb1ac1d3b46fe38a80f53268c994795975026d60d6d302af094ff91478d6aa9a",
+    "/Users/cmtribble3/Documents/pollia/include/mitsuba/render/mueller.h": "c2bcddbff783ec3ad87f8e4d2e7e66a1d928e4c631a59f0c8d1d35b7e4caf36c",
+    "/Users/cmtribble3/Documents/pollia/include/mitsuba/core/vector.h": "3af6944ccd7968761dffcfdd236e530a53b8b5715e987c1aa9d78a62c1d52028",
+    "/Users/cmtribble3/Documents/PolRay/Packages/PolRayRenderers/Sources/PolRayRenderers/MetalShared/ComplexMath.h": "d1bdd7ea7fb4cad6adab0bc53dd6bcd8781bbff4def567d73a699fba6b0ae4e2",
+    "/Users/cmtribble3/Documents/PolRay/Packages/PolRayRenderers/Sources/PolRayRenderers/MetalShared/PolarizationMath.h": "bb17ed7cfd6400ee274a6319656c774ab596ed691909db376ac8b868cf15d650",
+    "/Users/cmtribble3/Documents/PolRay/Packages/PolRayRenderers/Sources/PolRayRenderers/MetalShared/JareckiModel.h": "243f9e9f7c3e0bc511b6feaa1b89c896a62f64821a28417d6b33c591df08990f",
+    "/Users/cmtribble3/Documents/PolRay/Packages/PolRayRenderers/Sources/PolRayRenderers/MetalShared/LightSampling.h": "f94538af7d5c0362c20bb40ca15b64176df7365bf55542e062a4a9ea69e887ab"
+  },
+  "tolerance": "absolute error <= 3e-5 + 3e-5 * per-case max reference magnitude; finite-state comparisons separate",
+  "results": {
+    "jones_to_mueller": {
+      "max_abs": 8796093022208.0,
+      "max_relative": 2.341359983629211e-07,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 10120,
+      "worst_label": "extreme_scale",
+      "fail_indices": [],
+      "random_max_abs": 4.76837158203125e-07
+    },
+    "jones_m00": {
+      "max_abs": 4.76837158203125e-07,
+      "max_relative": 2.341359983629211e-07,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 4056,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 4.76837158203125e-07
+    },
+    "first_column": {
+      "max_abs": 4.76837158203125e-07,
+      "max_relative": 2.341359983629211e-07,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 4056,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 4.76837158203125e-07
+    },
+    "apply_jones": {
+      "max_abs": 4398046511104.0,
+      "max_relative": 1.7137246310487968e-06,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 10120,
+      "worst_label": "extreme_scale",
+      "fail_indices": [],
+      "random_max_abs": 4.76837158203125e-07
+    },
+    "adjoint": {
+      "max_abs": 4.76837158203125e-07,
+      "max_relative": 9.212062173715038e-07,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 105,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 4.76837158203125e-07
+    },
+    "multiply": {
+      "max_abs": 0.0,
+      "max_relative": 0.0,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 0,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 0.0
+    },
+    "implicit_basis": {
+      "max_abs": 2.0,
+      "max_relative": 2.0,
+      "fail_count": 1,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 10034,
+      "worst_label": "basis_edge",
+      "fail_indices": [
+        10034
+      ],
+      "random_max_abs": 2.4586915969848633e-07
+    },
+    "source_basis": {
+      "max_abs": 3.1404197216033936e-06,
+      "max_relative": 4.292340822414177e-06,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 2701,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 3.1404197216033936e-06
+    },
+    "stokes_rotation": {
+      "max_abs": 7.748603820800781e-07,
+      "max_relative": 7.748603820800781e-07,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 3072,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 7.748603820800781e-07
+    },
+    "fresnel": {
+      "max_abs": 0.0012187646934762597,
+      "max_relative": 0.0012187647661203007,
+      "fail_count": 2,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 10041,
+      "worst_label": "fresnel_edge",
+      "fail_indices": [
+        10041,
+        10046
+      ],
+      "random_max_abs": 2.384185791015625e-07
+    },
+    "geometry_status": {
+      "max_abs": 0.0,
+      "max_relative": 0.0,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 0,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 0.0
+    },
+    "geometry_angles": {
+      "max_abs": 6.5583735704422e-06,
+      "max_relative": 6.807023719452103e-06,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 2010,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 6.5583735704422e-06
+    },
+    "geometry_axis": {
+      "max_abs": 1.1771917343139648e-06,
+      "max_relative": 1.4370311503969153e-06,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 1884,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 1.1771917343139648e-06
+    },
+    "jarecki_local_normalized": {
+      "max_abs": 1.800060272216797e-05,
+      "max_relative": 2.21784902866658e-05,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 607,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 1.800060272216797e-05
+    },
+    "gamma": {
+      "max_abs": 1.6093254089355469e-06,
+      "max_relative": 0.005024973866301918,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 10038,
+      "worst_label": "fresnel_edge",
+      "fail_indices": [],
+      "random_max_abs": 1.601874828338623e-06
+    },
+    "world_jones": {
+      "max_abs": 1.9628098011016846,
+      "max_relative": 2.0000001214680063,
+      "fail_count": 1,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 10032,
+      "worst_label": "basis_edge",
+      "fail_indices": [
+        10032
+      ],
+      "random_max_abs": 1.9431114196777344e-05
+    },
+    "mixture": {
+      "max_abs": 8.791685104370117e-06,
+      "max_relative": 8.791685104370117e-06,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 607,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 8.791685104370117e-06
+    },
+    "adapter_mono": {
+      "max_abs": 0.0,
+      "max_relative": 0.0,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 0,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 0.0
+    },
+    "adapter_rgb": {
+      "max_abs": 0.0,
+      "max_relative": 0.0,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 0,
+      "worst_label": "random",
+      "fail_indices": [],
+      "random_max_abs": 0.0
+    },
+    "first_row": {
+      "max_abs": 4398046511104.0,
+      "max_relative": 2.341359983629211e-07,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 10120,
+      "worst_label": "extreme_scale",
+      "fail_indices": [],
+      "random_max_abs": 4.76837158203125e-07
+    },
+    "composition_mueller": {
+      "max_abs": 17592186044416.0,
+      "max_relative": 1.8340458983741412e-06,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 10120,
+      "worst_label": "extreme_scale",
+      "fail_indices": [],
+      "random_max_abs": 1.430511474609375e-06
+    },
+    "emission": {
+      "max_abs": 4398046511104.0,
+      "max_relative": 1.7137246310487968e-06,
+      "fail_count": 0,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 0,
+      "worst_index": 10120,
+      "worst_label": "extreme_scale",
+      "fail_indices": [],
+      "random_max_abs": 4.76837158203125e-07
+    },
+    "normalization": {
+      "max_abs": 0.7076438733338364,
+      "max_relative": 0.9999861118912614,
+      "fail_count": 2,
+      "random_fail_count": 0,
+      "finite_mismatch_count": 1,
+      "worst_index": 10118,
+      "worst_label": "extreme_scale",
+      "fail_indices": [
+        10118,
+        10121
+      ],
+      "random_max_abs": 2.384185791015625e-07
+    }
+  }
+}

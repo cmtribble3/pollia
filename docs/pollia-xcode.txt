@@ -115,7 +115,7 @@ Verification status — 2026-10-08
     detected a killed worker and reconnected successfully. Timeout handling and
     frame validation passed.
   First UI port: Release SwiftUI app build and Metal filter checks passed.
-    Native launch check completed 512x512x15, 64 SPP, 7 actual Metal viewport
+    Native launch check completed 512x512x15, 64 SPP, 8 actual Metal viewport
     submissions. Native UI click/gesture automation is unavailable after a tool
     connection failure; it is not claimed as tested.
     Environment scripts, settings and setup notes are omitted.
