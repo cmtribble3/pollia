@@ -1,0 +1,84 @@
+Pollia app
+
+Build from the repository root, without opening Xcode:
+  ./scripts/build-pollia-app.sh
+
+The app is written to:
+  ~/Library/Developer/Xcode/DerivedData/pollia-runtime/Pollia.app
+Launch it from Finder or:
+  open "$HOME/Library/Developer/Xcode/DerivedData/pollia-runtime/Pollia.app"
+
+The local development build stages Python and the renderer beside the backend.
+It uses the already built Mitsuba/Dr.Jit Metal runtime. Run Pollia-Backend first
+if that runtime is missing. This is a development bundle, not a distributable
+installer; its runtime configuration points to the local build directory.
+
+The workspace has a Pollia-App build/run scheme after regeneration. Its build
+includes Pollia-Backend and invokes the same app packaging script. Pollia/App
+contains the UI; Display contains viewport/filter code and shaders; Scenes
+contains scene definitions, settings and examples; Rendering contains the render
+session and frame data; Render Worker contains both sides of the app/worker
+connection. These groups combine related files across languages. Build dependencies stay in Build.
+Environment settings and these instructions are not placed in the source navigator.
+
+Rendering
+  Select Cornell Box, Glass Sphere, Aluminum Sphere or Jarecki Sphere. These are
+  Mitsuba scene presets, not numerically validated translations of PolRAY scenes.
+  RGB and monochrome polarized rendering both use Metal exclusively. Custom PIS
+  and Mueller transport are selectable in monochrome; RGB support is pending.
+  Open XML Scene loads a research scene using its own integrator, camera, lighting
+  and image dimensions. The corresponding preset controls are disabled for XML.
+  Fresh Estimate discards the previous estimate. Continue adds the requested SPP
+  to the current estimate; changing scene settings requires a fresh estimate.
+  Estimates run in batches of at most 8 SPP. All film/AOV radiance channels are
+  sample-weighted on Metal before derived display filters are applied. Stop ends
+  after the active batch; it does not abort a GPU kernel in flight. A large batch
+  on a complex scene can still take time. Errors appear in the control panel.
+  Stats report completed SPP, last-batch rendering, and shared/snapshot delivery.
+
+Display
+  The viewport and polarization filters run on Metal. Display settings reuse the
+  last uploaded film buffer and do not rerender the scene. RGB intensity and RGB
+  analyzer show color; scalar filters select a red/green/blue or monochrome channel.
+  Q/U/V are normalized by intensity, matching PolRAY's display convention. DoP,
+  AoLP and ellipticity are derived from the accumulated Stokes channels. AoLP is
+  in degrees (-90 to +90). Ellipticity is the signed minor/major axis ratio,
+  tan(half atan2(V, hypot(Q, U))), with bounds -1 to +1: positive is right-handed,
+  negative is left-handed, and zero is linear polarization;
+  reference frames are Mitsuba's sensor-aligned Stokes frames. Undefined values,
+  including AoLP for zero linear polarization, are black. This UI check does not
+  certify equivalence to PolRAY's scientific sign/reference-frame conventions.
+  Exposure scales displayed intensity. Scalar ranges and optional log scale
+  control the colormap. The image and colorbar share PolRAY's exact Turbo, Viridis,
+  Phase and Diverging tables, plus Grayscale. Defaults match PolRAY: Phase for AoLP,
+  Viridis for ellipticity, Diverging for Q/U/V, and Grayscale for other scalar
+  filters. Seismic remains available for Q/U/V. Colorbar labels show the physical range.
+  Drag to orbit a preset camera; use the camera sliders for precise settings and
+  Fresh Estimate to apply slider edits. Display zoom crops the viewport only.
+  Save Image writes the displayed filter/exposure as sRGB PNG. Save Channels writes
+  unmodified interleaved float32-le radiance/AOV data plus JSON channel/shape,
+  scene-settings/source-file and seed/SPP-batch metadata.
+
+Port status
+  This first port covers the split layout, render/estimate controls, scene opening,
+  camera orbit/distance, display filters/ranges, and image/raw-channel export.
+  PolRAY-specific geometry diagnostics, sweep tools, polariscope/lens scene models
+  and source DoP/AoLP/ellipticity controls are not yet ported. Ocular rendering stays in
+  PolRAY. Mitsuba's stock area/environment emitters emit depolarized light; source
+  polarization requires a custom emitter or explicit polarization optics. That
+  modeling choice needs agreement before adding those controls.
+
+Verification
+  source scripts/pollia-env.sh
+  export PYTHONPATH="$PWD/rendering:$PYTHONPATH"
+  python -m unittest discover -s rendering/tests -v
+  swift test --package-path swift
+  swift run --package-path swift pollia-display-check "$PWD" "$POLLIA_BUILD_DIR" /tmp/pollia-preview.png
+
+Real window/Metal presentation check (starts a temporary app instance, then exits):
+  open -n "$POLLIA_BUILD_DIR/Pollia.app" --args --verify-report /tmp/pollia-ui-check.json --exit-after-check
+Read the JSON after it is written. passed=true requires the startup estimate to
+finish and at least one actual Metal drawable command buffer to complete.
+The recorded 2026-10-08 check completed 512x512x15, 64 SPP, 7 drawable submissions
+on Apple M4 Max. Interactive clicking/gesture automation is unverified because
+the native UI automation connection failed; Xcode was never launched.

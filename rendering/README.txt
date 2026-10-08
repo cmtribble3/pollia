@@ -43,15 +43,19 @@ It returns owned Data snapshots after copying the completed shared frame.
 This deliberate host copy is included in snapshotMs; it prevents overwrite while
 the UI retains a frame. The protocol pipe carries only commands and metadata.
 Pixels are linear, interleaved, little-endian float32, not a tonemapped UI image.
-Tone mapping and display texture upload will be added with the UI port.
+The app's PolliaDisplay module performs display filtering and texture presentation
+on Metal; see docs/pollia-app.txt for the current SwiftUI port.
 
 Worker protocol v1
   Startup: {event: ready, protocol: 1, variant: ...}
   Requests: JSON lines with positive integer id and command.
   Replies: matching id, ok, and result or error {type, message}.
   load: path and optional parameters object.
-  render: spp, seed, sensor and output (preview/full). Returns generation,
-    shape, channel_names, bytes, dtype, Metal kernel_count and timing metadata.
+  preset: scene settings object (see pollia/scenes.py), loaded via load_dict.
+  render: spp, seed, sensor, output (preview/full) and accumulate. Returns generation,
+    shape, channel_names, bytes, dtype, sample_count, Metal kernel_count and timings.
+    accumulate=true combines full film tensors on Metal weighted by requested SPP;
+    false starts a fresh estimate. Loading a scene also resets accumulation.
   publish: generation and shared-file capacity. Copies that frame into the
     startup --shared-file and acknowledges completion. Read it after this reply.
   ping: backend identity.
@@ -69,9 +73,9 @@ Lifecycle and limits
   Reconnect and reload the scene to recover; there is no silent CPU substitution
   or automatic retry of a render. Default timeout is 120 seconds per pipe
   operation and is configurable for longer renders.
-  shutdown is ordered after active work. Swift Task cancellation does not yet
-  interrupt a native render. Interactive cancellation/progressive batching belongs
-  to the next UI integration step.
+  shutdown is ordered after active work. Swift Task cancellation does not interrupt
+  a native render. The app stops between its 8-SPP batches and retains completed
+  samples. A native kernel already running must complete or reach the timeout.
   The current launch configuration uses the development runtime. Distributing
   the app will require bundling/signing Python and native dependencies.
 

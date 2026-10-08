@@ -57,18 +57,24 @@ def main():
                         session.load_file(request["path"], **parameters)
                         frame = None
                         result = dict(loaded=True)
+                    elif command == "preset":
+                        session.load_preset(**request["settings"])
+                        frame = None
+                        result = dict(loaded=True)
                     elif command == "render":
                         frame = None
                         frame = session.render(spp=request.get("spp", 16),
                                                seed=request.get("seed", 0),
                                                sensor=request.get("sensor", 0),
-                                               output=request.get("output", "preview"))
+                                               output=request.get("output", "preview"),
+                                               accumulate=request.get("accumulate", False))
                         generation += 1
                         result = dict(generation=generation, shape=list(frame.pixels.shape),
                                       channel_names=frame.channel_names,
                                       bytes=frame.pixels.nbytes, dtype="float32-le",
                                       render_ms=frame.render_ms, readback_ms=frame.readback_ms,
-                                      kernel_count=frame.kernel_count, variant=session.variant)
+                                      kernel_count=frame.kernel_count, variant=session.variant,
+                                      sample_count=frame.sample_count)
                     elif command == "publish":
                         if frame is None or request.get("generation") != generation:
                             raise ValueError("No matching frame to publish")

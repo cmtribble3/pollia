@@ -60,11 +60,19 @@ public final class PythonRenderSession: @unchecked Sendable {
         }
     }
 
+    public func loadPreset(_ settings: SceneSettings) async throws {
+        try await perform { connection in
+            let encoded = try JSONEncoder().encode(settings)
+            let fields = try JSONSerialization.jsonObject(with: encoded)
+            let _: Loaded = try connection.request("preset", fields: ["settings": fields])
+        }
+    }
+
     public func render(spp: UInt32 = 16, seed: UInt32 = 0, sensor: Int = 0,
-                       output: FrameOutput = .preview) async throws -> RenderFrame {
+                       output: FrameOutput = .preview, accumulate: Bool = false) async throws -> RenderFrame {
         try await perform { connection in
             let metadata: FrameMetadata = try connection.request("render", fields: [
-                "spp": spp, "seed": seed, "sensor": sensor, "output": output.rawValue
+                "spp": spp, "seed": seed, "sensor": sensor, "output": output.rawValue, "accumulate": accumulate
             ])
             try metadata.validate(variant: connection.configuration.variant)
             try connection.ensureBuffer(bytes: metadata.bytes)

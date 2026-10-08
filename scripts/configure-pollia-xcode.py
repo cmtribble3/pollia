@@ -37,6 +37,10 @@ def configure_variants(root, build):
     # retain the original environment's paths and are not exposed to the user.
     environment = root / ".venv"
     if environment.is_dir():
+        for source in environment.rglob("*"):
+            target = build / "pollia-python-env" / source.relative_to(environment)
+            if source.is_symlink() and target.is_symlink():
+                target.unlink()
         shutil.copytree(environment, build / "pollia-python-env",
                         symlinks=True, dirs_exist_ok=True,
                         ignore=shutil.ignore_patterns("__pycache__"))
@@ -57,7 +61,7 @@ def navigator(root, build):
         kind = {".cpp": "sourcecode.cpp.cpp", ".h": "sourcecode.c.h",
                 ".hpp": "sourcecode.cpp.h", ".mm": "sourcecode.cpp.objcpp",
                 ".py": "text.script.python", ".sh": "text.script.sh",
-                ".xml": "text.xml", ".swift": "sourcecode.swift"}.get(suffix, "text")
+                ".xml": "text.xml", ".swift": "sourcecode.swift", ".metal": "sourcecode.metal"}.get(suffix, "text")
         objects[key] = (f"isa = PBXFileReference; lastKnownFileType = {quote(kind)}; "
                         f"name = {quote(path.name)}; path = {quote(path)}; sourceTree = SOURCE_ROOT;")
         return key
@@ -81,7 +85,7 @@ def navigator(root, build):
                     if entry:
                         children.append(entry)
                 elif child.suffix in {".cpp", ".h", ".hpp", ".inl", ".mm", ".py",
-                                      ".xml", ".swift"}:
+                                      ".xml", ".swift", ".metal"}:
                     if child.name.startswith("pollia_") and str(relative).startswith(("src/", "include/mitsuba")):
                         continue
                     children.append(file(Path("..") / child.relative_to(root)))
@@ -89,15 +93,34 @@ def navigator(root, build):
             return None
         return group(label or path.name, children, str(relative))
 
+    def functional_group(label, paths, key):
+        children = [file(Path("..") / path) for path in paths
+                    if (root / path).is_file()]
+        return group(label, children, key) if children else None
+
     integrators = group("Integrators", [file(Path("..") / p) for p in (
         "src/integrators/pollia_pis.cpp", "src/integrators/pollia_mueller.cpp")], "pollia-integrators")
     materials = group("Materials", [file(Path("..") / p) for p in (
         "src/bsdfs/pollia_jarecki.cpp", "include/mitsuba/render/pollia_jarecki.h")], "pollia-materials")
+    scene_examples = [str(path.relative_to(root)) for path in sorted((root / "scenes").glob("*.xml"))]
+    scenes = functional_group("Scenes", [
+        "rendering/pollia/scenes.py", "swift/Sources/PolliaRendering/SceneSettings.swift",
+        *scene_examples,
+    ], "pollia-scenes")
+    rendering = functional_group("Rendering", [
+        "rendering/pollia/session.py", "rendering/pollia/__init__.py",
+        "swift/Sources/PolliaRendering/RenderFrame.swift",
+    ], "pollia-rendering")
+    worker = functional_group("Render Worker", [
+        "rendering/pollia/worker.py", "swift/Sources/PolliaRendering/PythonRenderSession.swift",
+    ], "pollia-worker")
     pollia_sources = [integrators, materials]
-    for path, label in [("rendering", "Python Rendering"), ("swift/Sources", "Swift Rendering")]:
+    for path, label in [("swift/Sources/PolliaApp", "App"),
+                        ("swift/Sources/PolliaDisplay", "Display")]:
         entry = tree(Path(path), label)
         if entry:
             pollia_sources.append(entry)
+    pollia_sources.extend(entry for entry in (scenes, rendering, worker) if entry)
     top = [group("Pollia", pollia_sources, "pollia")]
     mitsuba = [tree(Path(p), label) for p, label in (
         ("src/core", "Core"), ("src/render", "Rendering"),
@@ -115,10 +138,20 @@ def navigator(root, build):
         ("ext/drjit/ext/drjit-core/include", "Core Headers"),
         ("ext/drjit/ext/drjit-core/src", "Core Source"))]
     top.append(group("Dr.Jit", [p for p in drjit if p], "drjit"))
-    for path, label in [("scenes", "Scenes"), ("benchmarks", "Benchmarks")]:
+    for path, label in [("benchmarks", "Benchmarks")]:
         entry = tree(Path(path), label)
         if entry:
             top.append(entry)
+    tests = [functional_group(label, paths, key) for label, paths, key in (
+        ("Render Worker", [
+            "swift/Tests/PolliaRenderingTests/FrameContractTests.swift",
+            "rendering/tests/test_worker.py",
+            "swift/Sources/WorkerCheck/WorkerCheck.swift",
+        ], "worker-tests"),
+        ("Display", ["swift/Sources/DisplayCheck/DisplayCheck.swift"], "display-tests"),
+    )]
+    if any(tests):
+        top.append(group("Tests", [entry for entry in tests if entry], "pollia-tests"))
     main = group("Pollia Sources", top, "main")
     project = oid("project")
     configs = oid("configs")

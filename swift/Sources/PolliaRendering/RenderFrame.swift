@@ -9,7 +9,7 @@ public enum FrameOutput: String, Sendable {
     case preview, full
 }
 
-public struct FrameMetadata: Decodable, Sendable {
+public struct FrameMetadata: Codable, Sendable {
     public let generation: Int
     public let shape: [Int]
     public let channelNames: [String]
@@ -19,14 +19,16 @@ public struct FrameMetadata: Decodable, Sendable {
     public let readbackMs: Double
     public let kernelCount: Int
     public let variant: String
+    public let sampleCount: Int?
 
     enum CodingKeys: String, CodingKey {
         case generation, shape, bytes, dtype, variant
         case channelNames = "channel_names", renderMs = "render_ms"
         case readbackMs = "readback_ms", kernelCount = "kernel_count"
+        case sampleCount = "sample_count"
     }
 
-    func validate(variant expected: MetalVariant) throws {
+    public func validate(variant expected: MetalVariant) throws {
         guard shape.count == 3, shape.allSatisfy({ $0 > 0 }),
               channelNames.count == shape[2], dtype == "float32-le",
               variant == expected.rawValue, kernelCount > 0, generation > 0,
@@ -50,6 +52,12 @@ public struct RenderFrame: Sendable {
     public let pixels: Data
     public let sharedMs: Double
     public let snapshotMs: Double
+    public init(metadata: FrameMetadata, pixels: Data, sharedMs: Double = 0, snapshotMs: Double = 0) {
+        self.metadata = metadata
+        self.pixels = pixels
+        self.sharedMs = sharedMs
+        self.snapshotMs = snapshotMs
+    }
 }
 
 public enum WorkerError: Error, CustomStringConvertible, Sendable {

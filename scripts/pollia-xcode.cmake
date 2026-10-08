@@ -87,3 +87,16 @@ set_target_properties(Pollia-Metal-Smoke PROPERTIES
   XCODE_SCHEME_ARGUMENTS "${CMAKE_BINARY_DIR}/pollia-scripts/verify-metal.py;--variant;metal_rgb_polarized"
   XCODE_SCHEME_ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/python"
   XCODE_SCHEME_WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
+
+add_custom_target(Pollia-App
+  COMMAND /bin/bash "${CMAKE_SOURCE_DIR}/scripts/build-pollia-app.sh" "${CMAKE_BINARY_DIR}"
+  DEPENDS Pollia-Backend
+  COMMENT "Build the Pollia SwiftUI app and stage its Python worker"
+  USES_TERMINAL)
+set_target_properties(Pollia-App PROPERTIES
+  FOLDER "Pollia"
+  XCODE_GENERATE_SCHEME ON
+  XCODE_SCHEME_LAUNCH_CONFIGURATION "RelWithDebInfo"
+  XCODE_SCHEME_EXECUTABLE "${CMAKE_BINARY_DIR}/Pollia.app/Contents/MacOS/Pollia"
+  XCODE_SCHEME_WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+  XCODE_SCHEME_ENABLE_GPU_FRAME_CAPTURE_MODE "Metal")

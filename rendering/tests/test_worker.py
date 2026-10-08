@@ -72,6 +72,25 @@ class Worker:
 
 
 class MetalWorkerTests(unittest.TestCase):
+    def test_presets_and_weighted_progressive_estimate(self):
+        direct = RenderSession()
+        for preset in ("cornell", "glass", "conductor", "jarecki"):
+            direct.load_preset(preset=preset, size=32)
+            frame = direct.render(spp=4, output="full")
+            self.assertEqual(frame.pixels.shape, (32, 32, 15))
+            self.assertTrue(np.isfinite(frame.pixels).all())
+            self.assertGreater(frame.pixels[..., :3].max(), 0)
+        direct.load_preset(preset="conductor", size=32)
+        first = direct.render(spp=2, seed=13, output="full").pixels.copy()
+        second = direct.render(spp=6, seed=14, output="full").pixels.copy()
+        direct.render(spp=2, seed=13, output="full")
+        combined = direct.render(spp=6, seed=14, output="full", accumulate=True)
+        self.assertEqual(combined.sample_count, 8)
+        np.testing.assert_allclose(combined.pixels, first * 0.25 + second * 0.75, rtol=2e-5, atol=2e-6)
+        self.assertEqual(direct.render(spp=3, output="full").sample_count, 3)
+        with self.assertRaisesRegex(ValueError, "monochrome"):
+            direct.load_preset(integrator="pollia_pis", size=32)
+
     def test_frames_match_direct_api_and_errors_preserve_session(self):
         worker = Worker()
         self.addCleanup(worker.close)
