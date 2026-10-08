@@ -7,12 +7,17 @@ meeting prototype, not a paper benchmark or final integrator.
 ## Xcode project
 
 Run `./generate-xcode-project.sh` from this checkout, then open
-`build-xcode/mitsuba.xcodeproj` in Xcode. Set `POLLIA_PYTHON` to the desired
+`pollia.xcworkspace` in Xcode. Set `POLLIA_PYTHON` to the desired
 Python executable if `python3` is not the interpreter used for Mitsuba's Python
 dependencies. The project includes `pollia_jarecki`, `pollia_pis`, and
 `pollia_mueller` schemes. Use the Release configuration for benchmark builds.
 The generated project is local and ignored by Git because CMake embeds absolute
 paths; regenerate it in each checkout.
+
+See `docs/pollia-xcode.txt` for the curated navigator and launch schemes.
+The build now also includes `metal_rgb_polarized` for stock RGB transport.
+RGB support for the custom PIS and Mueller integrators is planned work; their
+current mono-only checks are a prototype limitation.
 
 ## Fixed setup
 

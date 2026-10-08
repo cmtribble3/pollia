@@ -3,9 +3,9 @@
 # ----------------------------------------------------------
 cmake_minimum_required (VERSION 3.13...3.18)
 
-project(mitsuba
+project(pollia
   DESCRIPTION
-    "Mitsuba"
+    "Pollia polarization renderer based on Mitsuba"
   LANGUAGES
     CXX C
 )
@@ -646,3 +646,12 @@ install(
   DIRECTORY ${MI_BINARY_DIR}/data/sunsky
   DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}
 )
+
+option(POLLIA_BUILD_BENCHMARKS "Build the standalone Pollia orchestration harness" OFF)
+if(POLLIA_BUILD_BENCHMARKS)
+  add_subdirectory(benchmarks/orchestration)
+endif()
+
+if(CMAKE_GENERATOR STREQUAL "Xcode")
+  include(scripts/pollia-xcode.cmake)
+endif()

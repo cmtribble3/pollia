@@ -13,8 +13,13 @@
 /.ipynb_checkpoints
 
 # Python
+/.venv/
+*.xcworkspace/xcuserdata/
 __pycache__
 *.pyc
+benchmarks/results/**/*-arrays/
+swift/.build/
+swift/.swiftpm/
 /wheelhouse
 
 # macOS

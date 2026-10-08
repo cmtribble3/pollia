@@ -1,0 +1,62 @@
+Pollia orchestration benchmark — 2026-10-08
+
+Python did not impose a substantial steady-state rendering penalty in this
+stock Metal RGB polarized scene. That supports retaining Python as an option;
+it does not establish the cost of a Swift/Python worker integration.
+
+Warmed render time (median of three process-trial medians, milliseconds)
+Size / samples       C++       Python direct       Python mi.render
+64 x 64 / 4          3.215       1.973               1.788
+256 x 256 / 16       6.718       6.778               6.797
+512 x 512 / 32      13.084      13.058              13.132
+
+At 256 x 256, Python direct was 0.9% slower and mi.render was 1.2% slower.
+At 512 x 512, Python direct was 0.2% faster and mi.render was 0.4% slower.
+These small gaps do not demonstrate a material C++ rendering advantage.
+The tiny case is unstable: C++ trial medians ranged from 1.584 to 3.784 ms.
+Treat its apparent Python advantage as variability, not a finding.
+
+Initialization inside the processes was about 9–10 ms for C++ and 90–92 ms
+for Python, including Dr.Jit/Mitsuba/NumPy imports. This excludes process
+launch and pre-main native library loading. Parent process wall times are
+also recorded, but include every render and teardown, not startup alone.
+A persistent Python session pays imports once rather than for each render.
+
+The separate 512 x 512 image-readback pass measured about 0.476 ms in C++
+and 1.587 ms via Python/NumPy. This is three single-pass samples; C++ migration
+and NumPy conversion have different copying semantics. It is not a measurement
+of presenting an image in Swift or worker IPC.
+
+Validation and methodology
+  Apple M4 Max; optimized RelWithDebInfo build; 12 host threads.
+  metal_rgb_polarized exclusively; all captured history entries are Metal.
+  Same XML, fixed geometry, stock Stokes/path integrator, depth 4.
+  3 process trials per path/case; 3 warmups; 15 measured renders per trial.
+  Trial order rotates among C++, Python direct and Python public API.
+  Seeds change between warm renders, identically across the paths.
+  Disk caches retained; first-render samples are not clean-cache samples.
+  Render and evaluation complete before each sample ends.
+  Readback, file writes and kernel-history instrumentation are excluded from
+  warmed render timings. Host tracing can submit GPU work; synchronization
+  includes JIT work and GPU waiting, so those timings are not a CPU/GPU split.
+  C++/Python diagnostic log levels matched for the reported run.
+  Every image finite and nonempty; largest cross-path absolute difference
+  7.75e-7 (comparison tolerance: atol 2e-6, rtol 2e-5).
+
+Limits and next decision
+  Worker IPC, image transport to Swift, embedded Python, scene edits, custom
+  Pollia integrators and automatic differentiation have not been benchmarked.
+  A Python worker retains a native renderer/JIT in a persistent process and
+  adds a protocol boundary. A C++ bridge keeps calls and image access in the
+  app process. Choosing the interface still requires user input.
+  Measure the worker protocol and image transport before attributing latency
+  to Python or selecting C++ solely for speed.
+
+Reproduce using benchmarks/orchestration/README.txt. Full samples, stderr,
+settings and source hashes are in orchestration.json. Raw float32 outputs
+are in orchestration-arrays (generated data excluded from Git).
+No Xcode app launch was used for this work. No changes were committed.
+
+Follow-up: communication and image transfer are now measured in
+transport-readout.txt, transport-optimized.json and transport-gpu-preview.json.
+The limits above describe the original render-only benchmark.

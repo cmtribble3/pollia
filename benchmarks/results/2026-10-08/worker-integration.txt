@@ -1,0 +1,2 @@
+PASS: Swift → persistent Python → Metal; RGB/full frames, buffer growth, snapshot ownership, scene error recovery, crash detection and restart
+32² preview: render 16.42145799996797 ms; shared 0.016833000699989498 ms; owned snapshot 0.0055833334045019 ms

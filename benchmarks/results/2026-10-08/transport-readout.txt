@@ -1,0 +1,92 @@
+Pollia render communication and image transfer — 2026-10-08
+
+Both C++ and Python were measured. With a persistent worker, NumPy views,
+shared memory and Metal preview packing, their measured render-to-image
+latencies were close. No language or app integration architecture is selected.
+
+Completed render + image delivery in the harness (milliseconds)
+Median of three process-trial medians. Python uses mi.render and a NumPy view.
+Preview packing is on Metal; full output preserves all Stokes channels.
+Size     Payload       C++ shared   Python shared   C++ pipe   Python pipe
+ 256      3 float ch       7.080         7.197      7.189         7.408
+ 256     15 float ch       7.668         7.521      7.797         7.723
+ 512      3 float ch      14.159        14.175     14.424        14.440
+ 512     15 float ch      14.845        14.694     16.131        15.832
+1024      3 float ch      20.365        20.772     22.519        21.873
+1024     15 float ch      22.287        22.329     30.852        30.595
+
+Sample counts: 256 = 16 spp; 512 = 32 spp; 1024 = 4 spp. Do not compare
+these rows as a pure resolution scaling curve; the sampling work differs.
+
+Transfer-only cost for a cached full 15-channel image (milliseconds)
+Size     MiB       C++ shared   Python shared   C++ pipe   Python pipe
+ 256     3.75        0.064         0.070      0.525         0.531
+ 512    15.00        0.218         0.226      2.118         2.143
+1024    60.00        0.937         0.949      8.973         8.961
+
+Small command/response round trips were about 6–12 microseconds in both
+languages in this harness. Worker readiness (process launch, imports/native
+initialization, scene load, first render and history check) was about 60–97 ms
+for C++ and 156–204 ms for Python, depending on case. This is a session-start
+cost, not an overhead paid on every render. Disk caches were retained.
+
+Packing and copying matter more than the Python render API in these cases.
+At 1024 x 1024, CPU RGB extraction cost roughly 0.89 ms in C++ and 3.21 ms
+through NumPy. The matched Metal gather removed that CPU bottleneck and
+reduced Python shared-memory preview delivery from 24.96 to 20.77 ms.
+These are separately run trials; treat the exact difference as approximate.
+np.asarray avoids the extra owned-array copy present in np.array; output
+ownership flags were recorded and transferred image values were checked.
+
+A shared-memory completion returns a borrowed frame. Taking an owned parent
+snapshot costs another approximately 0.23 ms for the 512 x 512 full image
+or 0.92 ms for the 1024 x 1024 full image. Those optional copies are excluded
+from the shared-memory round-trip numbers above.
+
+How C++ in-process access differs
+  The C++ worker uses native Mitsuba/Dr.Jit calls. Its inner render/readback
+  and prepared-frame timings omit IPC and can serve as native API baselines.
+  An in-process C++ bridge could return a host frame directly and avoid the
+  shared-memory copy and worker notification. These tests do not measure a
+  Swift FFI call or direct GPU-buffer/texture interoperability, so they do
+  not establish an exact Swift-to-C++ versus Swift-to-Python difference.
+
+Validation
+  Apple M4 Max, RelWithDebInfo, metal_rgb_polarized, 12 host threads.
+  Same fixed scene, sample counts, seeds and float32 payloads in both languages.
+  All captured render kernel-history entries use Metal; no CPU fallback.
+  3 process trials per path; 12 measured requests per transport/mode;
+  3 warmups; 100 pings. Worker and transport orders rotate.
+  CPU-packing matrix: C++, Python view and Python owned-copy paths;
+  GPU-preview matrix: C++ and Python view paths. Total: 72 worker sessions,
+  3456 timed render requests, 1728 cached-frame transfers, 7200 pings.
+  Sampled first/last transferred frames compared across transports/languages;
+  GPU preview extraction additionally compared with CPU-extracted frames.
+  Maximum cross-path absolute difference: 8.94e-07.
+  Image comparison tolerance: atol 2e-6, rtol 2e-5; checked frames finite/nonempty.
+
+Limits
+  Receiver/controller is Python, not Swift. Timings include its request and
+  response processing. Shared-memory results end when a view is available;
+  UI display, image conversion/tone mapping, GPU upload and user interaction
+  are excluded. Neither Swift FFI nor embedded Python has been measured.
+  One synchronous request and one frame buffer; production cancellation,
+  asynchronous delivery and double buffering need implementation/validation.
+  Frame memory is a temporary file-backed MAP_SHARED mapping; msync and
+  filesystem writes are not used per frame. All rendering remains on Metal.
+  Stock polarized path scene only. Larger research scenes and custom Pollia
+  integrators can change the balance. Small gaps are within run variability.
+
+Decision supported by the evidence
+  A persistent Python worker with shared image memory remains a viable option.
+  Sending full scientific frames through pipes adds avoidable latency.
+  C++ offers faster initialization and an in-process route to native buffers.
+  Python offers its mature Mitsuba API and separate-process failure isolation.
+  An embedded interpreter may avoid worker IPC but needs separate packaging
+  and lifetime management; it has not been tested here.
+  These results do not justify choosing a language on render speed alone.
+  The app/backend interface remains a user decision.
+
+Raw reports: transport-optimized.json and transport-gpu-preview.json.
+Sources and reproduction commands: benchmarks/orchestration/README.txt.
+No Xcode app launch was used. No changes were committed.

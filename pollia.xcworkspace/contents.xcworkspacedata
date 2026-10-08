@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace version="1.0">
+  <FileRef location="group:build-pollia-xcode/Pollia Sources.xcodeproj" />
+  <Group location="container:" name="Build">
+    <FileRef location="absolute:/Users/cmtribble3/Library/Developer/Xcode/DerivedData/pollia-runtime/pollia.xcodeproj" />
+  </Group>
+</Workspace>

@@ -1,0 +1,4 @@
+# Runtime dependencies for the existing source-built Mitsuba/Dr.Jit bindings.
+# Mitsuba and Dr.Jit themselves come from build-make/python, not PyPI.
+nanobind-backend==1.0.0
+numpy==2.5.3

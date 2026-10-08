@@ -1,0 +1,91 @@
+Pollia environment verification — 2026-10-08
+
+Step 1 establishes a usable existing Metal runtime. It does not choose the
+Swift integration architecture, benchmark Python against C++, or validate the
+scientific behavior of the custom Pollia integrators.
+
+Verified host toolchain
+  macOS: 26.6.2 (25G83), arm64
+  GPU: Apple M4 Max, 40 GPU cores, Metal supported
+  Xcode: 27.0 (27A266a), license accepted
+  Developer directory: /Applications/Xcode.app/Contents/Developer
+  Current Apple clang: 21.0.0 (clang-2100.3.34.2)
+  CMake: 4.3.2 (/opt/homebrew/bin/cmake)
+  Ninja: not found on the current PATH; the existing Makefiles build uses make
+
+Source snapshot (existing branch pis-port; no revision changes made)
+  Pollia/Mitsuba: 375e4425552b0250640042a80a164f66c6e5161c
+  Mitsuba version: 3.10.0.dev1
+  Dr.Jit: f11990b55cfbe72bae8ec4a080d6d86e9da4597a
+  Dr.Jit version: 1.6.0.dev1
+  Dr.Jit core: 2e0c31f7fb5088dc04193622b78ddd422d060add
+  Recursive submodules were initialized and matched their recorded revisions.
+
+Runtime environment
+  Virtual environment: /Users/cmtribble3/Documents/pollia/.venv
+  Python: 3.12.14
+  Base interpreter:
+    /Users/cmtribble3/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3
+  The virtual environment isolates packages, but depends on that base Python.
+  Removing/replacing the base runtime requires recreating the environment.
+  Dependencies are pinned in requirements-pollia.txt:
+    nanobind-backend==1.0.0
+    numpy==2.5.3
+  Mitsuba and Dr.Jit are loaded from build-make/python, not installed from PyPI.
+  pip check passed.
+
+Existing build configuration
+  build-make: Unix Makefiles, Release; compiled runtime successfully exercised
+  build and build-xcode: Xcode-generated build trees, not rebuilt in step 1
+  Compiled variants:
+    metal_ad_mono_polarized, scalar_rgb, scalar_mono_polarized
+  DRJIT_ENABLE_METAL=ON, DRJIT_ENABLE_LLVM=ON, DRJIT_ENABLE_CUDA=OFF
+  MI_ENABLE_PYTHON=ON, MI_ENABLE_EMBREE=ON
+  Existing CMake caches still reference the original base interpreter.
+  generate-xcode-project.sh now prefers .venv/bin/python, with POLLIA_PYTHON
+  retaining precedence. The project was not regenerated during step 1.
+  No fresh compilation was performed; build reproducibility and exact
+  source/binary correspondence are not certified by this runtime check.
+
+Metal-only smoke verification
+  source scripts/pollia-env.sh
+  python scripts/verify-metal.py
+
+  Selected variant: metal_ad_mono_polarized (explicit; no CPU fallback)
+  Scene: built-in Cornell box, stock path integrator wrapped by stokes
+  Resolution: 32 x 32; samples per pixel: 4; seed: 1; maximum depth: 4
+  Result: passed; finite 32 x 32 x 5 output and positive intensity
+  Channels: base intensity plus S0, S1, S2, S3
+  Mean intensity: approximately 0.138442
+  S1/S2/S3 are zero for this scene; this checks runtime/output availability,
+  not nonzero polarization or sign/reference-frame correctness.
+  Latest machine-readable result: build-make/pollia-metal-verification.json
+
+  The sandbox could not detect the GPU. Verification passed with host GPU
+  access. Run from a normal local Terminal, or authorize host GPU access in
+  Codex. The runtime also prints an LLVM initialization warning; the explicit
+  Metal render succeeds without LLVM and without switching to CPU rendering.
+
+Xcode diagnostic
+  xcodebuild -list -project build-xcode/mitsuba.xcodeproj completed successfully.
+  It reported a CoreDevice framework symbol mismatch, plus sandbox-related
+  simulator/cache warnings. No Xcode build has yet been verified. If build or
+  device tooling fails in step 2, investigate that mismatch before repair.
+
+Recreate the package environment using the same base Python
+  /Users/cmtribble3/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -m venv .venv
+  .venv/bin/python -m pip install -r requirements-pollia.txt
+  source scripts/pollia-env.sh
+  python scripts/verify-metal.py
+
+Python 3.9.6 on /usr/bin/python3 is below this checkout's >=3.10 requirement.
+Use the explicit Pollia environment when working with the Python bindings.
+
+Step-2 update — 2026-10-08
+  The active environment now selects
+  ~/Library/Developer/Xcode/DerivedData/pollia-runtime by default. The preserved
+  build-make runtime remains selectable through POLLIA_BUILD_DIR.
+  The fresh project uses the macOS 27.0 SDK and includes metal_rgb_polarized.
+  RelWithDebInfo compilation and native/Python RGB and mono smoke renders passed.
+  See pollia-xcode.txt for configuration, launch schemes, planned RGB integrator
+  work, and interactive launch verification status.

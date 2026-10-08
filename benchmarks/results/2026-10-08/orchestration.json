@@ -1,0 +1,2985 @@
+{
+  "date": "2026-10-08T14:46:26.061352-07:00",
+  "machine": "macOS-26.6.2-arm64-arm-64bit",
+  "processor": "arm64",
+  "source_head": "375e4425552b0250640042a80a164f66c6e5161c",
+  "build_dir": "/Users/cmtribble3/Library/Developer/Xcode/DerivedData/pollia-runtime",
+  "configuration": "RelWithDebInfo",
+  "variant": "metal_rgb_polarized",
+  "scene": "/Users/cmtribble3/Documents/pollia/benchmarks/orchestration/scene.xml",
+  "scene_sha256": "2948d3df1bad259c2b1d049df895579e06d10d77df15d39cc8b816ea044211e5",
+  "trials": 3,
+  "repeats": 15,
+  "warmup": 3,
+  "threads": 12,
+  "cache_policy": "Preserve disk cache; separate first render and warmed session samples.",
+  "notes": [
+    "No UI or Swift bridge; process startup is paid once per session.",
+    "Host tracing may submit GPU work; eval_sync includes JIT compilation and waiting.",
+    "GPU history is a separate diagnostic pass; summed durations are not wall time.",
+    "Image readback/file IO excluded from render samples.",
+    "Worker IPC, shared-memory/image transport, scene edits and differentiation unmeasured.",
+    "Simple fixed geometry; changing seeds; stock polarized path integrator."
+  ],
+  "cases": [
+    {
+      "size": 64,
+      "spp": 4,
+      "runs": [
+        {
+          "language": "cpp",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 13.953167,
+          "scene_load_ms": 14.453542,
+          "first": {
+            "trace_ms": 5.570208,
+            "eval_sync_ms": 12.679167,
+            "total_ms": 18.249375
+          },
+          "warm": [
+            {
+              "trace_ms": 1.270875,
+              "eval_sync_ms": 2.491,
+              "total_ms": 3.761875
+            },
+            {
+              "trace_ms": 1.465208,
+              "eval_sync_ms": 2.349875,
+              "total_ms": 3.815125
+            },
+            {
+              "trace_ms": 1.399041,
+              "eval_sync_ms": 2.3815,
+              "total_ms": 3.780583
+            },
+            {
+              "trace_ms": 1.592666,
+              "eval_sync_ms": 2.368125,
+              "total_ms": 3.960833
+            },
+            {
+              "trace_ms": 1.3385,
+              "eval_sync_ms": 2.432875,
+              "total_ms": 3.771416
+            },
+            {
+              "trace_ms": 1.472167,
+              "eval_sync_ms": 2.421667,
+              "total_ms": 3.893875
+            },
+            {
+              "trace_ms": 1.384667,
+              "eval_sync_ms": 2.399042,
+              "total_ms": 3.783709
+            },
+            {
+              "trace_ms": 1.567083,
+              "eval_sync_ms": 2.090375,
+              "total_ms": 3.6575
+            },
+            {
+              "trace_ms": 1.441292,
+              "eval_sync_ms": 2.413583,
+              "total_ms": 3.854917
+            },
+            {
+              "trace_ms": 1.456083,
+              "eval_sync_ms": 1.989833,
+              "total_ms": 3.445958
+            },
+            {
+              "trace_ms": 1.413167,
+              "eval_sync_ms": 2.37975,
+              "total_ms": 3.792917
+            },
+            {
+              "trace_ms": 1.458708,
+              "eval_sync_ms": 2.065583,
+              "total_ms": 3.524291
+            },
+            {
+              "trace_ms": 1.430375,
+              "eval_sync_ms": 2.401917,
+              "total_ms": 3.832292
+            },
+            {
+              "trace_ms": 1.406208,
+              "eval_sync_ms": 2.488333,
+              "total_ms": 3.894583
+            },
+            {
+              "trace_ms": 1.386459,
+              "eval_sync_ms": 2.118167,
+              "total_ms": 3.504667
+            }
+          ],
+          "readback_ms": 0.238125,
+          "history_device_sum_ms": 2.022451,
+          "history_entries": 13,
+          "shape": [
+            64,
+            64,
+            15
+          ],
+          "mode": "cpp",
+          "trial": 0,
+          "process_wall_ms": 504.1592919988034,
+          "stderr": "",
+          "output_max_abs_difference": 0.0,
+          "output_rms_difference": 0.0
+        },
+        {
+          "language": "python",
+          "api": "direct",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 92.22870799931115,
+          "scene_load_ms": 12.394958001095802,
+          "first": {
+            "trace_ms": 4.570708999381168,
+            "eval_sync_ms": 11.386583999410504,
+            "total_ms": 15.95808400088572
+          },
+          "warm": [
+            {
+              "trace_ms": 1.0346249982831068,
+              "eval_sync_ms": 2.1270840006764047,
+              "total_ms": 3.161874999932479
+            },
+            {
+              "trace_ms": 1.1658750008791685,
+              "eval_sync_ms": 2.35262499700184,
+              "total_ms": 3.5187920002499595
+            },
+            {
+              "trace_ms": 1.073999999789521,
+              "eval_sync_ms": 1.1044579987355974,
+              "total_ms": 2.178624999942258
+            },
+            {
+              "trace_ms": 1.0125830012839288,
+              "eval_sync_ms": 0.49862499872688204,
+              "total_ms": 1.5112920009414665
+            },
+            {
+              "trace_ms": 1.1330420020385645,
+              "eval_sync_ms": 0.9237500016752165,
+              "total_ms": 2.0570000015140977
+            },
+            {
+              "trace_ms": 1.0167500004172325,
+              "eval_sync_ms": 0.9712499995657708,
+              "total_ms": 1.9880830004694872
+            },
+            {
+              "trace_ms": 1.0467090032761917,
+              "eval_sync_ms": 0.9260830011044163,
+              "total_ms": 1.9729170016944408
+            },
+            {
+              "trace_ms": 0.9975419998227153,
+              "eval_sync_ms": 0.4840000001422595,
+              "total_ms": 1.4817500014032703
+            },
+            {
+              "trace_ms": 1.0107090020028409,
+              "eval_sync_ms": 0.5054579996794928,
+              "total_ms": 1.5162500021688174
+            },
+            {
+              "trace_ms": 1.0086250003951136,
+              "eval_sync_ms": 0.930374997551553,
+              "total_ms": 1.9390829984331504
+            },
+            {
+              "trace_ms": 1.0301250003976747,
+              "eval_sync_ms": 1.0144580010091886,
+              "total_ms": 2.044708002358675
+            },
+            {
+              "trace_ms": 1.0000840011343826,
+              "eval_sync_ms": 1.1046670006180648,
+              "total_ms": 2.104834002238931
+            },
+            {
+              "trace_ms": 0.9969169987016357,
+              "eval_sync_ms": 0.5030419997638091,
+              "total_ms": 1.5000419989519287
+            },
+            {
+              "trace_ms": 1.1187080017407425,
+              "eval_sync_ms": 0.4556250023597386,
+              "total_ms": 1.5745410019007977
+            },
+            {
+              "trace_ms": 1.0000829970522318,
+              "eval_sync_ms": 0.5088329999125563,
+              "total_ms": 1.5089999978954438
+            }
+          ],
+          "readback_ms": 0.9326669969595969,
+          "history_device_sum_ms": 0.4806199916638434,
+          "history_entries": 13,
+          "shape": [
+            64,
+            64,
+            15
+          ],
+          "mode": "python_direct",
+          "trial": 0,
+          "process_wall_ms": 204.96520799861173,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 2.980232238769531e-07,
+          "output_rms_difference": 2.8605430549317104e-08
+        },
+        {
+          "language": "python",
+          "api": "public",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 90.63104199958616,
+          "scene_load_ms": 12.177958000393119,
+          "first": {
+            "trace_ms": 4.784917000506539,
+            "eval_sync_ms": 11.508667001180584,
+            "total_ms": 16.29441700060852
+          },
+          "warm": [
+            {
+              "trace_ms": 1.2019579990010243,
+              "eval_sync_ms": 2.1200829978624824,
+              "total_ms": 3.322332999232458
+            },
+            {
+              "trace_ms": 1.1160829999425914,
+              "eval_sync_ms": 2.3683330000494607,
+              "total_ms": 3.4845410009438638
+            },
+            {
+              "trace_ms": 1.0465829982422292,
+              "eval_sync_ms": 2.0239160003256984,
+              "total_ms": 3.070665999985067
+            },
+            {
+              "trace_ms": 1.0082910011988133,
+              "eval_sync_ms": 2.4864999977580737,
+              "total_ms": 3.4949159999086987
+            },
+            {
+              "trace_ms": 1.021042000502348,
+              "eval_sync_ms": 1.4548330000252463,
+              "total_ms": 2.475958001014078
+            },
+            {
+              "trace_ms": 1.0330000004614703,
+              "eval_sync_ms": 0.5172499986656476,
+              "total_ms": 1.5502919995924458
+            },
+            {
+              "trace_ms": 1.0265829987474717,
+              "eval_sync_ms": 0.5210829986026511,
+              "total_ms": 1.5477079978154507
+            },
+            {
+              "trace_ms": 1.0068749979836866,
+              "eval_sync_ms": 0.8105839988274965,
+              "total_ms": 1.8176669982494786
+            },
+            {
+              "trace_ms": 0.9964169985323679,
+              "eval_sync_ms": 0.5519160004041623,
+              "total_ms": 1.5484579998883419
+            },
+            {
+              "trace_ms": 0.9744589988258667,
+              "eval_sync_ms": 1.0702500003390014,
+              "total_ms": 2.044791999651352
+            },
+            {
+              "trace_ms": 1.010209001833573,
+              "eval_sync_ms": 0.49329199828207493,
+              "total_ms": 1.5035420001368038
+            },
+            {
+              "trace_ms": 1.0245000012218952,
+              "eval_sync_ms": 0.49495799976284616,
+              "total_ms": 1.5195410014712252
+            },
+            {
+              "trace_ms": 0.9889159991871566,
+              "eval_sync_ms": 0.5521249986486509,
+              "total_ms": 1.5411249987664632
+            },
+            {
+              "trace_ms": 1.0061249995487742,
+              "eval_sync_ms": 0.5401659982453566,
+              "total_ms": 1.5463329982594587
+            },
+            {
+              "trace_ms": 1.1613749993557576,
+              "eval_sync_ms": 0.476624998555053,
+              "total_ms": 1.6381669993279502
+            }
+          ],
+          "readback_ms": 0.24037500043050386,
+          "history_device_sum_ms": 0.44832798722200096,
+          "history_entries": 13,
+          "shape": [
+            64,
+            64,
+            15
+          ],
+          "mode": "python_public",
+          "trial": 0,
+          "process_wall_ms": 200.58008399792016,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 3.5762786865234375e-07,
+          "output_rms_difference": 3.0370924988509694e-08
+        },
+        {
+          "language": "python",
+          "api": "direct",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 90.73483400061377,
+          "scene_load_ms": 11.881417001859518,
+          "first": {
+            "trace_ms": 4.542708000371931,
+            "eval_sync_ms": 11.588917001063237,
+            "total_ms": 16.132125001604436
+          },
+          "warm": [
+            {
+              "trace_ms": 1.0506250000617001,
+              "eval_sync_ms": 2.3472499997296836,
+              "total_ms": 3.398166001716163
+            },
+            {
+              "trace_ms": 1.4004580007167533,
+              "eval_sync_ms": 2.338458001759136,
+              "total_ms": 3.739125000720378
+            },
+            {
+              "trace_ms": 1.3056249990768265,
+              "eval_sync_ms": 2.3894580008345656,
+              "total_ms": 3.6952920017938595
+            },
+            {
+              "trace_ms": 1.4421250016312115,
+              "eval_sync_ms": 2.3435840012098197,
+              "total_ms": 3.7860840020584874
+            },
+            {
+              "trace_ms": 1.203416999487672,
+              "eval_sync_ms": 2.0679160006693564,
+              "total_ms": 3.271500001574168
+            },
+            {
+              "trace_ms": 1.1052090012526605,
+              "eval_sync_ms": 2.031708998401882,
+              "total_ms": 3.1370840006275102
+            },
+            {
+              "trace_ms": 1.0912079997069668,
+              "eval_sync_ms": 2.0944169991707895,
+              "total_ms": 3.185792000294896
+            },
+            {
+              "trace_ms": 1.1254579985688906,
+              "eval_sync_ms": 2.445334001095034,
+              "total_ms": 3.571124998416053
+            },
+            {
+              "trace_ms": 1.053750002029119,
+              "eval_sync_ms": 2.237833003164269,
+              "total_ms": 3.291750002972549
+            },
+            {
+              "trace_ms": 1.1030839996237773,
+              "eval_sync_ms": 2.1041670006525237,
+              "total_ms": 3.2074170012492687
+            },
+            {
+              "trace_ms": 1.0977079982694704,
+              "eval_sync_ms": 2.103541999531444,
+              "total_ms": 3.201416999218054
+            },
+            {
+              "trace_ms": 1.049791000696132,
+              "eval_sync_ms": 1.212375002069166,
+              "total_ms": 2.2623330005444586
+            },
+            {
+              "trace_ms": 1.0472089998074807,
+              "eval_sync_ms": 0.5806670014862902,
+              "total_ms": 1.6279590017802548
+            },
+            {
+              "trace_ms": 1.0563750001892913,
+              "eval_sync_ms": 0.534582999534905,
+              "total_ms": 1.5910829970380291
+            },
+            {
+              "trace_ms": 0.990999997156905,
+              "eval_sync_ms": 0.5595830007223412,
+              "total_ms": 1.550707998831058
+            }
+          ],
+          "readback_ms": 0.27283300005365163,
+          "history_device_sum_ms": 0.45374300912953913,
+          "history_entries": 13,
+          "shape": [
+            64,
+            64,
+            15
+          ],
+          "mode": "python_direct",
+          "trial": 1,
+          "process_wall_ms": 212.73004100294202,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 2.980232238769531e-07,
+          "output_rms_difference": 2.885628482595997e-08
+        },
+        {
+          "language": "python",
+          "api": "public",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 90.17558299819939,
+          "scene_load_ms": 12.535040998045588,
+          "first": {
+            "trace_ms": 4.806416000064928,
+            "eval_sync_ms": 10.957582999253646,
+            "total_ms": 15.76483300232212
+          },
+          "warm": [
+            {
+              "trace_ms": 1.1281670012976974,
+              "eval_sync_ms": 2.3539169997093268,
+              "total_ms": 3.482208998320857
+            },
+            {
+              "trace_ms": 1.0558329995546956,
+              "eval_sync_ms": 2.0980000008421484,
+              "total_ms": 3.1539999981760047
+            },
+            {
+              "trace_ms": 1.4302910021797288,
+              "eval_sync_ms": 2.290000000357395,
+              "total_ms": 3.7205410008027684
+            },
+            {
+              "trace_ms": 1.5480410002055578,
+              "eval_sync_ms": 0.45775000035064295,
+              "total_ms": 2.006082999287173
+            },
+            {
+              "trace_ms": 1.0759159995359369,
+              "eval_sync_ms": 0.4575419989123475,
+              "total_ms": 1.5334999989136122
+            },
+            {
+              "trace_ms": 1.2688330025412142,
+              "eval_sync_ms": 0.48704200162319466,
+              "total_ms": 1.7561250024300534
+            },
+            {
+              "trace_ms": 1.2085419984941836,
+              "eval_sync_ms": 0.5249589994491544,
+              "total_ms": 1.7336669989163056
+            },
+            {
+              "trace_ms": 1.3347919993975665,
+              "eval_sync_ms": 0.9713750005175825,
+              "total_ms": 2.3069170019880403
+            },
+            {
+              "trace_ms": 1.2772500012943055,
+              "eval_sync_ms": 0.5107079996378161,
+              "total_ms": 1.7880829982459545
+            },
+            {
+              "trace_ms": 1.3270000017655548,
+              "eval_sync_ms": 0.4974170005880296,
+              "total_ms": 1.8247920015710406
+            },
+            {
+              "trace_ms": 1.1442079994594678,
+              "eval_sync_ms": 0.5203330001677386,
+              "total_ms": 1.664750001509674
+            },
+            {
+              "trace_ms": 1.092000002245186,
+              "eval_sync_ms": 1.0100829967996106,
+              "total_ms": 2.102207999996608
+            },
+            {
+              "trace_ms": 1.105041999835521,
+              "eval_sync_ms": 0.49491699974169023,
+              "total_ms": 1.600042000063695
+            },
+            {
+              "trace_ms": 1.0787080027512275,
+              "eval_sync_ms": 0.4255840030964464,
+              "total_ms": 1.5044170031615067
+            },
+            {
+              "trace_ms": 1.049291000526864,
+              "eval_sync_ms": 0.5001669997000135,
+              "total_ms": 1.5495830011786893
+            }
+          ],
+          "readback_ms": 0.24870899869711138,
+          "history_device_sum_ms": 0.4597420002100989,
+          "history_entries": 13,
+          "shape": [
+            64,
+            64,
+            15
+          ],
+          "mode": "python_public",
+          "trial": 1,
+          "process_wall_ms": 200.2879589999793,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 3.5762786865234375e-07,
+          "output_rms_difference": 3.027650425967665e-08
+        },
+        {
+          "language": "cpp",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 9.95825,
+          "scene_load_ms": 10.027458,
+          "first": {
+            "trace_ms": 4.756417,
+            "eval_sync_ms": 11.415125,
+            "total_ms": 16.171542
+          },
+          "warm": [
+            {
+              "trace_ms": 1.263875,
+              "eval_sync_ms": 2.111667,
+              "total_ms": 3.375542
+            },
+            {
+              "trace_ms": 1.211375,
+              "eval_sync_ms": 2.036208,
+              "total_ms": 3.247625
+            },
+            {
+              "trace_ms": 1.096167,
+              "eval_sync_ms": 2.016375,
+              "total_ms": 3.112584
+            },
+            {
+              "trace_ms": 1.195292,
+              "eval_sync_ms": 1.854541,
+              "total_ms": 3.049875
+            },
+            {
+              "trace_ms": 1.06075,
+              "eval_sync_ms": 0.475458,
+              "total_ms": 1.53625
+            },
+            {
+              "trace_ms": 1.054625,
+              "eval_sync_ms": 0.517208,
+              "total_ms": 1.571833
+            },
+            {
+              "trace_ms": 1.041917,
+              "eval_sync_ms": 0.524125,
+              "total_ms": 1.566084
+            },
+            {
+              "trace_ms": 1.115125,
+              "eval_sync_ms": 0.469208,
+              "total_ms": 1.584333
+            },
+            {
+              "trace_ms": 1.063625,
+              "eval_sync_ms": 1.022125,
+              "total_ms": 2.085792
+            },
+            {
+              "trace_ms": 1.038916,
+              "eval_sync_ms": 0.505917,
+              "total_ms": 1.544875
+            },
+            {
+              "trace_ms": 1.076042,
+              "eval_sync_ms": 0.467708,
+              "total_ms": 1.543792
+            },
+            {
+              "trace_ms": 1.026833,
+              "eval_sync_ms": 0.479334,
+              "total_ms": 1.506167
+            },
+            {
+              "trace_ms": 1.088125,
+              "eval_sync_ms": 0.555958,
+              "total_ms": 1.644125
+            },
+            {
+              "trace_ms": 1.039541,
+              "eval_sync_ms": 0.652333,
+              "total_ms": 1.691916
+            },
+            {
+              "trace_ms": 1.041166,
+              "eval_sync_ms": 0.427583,
+              "total_ms": 1.468791
+            }
+          ],
+          "readback_ms": 0.255542,
+          "history_device_sum_ms": 0.450991,
+          "history_entries": 13,
+          "shape": [
+            64,
+            64,
+            15
+          ],
+          "mode": "cpp",
+          "trial": 1,
+          "process_wall_ms": 94.6928340017621,
+          "stderr": "",
+          "output_max_abs_difference": 2.980232238769531e-07,
+          "output_rms_difference": 3.0691018121121806e-08
+        },
+        {
+          "language": "python",
+          "api": "public",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 91.82345899898792,
+          "scene_load_ms": 12.768709002557443,
+          "first": {
+            "trace_ms": 4.7496669976681005,
+            "eval_sync_ms": 11.48095799726434,
+            "total_ms": 16.230999997787876
+          },
+          "warm": [
+            {
+              "trace_ms": 1.1830830007966142,
+              "eval_sync_ms": 2.3787080026522744,
+              "total_ms": 3.562041001714533
+            },
+            {
+              "trace_ms": 1.1058329982915893,
+              "eval_sync_ms": 2.1550839992414694,
+              "total_ms": 3.261124998971354
+            },
+            {
+              "trace_ms": 1.1316250020172447,
+              "eval_sync_ms": 2.4371670006075874,
+              "total_ms": 3.568874999473337
+            },
+            {
+              "trace_ms": 1.055584001733223,
+              "eval_sync_ms": 1.095208997867303,
+              "total_ms": 2.150833999621682
+            },
+            {
+              "trace_ms": 1.042208998114802,
+              "eval_sync_ms": 0.500834001286421,
+              "total_ms": 1.5430839994223788
+            },
+            {
+              "trace_ms": 1.0024170005635824,
+              "eval_sync_ms": 0.9279590012738481,
+              "total_ms": 1.9304590023239143
+            },
+            {
+              "trace_ms": 1.1004580010194331,
+              "eval_sync_ms": 0.9703329997137189,
+              "total_ms": 2.070874998025829
+            },
+            {
+              "trace_ms": 1.0564160002104472,
+              "eval_sync_ms": 1.019167000777088,
+              "total_ms": 2.075750002404675
+            },
+            {
+              "trace_ms": 1.030916999297915,
+              "eval_sync_ms": 0.4927909976686351,
+              "total_ms": 1.523749997431878
+            },
+            {
+              "trace_ms": 1.056958000845043,
+              "eval_sync_ms": 0.5336250032996759,
+              "total_ms": 1.590625000972068
+            },
+            {
+              "trace_ms": 1.0596249994705431,
+              "eval_sync_ms": 0.4907080001430586,
+              "total_ms": 1.5504160001000855
+            },
+            {
+              "trace_ms": 1.0355000013078097,
+              "eval_sync_ms": 0.45529199996963143,
+              "total_ms": 1.490875001763925
+            },
+            {
+              "trace_ms": 1.0271669998473953,
+              "eval_sync_ms": 0.9812089992919937,
+              "total_ms": 2.008458999625873
+            },
+            {
+              "trace_ms": 1.1345409984642174,
+              "eval_sync_ms": 0.549832999240607,
+              "total_ms": 1.684540999121964
+            },
+            {
+              "trace_ms": 1.0479159973328933,
+              "eval_sync_ms": 0.46624999959021807,
+              "total_ms": 1.5142079973884393
+            }
+          ],
+          "readback_ms": 0.24070899962680414,
+          "history_device_sum_ms": 0.4561590093653649,
+          "history_entries": 13,
+          "shape": [
+            64,
+            64,
+            15
+          ],
+          "mode": "python_public",
+          "trial": 2,
+          "process_wall_ms": 202.07258300069952,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 3.5762786865234375e-07,
+          "output_rms_difference": 2.8833043640136416e-08
+        },
+        {
+          "language": "cpp",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 9.8745,
+          "scene_load_ms": 10.393458,
+          "first": {
+            "trace_ms": 5.0355,
+            "eval_sync_ms": 11.085834,
+            "total_ms": 16.121375
+          },
+          "warm": [
+            {
+              "trace_ms": 1.232458,
+              "eval_sync_ms": 2.328208,
+              "total_ms": 3.560708
+            },
+            {
+              "trace_ms": 1.075917,
+              "eval_sync_ms": 2.153125,
+              "total_ms": 3.229042
+            },
+            {
+              "trace_ms": 1.172083,
+              "eval_sync_ms": 1.881792,
+              "total_ms": 3.053875
+            },
+            {
+              "trace_ms": 1.13925,
+              "eval_sync_ms": 2.116708,
+              "total_ms": 3.255958
+            },
+            {
+              "trace_ms": 1.296625,
+              "eval_sync_ms": 2.345542,
+              "total_ms": 3.642167
+            },
+            {
+              "trace_ms": 1.196208,
+              "eval_sync_ms": 2.091708,
+              "total_ms": 3.287958
+            },
+            {
+              "trace_ms": 1.074459,
+              "eval_sync_ms": 2.140458,
+              "total_ms": 3.214917
+            },
+            {
+              "trace_ms": 1.21175,
+              "eval_sync_ms": 2.149084,
+              "total_ms": 3.360834
+            },
+            {
+              "trace_ms": 1.012042,
+              "eval_sync_ms": 2.272708,
+              "total_ms": 3.284792
+            },
+            {
+              "trace_ms": 1.022291,
+              "eval_sync_ms": 0.656083,
+              "total_ms": 1.678416
+            },
+            {
+              "trace_ms": 1.022333,
+              "eval_sync_ms": 0.509459,
+              "total_ms": 1.531792
+            },
+            {
+              "trace_ms": 1.0165,
+              "eval_sync_ms": 0.479375,
+              "total_ms": 1.495875
+            },
+            {
+              "trace_ms": 1.022041,
+              "eval_sync_ms": 0.493834,
+              "total_ms": 1.515875
+            },
+            {
+              "trace_ms": 1.05425,
+              "eval_sync_ms": 0.515167,
+              "total_ms": 1.569417
+            },
+            {
+              "trace_ms": 1.054,
+              "eval_sync_ms": 0.508083,
+              "total_ms": 1.562125
+            }
+          ],
+          "readback_ms": 0.203166,
+          "history_device_sum_ms": 0.465954,
+          "history_entries": 13,
+          "shape": [
+            64,
+            64,
+            15
+          ],
+          "mode": "cpp",
+          "trial": 2,
+          "process_wall_ms": 103.60904200206278,
+          "stderr": "",
+          "output_max_abs_difference": 3.5762786865234375e-07,
+          "output_rms_difference": 3.016118386028414e-08
+        },
+        {
+          "language": "python",
+          "api": "direct",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 90.93804200165323,
+          "scene_load_ms": 12.283208001463208,
+          "first": {
+            "trace_ms": 5.642000000079861,
+            "eval_sync_ms": 11.429624999436783,
+            "total_ms": 17.073333001462743
+          },
+          "warm": [
+            {
+              "trace_ms": 1.1226669994357508,
+              "eval_sync_ms": 2.3464589976356365,
+              "total_ms": 3.469291998044355
+            },
+            {
+              "trace_ms": 1.061457998730475,
+              "eval_sync_ms": 2.420832999632694,
+              "total_ms": 3.4824579997803085
+            },
+            {
+              "trace_ms": 1.0868339995795395,
+              "eval_sync_ms": 2.1442079996631946,
+              "total_ms": 3.231167000194546
+            },
+            {
+              "trace_ms": 1.2662090011872351,
+              "eval_sync_ms": 2.3293339982046746,
+              "total_ms": 3.595834001316689
+            },
+            {
+              "trace_ms": 1.0917500003415626,
+              "eval_sync_ms": 0.5262909980956465,
+              "total_ms": 1.6182500003196765
+            },
+            {
+              "trace_ms": 1.0680000013962854,
+              "eval_sync_ms": 0.46866699995007366,
+              "total_ms": 1.5367920022981707
+            },
+            {
+              "trace_ms": 1.0483340010978281,
+              "eval_sync_ms": 0.48183299804804847,
+              "total_ms": 1.5302920000976883
+            },
+            {
+              "trace_ms": 1.013750003039604,
+              "eval_sync_ms": 0.5029999992984813,
+              "total_ms": 1.5168749996519182
+            },
+            {
+              "trace_ms": 0.9940419986378402,
+              "eval_sync_ms": 0.9903750033117831,
+              "total_ms": 1.9844580019707792
+            },
+            {
+              "trace_ms": 1.0249170009046793,
+              "eval_sync_ms": 0.5000410019420087,
+              "total_ms": 1.5251250006258488
+            },
+            {
+              "trace_ms": 1.0360419983044267,
+              "eval_sync_ms": 0.48541700016357936,
+              "total_ms": 1.5215839994198177
+            },
+            {
+              "trace_ms": 1.0275839995301794,
+              "eval_sync_ms": 0.49854200187837705,
+              "total_ms": 1.5263339992088731
+            },
+            {
+              "trace_ms": 1.049833997967653,
+              "eval_sync_ms": 0.5097079992992803,
+              "total_ms": 1.5596249977534171
+            },
+            {
+              "trace_ms": 1.0094579993165098,
+              "eval_sync_ms": 0.5598339994321577,
+              "total_ms": 1.5693749992351513
+            },
+            {
+              "trace_ms": 1.0948749986710027,
+              "eval_sync_ms": 1.0279169982823078,
+              "total_ms": 2.122999998391606
+            }
+          ],
+          "readback_ms": 0.26054100089822896,
+          "history_device_sum_ms": 0.4444930059835315,
+          "history_entries": 13,
+          "shape": [
+            64,
+            64,
+            15
+          ],
+          "mode": "python_direct",
+          "trial": 2,
+          "process_wall_ms": 201.79066600030637,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 3.5762786865234375e-07,
+          "output_rms_difference": 3.127903333291099e-08
+        }
+      ],
+      "summary": {
+        "cpp": {
+          "warm_median_ms": 3.214917,
+          "trial_medians_ms": [
+            3.783709,
+            1.584333,
+            3.214917
+          ],
+          "initialize_median_ms": 9.95825,
+          "scene_load_median_ms": 10.393458,
+          "first_render_median_ms": 16.171542,
+          "trace_median_ms": 1.172083,
+          "eval_sync_median_ms": 2.065583,
+          "history_device_sum_median_ms": 0.465954,
+          "readback_median_ms": 0.238125,
+          "ratio_to_cpp": 1.0,
+          "difference_from_cpp_ms": 0.0
+        },
+        "python_direct": {
+          "warm_median_ms": 1.9729170016944408,
+          "trial_medians_ms": [
+            1.9729170016944408,
+            3.2074170012492687,
+            1.5693749992351513
+          ],
+          "initialize_median_ms": 90.93804200165323,
+          "scene_load_median_ms": 12.283208001463208,
+          "first_render_median_ms": 16.132125001604436,
+          "trace_median_ms": 1.0506250000617001,
+          "eval_sync_median_ms": 0.9903750033117831,
+          "history_device_sum_median_ms": 0.45374300912953913,
+          "readback_median_ms": 0.27283300005365163,
+          "ratio_to_cpp": 0.6136758745853909,
+          "difference_from_cpp_ms": -1.241999998305559
+        },
+        "python_public": {
+          "warm_median_ms": 1.7880829982459545,
+          "trial_medians_ms": [
+            1.6381669993279502,
+            1.7880829982459545,
+            1.9304590023239143
+          ],
+          "initialize_median_ms": 90.63104199958616,
+          "scene_load_median_ms": 12.535040998045588,
+          "first_render_median_ms": 16.230999997787876,
+          "trace_median_ms": 1.056958000845043,
+          "eval_sync_median_ms": 0.549832999240607,
+          "history_device_sum_median_ms": 0.4561590093653649,
+          "readback_median_ms": 0.24070899962680414,
+          "ratio_to_cpp": 0.5561832539521097,
+          "difference_from_cpp_ms": -1.4268340017540453
+        }
+      }
+    },
+    {
+      "size": 256,
+      "spp": 16,
+      "runs": [
+        {
+          "language": "cpp",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 9.201875,
+          "scene_load_ms": 10.367416,
+          "first": {
+            "trace_ms": 4.404666,
+            "eval_sync_ms": 27.236,
+            "total_ms": 31.640708
+          },
+          "warm": [
+            {
+              "trace_ms": 1.115209,
+              "eval_sync_ms": 5.673708,
+              "total_ms": 6.788917
+            },
+            {
+              "trace_ms": 1.025916,
+              "eval_sync_ms": 5.6075,
+              "total_ms": 6.633416
+            },
+            {
+              "trace_ms": 1.026,
+              "eval_sync_ms": 5.702959,
+              "total_ms": 6.729
+            },
+            {
+              "trace_ms": 1.142959,
+              "eval_sync_ms": 5.830583,
+              "total_ms": 6.973542
+            },
+            {
+              "trace_ms": 1.033958,
+              "eval_sync_ms": 5.686375,
+              "total_ms": 6.720375
+            },
+            {
+              "trace_ms": 1.059458,
+              "eval_sync_ms": 5.713667,
+              "total_ms": 6.773125
+            },
+            {
+              "trace_ms": 0.996583,
+              "eval_sync_ms": 5.827458,
+              "total_ms": 6.824083
+            },
+            {
+              "trace_ms": 1.001458,
+              "eval_sync_ms": 5.67325,
+              "total_ms": 6.67475
+            },
+            {
+              "trace_ms": 0.9515,
+              "eval_sync_ms": 5.612958,
+              "total_ms": 6.564458
+            },
+            {
+              "trace_ms": 1.0045,
+              "eval_sync_ms": 5.642833,
+              "total_ms": 6.647333
+            },
+            {
+              "trace_ms": 0.972416,
+              "eval_sync_ms": 5.667125,
+              "total_ms": 6.639583
+            },
+            {
+              "trace_ms": 0.964334,
+              "eval_sync_ms": 5.706666,
+              "total_ms": 6.671
+            },
+            {
+              "trace_ms": 0.981875,
+              "eval_sync_ms": 5.701625,
+              "total_ms": 6.6835
+            },
+            {
+              "trace_ms": 0.919917,
+              "eval_sync_ms": 5.792833,
+              "total_ms": 6.71275
+            },
+            {
+              "trace_ms": 0.988083,
+              "eval_sync_ms": 5.63325,
+              "total_ms": 6.621333
+            }
+          ],
+          "readback_ms": 0.291833,
+          "history_device_sum_ms": 5.610535,
+          "history_entries": 13,
+          "shape": [
+            256,
+            256,
+            15
+          ],
+          "mode": "cpp",
+          "trial": 0,
+          "process_wall_ms": 197.04799999817624,
+          "stderr": "",
+          "output_max_abs_difference": 0.0,
+          "output_rms_difference": 0.0
+        },
+        {
+          "language": "python",
+          "api": "direct",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 100.95066600115388,
+          "scene_load_ms": 11.758749998989515,
+          "first": {
+            "trace_ms": 4.641291001462378,
+            "eval_sync_ms": 14.95437499761465,
+            "total_ms": 19.59670799988089
+          },
+          "warm": [
+            {
+              "trace_ms": 1.1142920011479873,
+              "eval_sync_ms": 5.783374999737134,
+              "total_ms": 6.897875002323417
+            },
+            {
+              "trace_ms": 1.0839999995368998,
+              "eval_sync_ms": 5.911249998462154,
+              "total_ms": 6.995374998950865
+            },
+            {
+              "trace_ms": 1.1963340002694167,
+              "eval_sync_ms": 6.375000000844011,
+              "total_ms": 7.571542002551723
+            },
+            {
+              "trace_ms": 1.1951250016863924,
+              "eval_sync_ms": 5.8811250019061845,
+              "total_ms": 7.076500001858221
+            },
+            {
+              "trace_ms": 1.0774999973364174,
+              "eval_sync_ms": 6.07020900133648,
+              "total_ms": 7.147874999645865
+            },
+            {
+              "trace_ms": 1.175958001113031,
+              "eval_sync_ms": 6.857832999230595,
+              "total_ms": 8.034000002226094
+            },
+            {
+              "trace_ms": 1.0999999976775143,
+              "eval_sync_ms": 5.76487500075018,
+              "total_ms": 6.865084000310162
+            },
+            {
+              "trace_ms": 1.1610419969656505,
+              "eval_sync_ms": 5.8497499994700775,
+              "total_ms": 7.011166999291163
+            },
+            {
+              "trace_ms": 1.0442079983477015,
+              "eval_sync_ms": 5.733624999265885,
+              "total_ms": 6.77808299951721
+            },
+            {
+              "trace_ms": 1.0509169987926725,
+              "eval_sync_ms": 5.814916999952402,
+              "total_ms": 6.865999999718042
+            },
+            {
+              "trace_ms": 1.0636659972078633,
+              "eval_sync_ms": 6.340042000374524,
+              "total_ms": 7.403874998999527
+            },
+            {
+              "trace_ms": 1.0671250020095613,
+              "eval_sync_ms": 6.442583002353786,
+              "total_ms": 7.50983300167718
+            },
+            {
+              "trace_ms": 1.000374999421183,
+              "eval_sync_ms": 5.671916998835513,
+              "total_ms": 6.672416999208508
+            },
+            {
+              "trace_ms": 0.9942920005414635,
+              "eval_sync_ms": 6.028667001373833,
+              "total_ms": 7.02304200240178
+            },
+            {
+              "trace_ms": 0.9831669995037373,
+              "eval_sync_ms": 5.7607919989095535,
+              "total_ms": 6.744041998899775
+            }
+          ],
+          "readback_ms": 0.6376250021276064,
+          "history_device_sum_ms": 5.583535107085481,
+          "history_entries": 13,
+          "shape": [
+            256,
+            256,
+            15
+          ],
+          "mode": "python_direct",
+          "trial": 0,
+          "process_wall_ms": 307.7981250025914,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 5.364418029785156e-07,
+          "output_rms_difference": 5.831060977325042e-08
+        },
+        {
+          "language": "python",
+          "api": "public",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 91.7997500000638,
+          "scene_load_ms": 11.9096249982249,
+          "first": {
+            "trace_ms": 4.556083000352373,
+            "eval_sync_ms": 15.170500002568588,
+            "total_ms": 19.727000002603745
+          },
+          "warm": [
+            {
+              "trace_ms": 1.0795840025821235,
+              "eval_sync_ms": 5.7908330018108245,
+              "total_ms": 6.870625002193265
+            },
+            {
+              "trace_ms": 1.1599580029724166,
+              "eval_sync_ms": 5.245832999207778,
+              "total_ms": 6.405957999959355
+            },
+            {
+              "trace_ms": 1.123540998378303,
+              "eval_sync_ms": 5.799208000098588,
+              "total_ms": 6.922832999407547
+            },
+            {
+              "trace_ms": 1.0407080008008052,
+              "eval_sync_ms": 5.8545830033835955,
+              "total_ms": 6.895458001963561
+            },
+            {
+              "trace_ms": 1.012083997920854,
+              "eval_sync_ms": 6.225790999451419,
+              "total_ms": 7.237999998324085
+            },
+            {
+              "trace_ms": 0.9760000029928051,
+              "eval_sync_ms": 5.694041003152961,
+              "total_ms": 6.670083002973115
+            },
+            {
+              "trace_ms": 1.1726250013452955,
+              "eval_sync_ms": 6.057333001081133,
+              "total_ms": 7.230167000670917
+            },
+            {
+              "trace_ms": 1.1533329998201225,
+              "eval_sync_ms": 5.750500000431202,
+              "total_ms": 6.904165999003453
+            },
+            {
+              "trace_ms": 1.057457997376332,
+              "eval_sync_ms": 5.697084001440089,
+              "total_ms": 6.754666999768233
+            },
+            {
+              "trace_ms": 1.1131250030302908,
+              "eval_sync_ms": 6.105917000240879,
+              "total_ms": 7.2192920015368145
+            },
+            {
+              "trace_ms": 1.1156670007039793,
+              "eval_sync_ms": 6.6003339998133015,
+              "total_ms": 7.71616699785227
+            },
+            {
+              "trace_ms": 1.0545419972913805,
+              "eval_sync_ms": 6.774459001462674,
+              "total_ms": 7.829166999727022
+            },
+            {
+              "trace_ms": 1.0449170003994368,
+              "eval_sync_ms": 6.072707998100668,
+              "total_ms": 7.1177919999172445
+            },
+            {
+              "trace_ms": 0.9978749985748436,
+              "eval_sync_ms": 5.717041000025347,
+              "total_ms": 6.715040999552002
+            },
+            {
+              "trace_ms": 0.9543330015731044,
+              "eval_sync_ms": 5.653291002090555,
+              "total_ms": 6.607708000956336
+            }
+          ],
+          "readback_ms": 0.5272910020721611,
+          "history_device_sum_ms": 5.76682383636944,
+          "history_entries": 13,
+          "shape": [
+            256,
+            256,
+            15
+          ],
+          "mode": "python_public",
+          "trial": 0,
+          "process_wall_ms": 294.8729999989155,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 7.748603820800781e-07,
+          "output_rms_difference": 5.793461219300026e-08
+        },
+        {
+          "language": "python",
+          "api": "direct",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 91.96274999703746,
+          "scene_load_ms": 11.803958001110004,
+          "first": {
+            "trace_ms": 4.591457996866666,
+            "eval_sync_ms": 16.521084002306452,
+            "total_ms": 21.113167000294197
+          },
+          "warm": [
+            {
+              "trace_ms": 1.038042002619477,
+              "eval_sync_ms": 5.286125000566244,
+              "total_ms": 6.324375000986038
+            },
+            {
+              "trace_ms": 1.0221659977105446,
+              "eval_sync_ms": 6.455499998992309,
+              "total_ms": 7.477832998119993
+            },
+            {
+              "trace_ms": 1.103708000300685,
+              "eval_sync_ms": 5.92470799892908,
+              "total_ms": 7.02850000016042
+            },
+            {
+              "trace_ms": 1.1743329996534158,
+              "eval_sync_ms": 5.72291600110475,
+              "total_ms": 6.897415998537326
+            },
+            {
+              "trace_ms": 1.060124999639811,
+              "eval_sync_ms": 5.571540998062119,
+              "total_ms": 6.631832999119069
+            },
+            {
+              "trace_ms": 1.0014170002250466,
+              "eval_sync_ms": 6.048958999599563,
+              "total_ms": 7.050459000311093
+            },
+            {
+              "trace_ms": 0.9861669968813658,
+              "eval_sync_ms": 6.3267500008805655,
+              "total_ms": 7.312999998248415
+            },
+            {
+              "trace_ms": 0.9783750028873328,
+              "eval_sync_ms": 5.754166999395238,
+              "total_ms": 6.732709000061732
+            },
+            {
+              "trace_ms": 0.9985409997170791,
+              "eval_sync_ms": 5.736374998377869,
+              "total_ms": 6.734957998560276
+            },
+            {
+              "trace_ms": 1.1720420006895438,
+              "eval_sync_ms": 5.60191600015969,
+              "total_ms": 6.774124998628395
+            },
+            {
+              "trace_ms": 0.9832499999902211,
+              "eval_sync_ms": 5.6929579986899626,
+              "total_ms": 6.6762499991455115
+            },
+            {
+              "trace_ms": 0.9634999987611081,
+              "eval_sync_ms": 5.847125001309905,
+              "total_ms": 6.810667000536341
+            },
+            {
+              "trace_ms": 0.9821249986998737,
+              "eval_sync_ms": 5.6439580002916045,
+              "total_ms": 6.626166999922134
+            },
+            {
+              "trace_ms": 1.1101250020146836,
+              "eval_sync_ms": 5.836958000145387,
+              "total_ms": 6.947333000425715
+            },
+            {
+              "trace_ms": 1.0512080007174518,
+              "eval_sync_ms": 5.582416997640394,
+              "total_ms": 6.633749999309657
+            }
+          ],
+          "readback_ms": 0.5437920008262154,
+          "history_device_sum_ms": 5.692284859716892,
+          "history_entries": 13,
+          "shape": [
+            256,
+            256,
+            15
+          ],
+          "mode": "python_direct",
+          "trial": 1,
+          "process_wall_ms": 294.99937500077067,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 6.556510925292969e-07,
+          "output_rms_difference": 5.79191103423936e-08
+        },
+        {
+          "language": "python",
+          "api": "public",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 90.37820800222107,
+          "scene_load_ms": 12.600792000739602,
+          "first": {
+            "trace_ms": 4.803166000783676,
+            "eval_sync_ms": 14.780292000068584,
+            "total_ms": 19.58408300197334
+          },
+          "warm": [
+            {
+              "trace_ms": 1.1545829984243028,
+              "eval_sync_ms": 5.6897920003393665,
+              "total_ms": 6.844666997494642
+            },
+            {
+              "trace_ms": 1.0927080002147704,
+              "eval_sync_ms": 5.921374999161344,
+              "total_ms": 7.014250000793254
+            },
+            {
+              "trace_ms": 1.0972080017381813,
+              "eval_sync_ms": 5.693333998351591,
+              "total_ms": 6.790667001041584
+            },
+            {
+              "trace_ms": 1.1996249995718244,
+              "eval_sync_ms": 5.707290998543613,
+              "total_ms": 6.906999999046093
+            },
+            {
+              "trace_ms": 1.0372920005465858,
+              "eval_sync_ms": 5.672750001394888,
+              "total_ms": 6.710084002406802
+            },
+            {
+              "trace_ms": 1.1114580011053476,
+              "eval_sync_ms": 5.685416999767767,
+              "total_ms": 6.7970420022902545
+            },
+            {
+              "trace_ms": 1.1475419996713754,
+              "eval_sync_ms": 5.671666000125697,
+              "total_ms": 6.819375001214212
+            },
+            {
+              "trace_ms": 1.0845830001926515,
+              "eval_sync_ms": 5.565209001360927,
+              "total_ms": 6.650041999819223
+            },
+            {
+              "trace_ms": 1.0020830013672821,
+              "eval_sync_ms": 5.711791996873217,
+              "total_ms": 6.7139999991923105
+            },
+            {
+              "trace_ms": 0.9811249983613379,
+              "eval_sync_ms": 5.672999999660533,
+              "total_ms": 6.654207998508355
+            },
+            {
+              "trace_ms": 0.9473330028413329,
+              "eval_sync_ms": 5.6807920009305235,
+              "total_ms": 6.6281670005992055
+            },
+            {
+              "trace_ms": 0.9930839987646323,
+              "eval_sync_ms": 5.761874999734573,
+              "total_ms": 6.754999998520361
+            },
+            {
+              "trace_ms": 1.2298749970796052,
+              "eval_sync_ms": 5.728208001528401,
+              "total_ms": 6.958207999559818
+            },
+            {
+              "trace_ms": 1.0162090002268087,
+              "eval_sync_ms": 5.8160829976259265,
+              "total_ms": 6.832416998804547
+            },
+            {
+              "trace_ms": 1.0072500008391216,
+              "eval_sync_ms": 5.817916000523837,
+              "total_ms": 6.825207998190308
+            }
+          ],
+          "readback_ms": 0.568666000617668,
+          "history_device_sum_ms": 5.669661833206192,
+          "history_entries": 13,
+          "shape": [
+            256,
+            256,
+            15
+          ],
+          "mode": "python_public",
+          "trial": 1,
+          "process_wall_ms": 293.1815420015482,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 6.556510925292969e-07,
+          "output_rms_difference": 5.826364618423176e-08
+        },
+        {
+          "language": "cpp",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 9.0735,
+          "scene_load_ms": 9.638709,
+          "first": {
+            "trace_ms": 4.548041,
+            "eval_sync_ms": 15.306625,
+            "total_ms": 19.854666
+          },
+          "warm": [
+            {
+              "trace_ms": 1.108958,
+              "eval_sync_ms": 5.725708,
+              "total_ms": 6.834708
+            },
+            {
+              "trace_ms": 1.172,
+              "eval_sync_ms": 5.822125,
+              "total_ms": 6.994125
+            },
+            {
+              "trace_ms": 1.020459,
+              "eval_sync_ms": 5.724375,
+              "total_ms": 6.744834
+            },
+            {
+              "trace_ms": 1.002916,
+              "eval_sync_ms": 5.745667,
+              "total_ms": 6.748583
+            },
+            {
+              "trace_ms": 0.96375,
+              "eval_sync_ms": 5.754209,
+              "total_ms": 6.718
+            },
+            {
+              "trace_ms": 1.032584,
+              "eval_sync_ms": 5.679791,
+              "total_ms": 6.712375
+            },
+            {
+              "trace_ms": 0.958625,
+              "eval_sync_ms": 5.752875,
+              "total_ms": 6.7115
+            },
+            {
+              "trace_ms": 0.989833,
+              "eval_sync_ms": 5.720125,
+              "total_ms": 6.71
+            },
+            {
+              "trace_ms": 1.013458,
+              "eval_sync_ms": 5.84075,
+              "total_ms": 6.85425
+            },
+            {
+              "trace_ms": 0.98775,
+              "eval_sync_ms": 5.654791,
+              "total_ms": 6.642541
+            },
+            {
+              "trace_ms": 0.96175,
+              "eval_sync_ms": 5.354583,
+              "total_ms": 6.316333
+            },
+            {
+              "trace_ms": 0.983584,
+              "eval_sync_ms": 5.741791,
+              "total_ms": 6.725375
+            },
+            {
+              "trace_ms": 0.970542,
+              "eval_sync_ms": 5.811208,
+              "total_ms": 6.78175
+            },
+            {
+              "trace_ms": 0.958917,
+              "eval_sync_ms": 5.637125,
+              "total_ms": 6.596042
+            },
+            {
+              "trace_ms": 0.948292,
+              "eval_sync_ms": 5.767,
+              "total_ms": 6.715292
+            }
+          ],
+          "readback_ms": 0.308625,
+          "history_device_sum_ms": 5.225324,
+          "history_entries": 13,
+          "shape": [
+            256,
+            256,
+            15
+          ],
+          "mode": "cpp",
+          "trial": 1,
+          "process_wall_ms": 185.68975000016508,
+          "stderr": "",
+          "output_max_abs_difference": 5.960464477539062e-07,
+          "output_rms_difference": 5.6976943900207366e-08
+        },
+        {
+          "language": "python",
+          "api": "public",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 91.36066599967307,
+          "scene_load_ms": 12.047708998579765,
+          "first": {
+            "trace_ms": 4.530541998974513,
+            "eval_sync_ms": 14.879916998324916,
+            "total_ms": 19.41104199795518
+          },
+          "warm": [
+            {
+              "trace_ms": 1.020207997498801,
+              "eval_sync_ms": 6.438791999244131,
+              "total_ms": 7.4592499986465555
+            },
+            {
+              "trace_ms": 1.1681670002872124,
+              "eval_sync_ms": 6.027374998666346,
+              "total_ms": 7.195750000391854
+            },
+            {
+              "trace_ms": 1.1802089975390118,
+              "eval_sync_ms": 6.377874997269828,
+              "total_ms": 7.558374996733619
+            },
+            {
+              "trace_ms": 1.1375829999451526,
+              "eval_sync_ms": 5.254250001598848,
+              "total_ms": 6.3919579988578334
+            },
+            {
+              "trace_ms": 1.104582999687409,
+              "eval_sync_ms": 5.629916999168927,
+              "total_ms": 6.734708000294631
+            },
+            {
+              "trace_ms": 1.0547500023676548,
+              "eval_sync_ms": 5.699165998521494,
+              "total_ms": 6.75404100184096
+            },
+            {
+              "trace_ms": 1.2009170022793114,
+              "eval_sync_ms": 5.868666001333622,
+              "total_ms": 7.0697080009267665
+            },
+            {
+              "trace_ms": 1.0931670003628824,
+              "eval_sync_ms": 5.746625000028871,
+              "total_ms": 6.840042002295377
+            },
+            {
+              "trace_ms": 1.1501250010041986,
+              "eval_sync_ms": 5.2551670014509,
+              "total_ms": 6.40541700340691
+            },
+            {
+              "trace_ms": 1.01787500170758,
+              "eval_sync_ms": 5.682375001924811,
+              "total_ms": 6.700375000946224
+            },
+            {
+              "trace_ms": 1.1826660011138301,
+              "eval_sync_ms": 5.645500001264736,
+              "total_ms": 6.828375000623055
+            },
+            {
+              "trace_ms": 1.055707998602884,
+              "eval_sync_ms": 5.738750001910375,
+              "total_ms": 6.794541000999743
+            },
+            {
+              "trace_ms": 0.9893329988699406,
+              "eval_sync_ms": 5.735750000894768,
+              "total_ms": 6.7252080007165205
+            },
+            {
+              "trace_ms": 1.0690409981179982,
+              "eval_sync_ms": 5.602124998404179,
+              "total_ms": 6.671457998891128
+            },
+            {
+              "trace_ms": 1.031041996611748,
+              "eval_sync_ms": 5.665958000463434,
+              "total_ms": 6.697124998026993
+            }
+          ],
+          "readback_ms": 0.5467080009111669,
+          "history_device_sum_ms": 5.7351622332353145,
+          "history_entries": 13,
+          "shape": [
+            256,
+            256,
+            15
+          ],
+          "mode": "python_public",
+          "trial": 2,
+          "process_wall_ms": 293.4160830009205,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 6.556510925292969e-07,
+          "output_rms_difference": 5.842159687054249e-08
+        },
+        {
+          "language": "cpp",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 8.937375,
+          "scene_load_ms": 10.587292,
+          "first": {
+            "trace_ms": 4.608625,
+            "eval_sync_ms": 15.075041,
+            "total_ms": 19.683708
+          },
+          "warm": [
+            {
+              "trace_ms": 1.021916,
+              "eval_sync_ms": 5.752042,
+              "total_ms": 6.774
+            },
+            {
+              "trace_ms": 1.109875,
+              "eval_sync_ms": 5.725458,
+              "total_ms": 6.835375
+            },
+            {
+              "trace_ms": 1.042625,
+              "eval_sync_ms": 5.658125,
+              "total_ms": 6.700791
+            },
+            {
+              "trace_ms": 1.092042,
+              "eval_sync_ms": 5.79775,
+              "total_ms": 6.889792
+            },
+            {
+              "trace_ms": 1.165458,
+              "eval_sync_ms": 5.81525,
+              "total_ms": 6.98075
+            },
+            {
+              "trace_ms": 1.023875,
+              "eval_sync_ms": 5.722292,
+              "total_ms": 6.746209
+            },
+            {
+              "trace_ms": 1.03775,
+              "eval_sync_ms": 5.797042,
+              "total_ms": 6.834792
+            },
+            {
+              "trace_ms": 1.003167,
+              "eval_sync_ms": 5.258416,
+              "total_ms": 6.261583
+            },
+            {
+              "trace_ms": 1.0125,
+              "eval_sync_ms": 5.793334,
+              "total_ms": 6.805834
+            },
+            {
+              "trace_ms": 1.004708,
+              "eval_sync_ms": 5.847333,
+              "total_ms": 6.852083
+            },
+            {
+              "trace_ms": 0.976791,
+              "eval_sync_ms": 5.702167,
+              "total_ms": 6.678958
+            },
+            {
+              "trace_ms": 0.993625,
+              "eval_sync_ms": 5.699834,
+              "total_ms": 6.6935
+            },
+            {
+              "trace_ms": 1.041667,
+              "eval_sync_ms": 5.26475,
+              "total_ms": 6.306417
+            },
+            {
+              "trace_ms": 0.980917,
+              "eval_sync_ms": 5.69475,
+              "total_ms": 6.675708
+            },
+            {
+              "trace_ms": 0.973042,
+              "eval_sync_ms": 5.766042,
+              "total_ms": 6.739084
+            }
+          ],
+          "readback_ms": 0.303333,
+          "history_device_sum_ms": 5.560201,
+          "history_entries": 13,
+          "shape": [
+            256,
+            256,
+            15
+          ],
+          "mode": "cpp",
+          "trial": 2,
+          "process_wall_ms": 185.68341599893756,
+          "stderr": "",
+          "output_max_abs_difference": 5.960464477539062e-07,
+          "output_rms_difference": 5.8045455954076674e-08
+        },
+        {
+          "language": "python",
+          "api": "direct",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 91.62175000165007,
+          "scene_load_ms": 12.231292002979899,
+          "first": {
+            "trace_ms": 4.638040998543147,
+            "eval_sync_ms": 15.201125002931803,
+            "total_ms": 19.840332999592647
+          },
+          "warm": [
+            {
+              "trace_ms": 1.0546249977778643,
+              "eval_sync_ms": 6.198874998517567,
+              "total_ms": 7.253624997247243
+            },
+            {
+              "trace_ms": 1.1249579983996227,
+              "eval_sync_ms": 5.779332997917663,
+              "total_ms": 6.904457997734426
+            },
+            {
+              "trace_ms": 1.0638750027283095,
+              "eval_sync_ms": 5.715291001251899,
+              "total_ms": 6.779333001759369
+            },
+            {
+              "trace_ms": 1.2452910013962537,
+              "eval_sync_ms": 5.699124998500338,
+              "total_ms": 6.944666001800215
+            },
+            {
+              "trace_ms": 1.0247499994875398,
+              "eval_sync_ms": 5.763166001997888,
+              "total_ms": 6.788000002416084
+            },
+            {
+              "trace_ms": 1.0480829987500329,
+              "eval_sync_ms": 5.681957998604048,
+              "total_ms": 6.730082997819409
+            },
+            {
+              "trace_ms": 1.0995000011462253,
+              "eval_sync_ms": 5.731875000492437,
+              "total_ms": 6.831458002125146
+            },
+            {
+              "trace_ms": 1.0080420033773407,
+              "eval_sync_ms": 5.761041000369005,
+              "total_ms": 6.769250001525506
+            },
+            {
+              "trace_ms": 1.0122920029971283,
+              "eval_sync_ms": 5.894417001400143,
+              "total_ms": 6.906834001711104
+            },
+            {
+              "trace_ms": 1.155750000179978,
+              "eval_sync_ms": 5.606875001831213,
+              "total_ms": 6.762959001207491
+            },
+            {
+              "trace_ms": 0.994500001979759,
+              "eval_sync_ms": 5.641125000693137,
+              "total_ms": 6.635666002694052
+            },
+            {
+              "trace_ms": 0.9898749995045364,
+              "eval_sync_ms": 5.655791999743087,
+              "total_ms": 6.6457089997129515
+            },
+            {
+              "trace_ms": 1.0486659994057845,
+              "eval_sync_ms": 5.668458001309773,
+              "total_ms": 6.717166001180885
+            },
+            {
+              "trace_ms": 1.0162500002479646,
+              "eval_sync_ms": 5.761415999586461,
+              "total_ms": 6.777708000299754
+            },
+            {
+              "trace_ms": 1.0009590005211066,
+              "eval_sync_ms": 5.747750001319218,
+              "total_ms": 6.748792002326809
+            }
+          ],
+          "readback_ms": 0.6211659965629224,
+          "history_device_sum_ms": 5.806366996024735,
+          "history_entries": 13,
+          "shape": [
+            256,
+            256,
+            15
+          ],
+          "mode": "python_direct",
+          "trial": 2,
+          "process_wall_ms": 293.711958998756,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 6.556510925292969e-07,
+          "output_rms_difference": 5.7700060898152404e-08
+        }
+      ],
+      "summary": {
+        "cpp": {
+          "warm_median_ms": 6.718,
+          "trial_medians_ms": [
+            6.6835,
+            6.718,
+            6.746209
+          ],
+          "initialize_median_ms": 9.0735,
+          "scene_load_median_ms": 10.367416,
+          "first_render_median_ms": 19.854666,
+          "trace_median_ms": 1.003167,
+          "eval_sync_median_ms": 5.720125,
+          "history_device_sum_median_ms": 5.560201,
+          "readback_median_ms": 0.303333,
+          "ratio_to_cpp": 1.0,
+          "difference_from_cpp_ms": 0.0
+        },
+        "python_direct": {
+          "warm_median_ms": 6.777708000299754,
+          "trial_medians_ms": [
+            7.011166999291163,
+            6.774124998628395,
+            6.777708000299754
+          ],
+          "initialize_median_ms": 91.96274999703746,
+          "scene_load_median_ms": 11.803958001110004,
+          "first_render_median_ms": 19.840332999592647,
+          "trace_median_ms": 1.0509169987926725,
+          "eval_sync_median_ms": 5.761415999586461,
+          "history_device_sum_median_ms": 5.692284859716892,
+          "readback_median_ms": 0.6211659965629224,
+          "ratio_to_cpp": 1.00888776426016,
+          "difference_from_cpp_ms": 0.05970800029975365
+        },
+        "python_public": {
+          "warm_median_ms": 6.7970420022902545,
+          "trial_medians_ms": [
+            6.904165999003453,
+            6.7970420022902545,
+            6.75404100184096
+          ],
+          "initialize_median_ms": 91.36066599967307,
+          "scene_load_median_ms": 12.047708998579765,
+          "first_render_median_ms": 19.58408300197334,
+          "trace_median_ms": 1.0795840025821235,
+          "eval_sync_median_ms": 5.717041000025347,
+          "history_device_sum_median_ms": 5.7351622332353145,
+          "readback_median_ms": 0.5467080009111669,
+          "ratio_to_cpp": 1.0117657044195079,
+          "difference_from_cpp_ms": 0.07904200229025449
+        }
+      }
+    },
+    {
+      "size": 512,
+      "spp": 32,
+      "runs": [
+        {
+          "language": "cpp",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 8.882542,
+          "scene_load_ms": 9.941625,
+          "first": {
+            "trace_ms": 4.639209,
+            "eval_sync_ms": 21.747417,
+            "total_ms": 26.386667
+          },
+          "warm": [
+            {
+              "trace_ms": 1.137292,
+              "eval_sync_ms": 12.066709,
+              "total_ms": 13.204042
+            },
+            {
+              "trace_ms": 1.105917,
+              "eval_sync_ms": 11.978,
+              "total_ms": 13.083917
+            },
+            {
+              "trace_ms": 1.226292,
+              "eval_sync_ms": 11.895375,
+              "total_ms": 13.121709
+            },
+            {
+              "trace_ms": 1.241291,
+              "eval_sync_ms": 11.969625,
+              "total_ms": 13.210958
+            },
+            {
+              "trace_ms": 1.193625,
+              "eval_sync_ms": 11.890416,
+              "total_ms": 13.084083
+            },
+            {
+              "trace_ms": 1.037625,
+              "eval_sync_ms": 11.985459,
+              "total_ms": 13.023084
+            },
+            {
+              "trace_ms": 1.0315,
+              "eval_sync_ms": 11.988875,
+              "total_ms": 13.020375
+            },
+            {
+              "trace_ms": 1.04625,
+              "eval_sync_ms": 11.919917,
+              "total_ms": 12.966167
+            },
+            {
+              "trace_ms": 0.981625,
+              "eval_sync_ms": 12.039709,
+              "total_ms": 13.021334
+            },
+            {
+              "trace_ms": 1.147833,
+              "eval_sync_ms": 11.952916,
+              "total_ms": 13.100791
+            },
+            {
+              "trace_ms": 1.137875,
+              "eval_sync_ms": 11.983458,
+              "total_ms": 13.121333
+            },
+            {
+              "trace_ms": 1.182375,
+              "eval_sync_ms": 11.938042,
+              "total_ms": 13.120417
+            },
+            {
+              "trace_ms": 1.074084,
+              "eval_sync_ms": 11.904042,
+              "total_ms": 12.978167
+            },
+            {
+              "trace_ms": 1.169209,
+              "eval_sync_ms": 12.070333,
+              "total_ms": 13.239542
+            },
+            {
+              "trace_ms": 1.03975,
+              "eval_sync_ms": 11.927417,
+              "total_ms": 12.967208
+            }
+          ],
+          "readback_ms": 0.518083,
+          "history_device_sum_ms": 11.902577,
+          "history_entries": 13,
+          "shape": [
+            512,
+            512,
+            15
+          ],
+          "mode": "cpp",
+          "trial": 0,
+          "process_wall_ms": 319.407749997481,
+          "stderr": "",
+          "output_max_abs_difference": 0.0,
+          "output_rms_difference": 0.0
+        },
+        {
+          "language": "python",
+          "api": "direct",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 92.04004200000782,
+          "scene_load_ms": 12.217374998726882,
+          "first": {
+            "trace_ms": 4.544417002762202,
+            "eval_sync_ms": 21.621874999254942,
+            "total_ms": 26.16699999998673
+          },
+          "warm": [
+            {
+              "trace_ms": 1.1923749989364296,
+              "eval_sync_ms": 11.9643329999235,
+              "total_ms": 13.156999997590901
+            },
+            {
+              "trace_ms": 1.0710000024118926,
+              "eval_sync_ms": 11.99845800147159,
+              "total_ms": 13.0696660016838
+            },
+            {
+              "trace_ms": 1.0368750008638017,
+              "eval_sync_ms": 11.972042000707006,
+              "total_ms": 13.009083999349969
+            },
+            {
+              "trace_ms": 1.2027499979012646,
+              "eval_sync_ms": 11.93583399799536,
+              "total_ms": 13.138749996869592
+            },
+            {
+              "trace_ms": 1.1449999983597081,
+              "eval_sync_ms": 11.950874999456573,
+              "total_ms": 13.096041999233421
+            },
+            {
+              "trace_ms": 1.1457079999672715,
+              "eval_sync_ms": 11.935167000046931,
+              "total_ms": 13.080999997328036
+            },
+            {
+              "trace_ms": 1.0970829971483909,
+              "eval_sync_ms": 12.06787499904749,
+              "total_ms": 13.16512499761302
+            },
+            {
+              "trace_ms": 1.0459580007591285,
+              "eval_sync_ms": 12.012125000183005,
+              "total_ms": 13.05841600333224
+            },
+            {
+              "trace_ms": 1.0177080002904404,
+              "eval_sync_ms": 12.010750000627013,
+              "total_ms": 13.028624998696614
+            },
+            {
+              "trace_ms": 1.016582999000093,
+              "eval_sync_ms": 12.012540999421617,
+              "total_ms": 13.02929099983885
+            },
+            {
+              "trace_ms": 1.0000420006690547,
+              "eval_sync_ms": 11.940207998122787,
+              "total_ms": 12.940417000208981
+            },
+            {
+              "trace_ms": 0.9813749966269825,
+              "eval_sync_ms": 12.05537500209175,
+              "total_ms": 13.036832999205217
+            },
+            {
+              "trace_ms": 1.039041999320034,
+              "eval_sync_ms": 11.96791700203903,
+              "total_ms": 13.007042001845548
+            },
+            {
+              "trace_ms": 0.9695000007923227,
+              "eval_sync_ms": 11.933875000977423,
+              "total_ms": 12.903540999104735
+            },
+            {
+              "trace_ms": 1.0616670006129425,
+              "eval_sync_ms": 12.05241599745932,
+              "total_ms": 13.114207999024075
+            }
+          ],
+          "readback_ms": 1.6429579991381615,
+          "history_device_sum_ms": 11.849033356644213,
+          "history_entries": 13,
+          "shape": [
+            512,
+            512,
+            15
+          ],
+          "mode": "python_direct",
+          "trial": 0,
+          "process_wall_ms": 420.63895799947204,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 7.748603820800781e-07,
+          "output_rms_difference": 5.6912807650307715e-08
+        },
+        {
+          "language": "python",
+          "api": "public",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 91.65341699917917,
+          "scene_load_ms": 11.464833001809893,
+          "first": {
+            "trace_ms": 5.043209002906224,
+            "eval_sync_ms": 22.13645899973926,
+            "total_ms": 27.180459001101553
+          },
+          "warm": [
+            {
+              "trace_ms": 1.1511670018080622,
+              "eval_sync_ms": 11.918041000171797,
+              "total_ms": 13.06937499975902
+            },
+            {
+              "trace_ms": 1.1240839994570706,
+              "eval_sync_ms": 11.99554199774866,
+              "total_ms": 13.119791998178698
+            },
+            {
+              "trace_ms": 1.0604589988361113,
+              "eval_sync_ms": 11.899208002432715,
+              "total_ms": 12.959792002220638
+            },
+            {
+              "trace_ms": 1.183166001283098,
+              "eval_sync_ms": 11.900958001206163,
+              "total_ms": 13.08433300073375
+            },
+            {
+              "trace_ms": 1.140958000178216,
+              "eval_sync_ms": 11.879957997734891,
+              "total_ms": 13.020957998378435
+            },
+            {
+              "trace_ms": 1.2036249972879887,
+              "eval_sync_ms": 11.921834000531817,
+              "total_ms": 13.125749999744585
+            },
+            {
+              "trace_ms": 1.0437089986226056,
+              "eval_sync_ms": 12.174540999694727,
+              "total_ms": 13.218374999269145
+            },
+            {
+              "trace_ms": 1.5194169973256066,
+              "eval_sync_ms": 11.987374997261213,
+              "total_ms": 13.507166997442255
+            },
+            {
+              "trace_ms": 1.3568750000558794,
+              "eval_sync_ms": 11.95745799850556,
+              "total_ms": 13.314625000930391
+            },
+            {
+              "trace_ms": 1.2466250009310897,
+              "eval_sync_ms": 11.961791999056004,
+              "total_ms": 13.208666998252738
+            },
+            {
+              "trace_ms": 1.096500000130618,
+              "eval_sync_ms": 11.887541000760393,
+              "total_ms": 12.984250002773479
+            },
+            {
+              "trace_ms": 1.0334170001442544,
+              "eval_sync_ms": 12.035915999149438,
+              "total_ms": 13.06937499975902
+            },
+            {
+              "trace_ms": 1.0456250020070001,
+              "eval_sync_ms": 11.994750002486398,
+              "total_ms": 13.04054200227256
+            },
+            {
+              "trace_ms": 1.0889999975915998,
+              "eval_sync_ms": 11.859750000439817,
+              "total_ms": 12.948790998052573
+            },
+            {
+              "trace_ms": 1.0683749969757628,
+              "eval_sync_ms": 11.951708998822141,
+              "total_ms": 13.0202919972362
+            }
+          ],
+          "readback_ms": 1.5721669988124631,
+          "history_device_sum_ms": 11.84678514371626,
+          "history_entries": 13,
+          "shape": [
+            512,
+            512,
+            15
+          ],
+          "mode": "python_public",
+          "trial": 0,
+          "process_wall_ms": 422.173582999676,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 5.960464477539062e-07,
+          "output_rms_difference": 5.668566149437014e-08
+        },
+        {
+          "language": "python",
+          "api": "direct",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 91.76524999929825,
+          "scene_load_ms": 12.137958998209797,
+          "first": {
+            "trace_ms": 4.507665998971788,
+            "eval_sync_ms": 21.626208002999192,
+            "total_ms": 26.13454099991941
+          },
+          "warm": [
+            {
+              "trace_ms": 1.2161249978817068,
+              "eval_sync_ms": 11.911708999832626,
+              "total_ms": 13.128041999152629
+            },
+            {
+              "trace_ms": 1.3945409991720226,
+              "eval_sync_ms": 11.970125000516418,
+              "total_ms": 13.364957998419413
+            },
+            {
+              "trace_ms": 1.1529160001373384,
+              "eval_sync_ms": 11.90537500224309,
+              "total_ms": 13.058500000624917
+            },
+            {
+              "trace_ms": 1.0608750017127022,
+              "eval_sync_ms": 12.036790998536162,
+              "total_ms": 13.09775000117952
+            },
+            {
+              "trace_ms": 1.14824999764096,
+              "eval_sync_ms": 11.925375001737848,
+              "total_ms": 13.07375000033062
+            },
+            {
+              "trace_ms": 1.1819999999715947,
+              "eval_sync_ms": 11.91616700089071,
+              "total_ms": 13.09837499866262
+            },
+            {
+              "trace_ms": 1.1439999980211724,
+              "eval_sync_ms": 11.952249999012565,
+              "total_ms": 13.09637499798555
+            },
+            {
+              "trace_ms": 1.0841250004887115,
+              "eval_sync_ms": 11.904375001904555,
+              "total_ms": 12.988791000680067
+            },
+            {
+              "trace_ms": 1.0136660021089483,
+              "eval_sync_ms": 11.961750002228655,
+              "total_ms": 12.975625002582092
+            },
+            {
+              "trace_ms": 1.0320000001229346,
+              "eval_sync_ms": 11.953000001085456,
+              "total_ms": 12.985083001694875
+            },
+            {
+              "trace_ms": 1.0406670007796492,
+              "eval_sync_ms": 11.955875001149252,
+              "total_ms": 12.996708999708062
+            },
+            {
+              "trace_ms": 1.0618329979479313,
+              "eval_sync_ms": 12.128291997214546,
+              "total_ms": 13.190374997066101
+            },
+            {
+              "trace_ms": 1.0553330030234065,
+              "eval_sync_ms": 11.975166002230253,
+              "total_ms": 13.030541002081009
+            },
+            {
+              "trace_ms": 1.0184169987041969,
+              "eval_sync_ms": 12.006959001155337,
+              "total_ms": 13.025542000832502
+            },
+            {
+              "trace_ms": 1.013375000184169,
+              "eval_sync_ms": 11.978499998804182,
+              "total_ms": 12.991999999940163
+            }
+          ],
+          "readback_ms": 1.6853749984875321,
+          "history_device_sum_ms": 11.864702091086656,
+          "history_entries": 13,
+          "shape": [
+            512,
+            512,
+            15
+          ],
+          "mode": "python_direct",
+          "trial": 1,
+          "process_wall_ms": 422.43437499928405,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 6.556510925292969e-07,
+          "output_rms_difference": 5.703406398900494e-08
+        },
+        {
+          "language": "python",
+          "api": "public",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 91.90766699975939,
+          "scene_load_ms": 12.043334001646144,
+          "first": {
+            "trace_ms": 4.607625000062399,
+            "eval_sync_ms": 21.548708999034716,
+            "total_ms": 26.15700000023935
+          },
+          "warm": [
+            {
+              "trace_ms": 1.0887499993259553,
+              "eval_sync_ms": 11.892333001014777,
+              "total_ms": 12.981457999558188
+            },
+            {
+              "trace_ms": 1.0738749988377094,
+              "eval_sync_ms": 11.996249999356223,
+              "total_ms": 13.070332999632228
+            },
+            {
+              "trace_ms": 1.1030829991796054,
+              "eval_sync_ms": 11.934750000364147,
+              "total_ms": 13.03787500000908
+            },
+            {
+              "trace_ms": 1.2396250021993183,
+              "eval_sync_ms": 12.017291002848651,
+              "total_ms": 13.257000002340646
+            },
+            {
+              "trace_ms": 1.075499996659346,
+              "eval_sync_ms": 11.907125001016539,
+              "total_ms": 12.982707998162368
+            },
+            {
+              "trace_ms": 1.0943749985017348,
+              "eval_sync_ms": 11.914499998965766,
+              "total_ms": 13.008916997932829
+            },
+            {
+              "trace_ms": 1.012999997328734,
+              "eval_sync_ms": 12.545708999823546,
+              "total_ms": 13.558791997638764
+            },
+            {
+              "trace_ms": 1.2800840013369452,
+              "eval_sync_ms": 11.930374999792548,
+              "total_ms": 13.210875000368105
+            },
+            {
+              "trace_ms": 1.144124998972984,
+              "eval_sync_ms": 12.121167001168942,
+              "total_ms": 13.26537500062841
+            },
+            {
+              "trace_ms": 1.3378340008785017,
+              "eval_sync_ms": 11.968833998253103,
+              "total_ms": 13.306958997418405
+            },
+            {
+              "trace_ms": 1.1527499991643708,
+              "eval_sync_ms": 11.91020799888065,
+              "total_ms": 13.063082998996833
+            },
+            {
+              "trace_ms": 1.090707999537699,
+              "eval_sync_ms": 12.040833000355633,
+              "total_ms": 13.131666000845144
+            },
+            {
+              "trace_ms": 1.075792002666276,
+              "eval_sync_ms": 11.937250001210487,
+              "total_ms": 13.013167001190595
+            },
+            {
+              "trace_ms": 1.0402500010968652,
+              "eval_sync_ms": 12.387875001877546,
+              "total_ms": 13.428250000288244
+            },
+            {
+              "trace_ms": 1.5347080006904434,
+              "eval_sync_ms": 12.368125000648433,
+              "total_ms": 13.902999999118038
+            }
+          ],
+          "readback_ms": 1.5873329975875095,
+          "history_device_sum_ms": 12.421160360099748,
+          "history_entries": 13,
+          "shape": [
+            512,
+            512,
+            15
+          ],
+          "mode": "python_public",
+          "trial": 1,
+          "process_wall_ms": 424.4703339973057,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 5.960464477539062e-07,
+          "output_rms_difference": 5.6520474151690305e-08
+        },
+        {
+          "language": "cpp",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 9.549958,
+          "scene_load_ms": 10.926958,
+          "first": {
+            "trace_ms": 4.530166,
+            "eval_sync_ms": 21.423042,
+            "total_ms": 25.953208
+          },
+          "warm": [
+            {
+              "trace_ms": 1.140958,
+              "eval_sync_ms": 11.995625,
+              "total_ms": 13.136625
+            },
+            {
+              "trace_ms": 1.068083,
+              "eval_sync_ms": 12.130166,
+              "total_ms": 13.198291
+            },
+            {
+              "trace_ms": 1.26425,
+              "eval_sync_ms": 12.120333,
+              "total_ms": 13.384583
+            },
+            {
+              "trace_ms": 1.163041,
+              "eval_sync_ms": 12.16175,
+              "total_ms": 13.324791
+            },
+            {
+              "trace_ms": 1.122291,
+              "eval_sync_ms": 12.072417,
+              "total_ms": 13.19475
+            },
+            {
+              "trace_ms": 1.141416,
+              "eval_sync_ms": 12.232084,
+              "total_ms": 13.3735
+            },
+            {
+              "trace_ms": 1.206041,
+              "eval_sync_ms": 12.372542,
+              "total_ms": 13.578625
+            },
+            {
+              "trace_ms": 1.099917,
+              "eval_sync_ms": 12.22475,
+              "total_ms": 13.324667
+            },
+            {
+              "trace_ms": 1.21475,
+              "eval_sync_ms": 12.055084,
+              "total_ms": 13.269834
+            },
+            {
+              "trace_ms": 1.02175,
+              "eval_sync_ms": 12.084875,
+              "total_ms": 13.106625
+            },
+            {
+              "trace_ms": 1.099667,
+              "eval_sync_ms": 11.959125,
+              "total_ms": 13.058792
+            },
+            {
+              "trace_ms": 1.1495,
+              "eval_sync_ms": 12.271542,
+              "total_ms": 13.421042
+            },
+            {
+              "trace_ms": 1.063375,
+              "eval_sync_ms": 12.284958,
+              "total_ms": 13.348375
+            },
+            {
+              "trace_ms": 1.070291,
+              "eval_sync_ms": 12.0735,
+              "total_ms": 13.143791
+            },
+            {
+              "trace_ms": 1.076375,
+              "eval_sync_ms": 12.1635,
+              "total_ms": 13.239875
+            }
+          ],
+          "readback_ms": 0.47575,
+          "history_device_sum_ms": 12.144076,
+          "history_entries": 13,
+          "shape": [
+            512,
+            512,
+            15
+          ],
+          "mode": "cpp",
+          "trial": 1,
+          "process_wall_ms": 323.30087500304217,
+          "stderr": "",
+          "output_max_abs_difference": 6.556510925292969e-07,
+          "output_rms_difference": 5.649996751677312e-08
+        },
+        {
+          "language": "python",
+          "api": "public",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 92.75041700311704,
+          "scene_load_ms": 11.618541997449938,
+          "first": {
+            "trace_ms": 4.5816669990017544,
+            "eval_sync_ms": 21.52054199905251,
+            "total_ms": 26.10308400107897
+          },
+          "warm": [
+            {
+              "trace_ms": 1.1467090007499792,
+              "eval_sync_ms": 12.122374999307794,
+              "total_ms": 13.269209001009585
+            },
+            {
+              "trace_ms": 1.1474579987407196,
+              "eval_sync_ms": 12.059374999807915,
+              "total_ms": 13.206999999965774
+            },
+            {
+              "trace_ms": 1.2084580012015067,
+              "eval_sync_ms": 12.110083000152372,
+              "total_ms": 13.318875000550179
+            },
+            {
+              "trace_ms": 1.299583000218263,
+              "eval_sync_ms": 12.200000001030276,
+              "total_ms": 13.499790999048855
+            },
+            {
+              "trace_ms": 1.2377499988360796,
+              "eval_sync_ms": 12.234290999913355,
+              "total_ms": 13.472165999701247
+            },
+            {
+              "trace_ms": 1.061957998899743,
+              "eval_sync_ms": 12.1147909994761,
+              "total_ms": 13.176915999792982
+            },
+            {
+              "trace_ms": 1.2066250019415747,
+              "eval_sync_ms": 12.05975000266335,
+              "total_ms": 13.266500001918757
+            },
+            {
+              "trace_ms": 1.1527919996296987,
+              "eval_sync_ms": 11.991084000328556,
+              "total_ms": 13.144209002348362
+            },
+            {
+              "trace_ms": 1.1195830011274666,
+              "eval_sync_ms": 12.004666998109315,
+              "total_ms": 13.124375000188593
+            },
+            {
+              "trace_ms": 1.2904579998576082,
+              "eval_sync_ms": 11.919999997189734,
+              "total_ms": 13.210665998485638
+            },
+            {
+              "trace_ms": 1.0728330016718246,
+              "eval_sync_ms": 12.056999999913387,
+              "total_ms": 13.12987500205054
+            },
+            {
+              "trace_ms": 1.1510000003909227,
+              "eval_sync_ms": 11.928083000384504,
+              "total_ms": 13.079290998575743
+            },
+            {
+              "trace_ms": 1.0149160007131286,
+              "eval_sync_ms": 11.953375000302913,
+              "total_ms": 12.968416001967853
+            },
+            {
+              "trace_ms": 1.0581249989627395,
+              "eval_sync_ms": 11.988540998572716,
+              "total_ms": 13.046832998952596
+            },
+            {
+              "trace_ms": 1.025459001539275,
+              "eval_sync_ms": 12.04758300082176,
+              "total_ms": 13.073166999674868
+            }
+          ],
+          "readback_ms": 1.606750000064494,
+          "history_device_sum_ms": 11.997536688577384,
+          "history_entries": 13,
+          "shape": [
+            512,
+            512,
+            15
+          ],
+          "mode": "python_public",
+          "trial": 2,
+          "process_wall_ms": 425.8675840028445,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 5.960464477539062e-07,
+          "output_rms_difference": 5.686085216251296e-08
+        },
+        {
+          "language": "cpp",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 9.566583,
+          "scene_load_ms": 10.46525,
+          "first": {
+            "trace_ms": 4.592292,
+            "eval_sync_ms": 21.532667,
+            "total_ms": 26.125
+          },
+          "warm": [
+            {
+              "trace_ms": 1.1815,
+              "eval_sync_ms": 12.001916,
+              "total_ms": 13.183458
+            },
+            {
+              "trace_ms": 1.194792,
+              "eval_sync_ms": 11.977958,
+              "total_ms": 13.17275
+            },
+            {
+              "trace_ms": 1.286208,
+              "eval_sync_ms": 11.987833,
+              "total_ms": 13.274083
+            },
+            {
+              "trace_ms": 1.060291,
+              "eval_sync_ms": 11.925042,
+              "total_ms": 12.985333
+            },
+            {
+              "trace_ms": 1.256333,
+              "eval_sync_ms": 12.632334,
+              "total_ms": 13.888667
+            },
+            {
+              "trace_ms": 1.169333,
+              "eval_sync_ms": 11.915708,
+              "total_ms": 13.085083
+            },
+            {
+              "trace_ms": 1.122791,
+              "eval_sync_ms": 11.988625,
+              "total_ms": 13.111458
+            },
+            {
+              "trace_ms": 1.120708,
+              "eval_sync_ms": 11.920458,
+              "total_ms": 13.041166
+            },
+            {
+              "trace_ms": 1.080042,
+              "eval_sync_ms": 11.9285,
+              "total_ms": 13.008542
+            },
+            {
+              "trace_ms": 1.033875,
+              "eval_sync_ms": 12.102792,
+              "total_ms": 13.136709
+            },
+            {
+              "trace_ms": 1.071959,
+              "eval_sync_ms": 11.943333,
+              "total_ms": 13.015292
+            },
+            {
+              "trace_ms": 1.030417,
+              "eval_sync_ms": 11.942625,
+              "total_ms": 12.973042
+            },
+            {
+              "trace_ms": 1.080334,
+              "eval_sync_ms": 11.977666,
+              "total_ms": 13.058
+            },
+            {
+              "trace_ms": 1.096791,
+              "eval_sync_ms": 11.927417,
+              "total_ms": 13.024208
+            },
+            {
+              "trace_ms": 1.0135,
+              "eval_sync_ms": 12.062625,
+              "total_ms": 13.076125
+            }
+          ],
+          "readback_ms": 0.455208,
+          "history_device_sum_ms": 11.884993,
+          "history_entries": 13,
+          "shape": [
+            512,
+            512,
+            15
+          ],
+          "mode": "cpp",
+          "trial": 2,
+          "process_wall_ms": 321.4482500006852,
+          "stderr": "",
+          "output_max_abs_difference": 5.960464477539062e-07,
+          "output_rms_difference": 5.6700987339491704e-08
+        },
+        {
+          "language": "python",
+          "api": "direct",
+          "variant": "metal_rgb_polarized",
+          "initialize_ms": 91.94241699879058,
+          "scene_load_ms": 12.181165999209043,
+          "first": {
+            "trace_ms": 4.626291996828513,
+            "eval_sync_ms": 21.50870799960103,
+            "total_ms": 26.1362499986717
+          },
+          "warm": [
+            {
+              "trace_ms": 1.057375000527827,
+              "eval_sync_ms": 11.96058300047298,
+              "total_ms": 13.018125002417946
+            },
+            {
+              "trace_ms": 1.2457919983717147,
+              "eval_sync_ms": 11.912375000974862,
+              "total_ms": 13.158375000784872
+            },
+            {
+              "trace_ms": 1.1222909997741226,
+              "eval_sync_ms": 12.004625001281966,
+              "total_ms": 13.127082998835249
+            },
+            {
+              "trace_ms": 1.06824999966193,
+              "eval_sync_ms": 11.906499999895459,
+              "total_ms": 12.975000001461012
+            },
+            {
+              "trace_ms": 1.0836670007847715,
+              "eval_sync_ms": 11.979874998360174,
+              "total_ms": 13.063709000562085
+            },
+            {
+              "trace_ms": 1.1442920003901236,
+              "eval_sync_ms": 12.094584002625197,
+              "total_ms": 13.23904200035031
+            },
+            {
+              "trace_ms": 1.1074169997300487,
+              "eval_sync_ms": 11.963625001953915,
+              "total_ms": 13.071084002149291
+            },
+            {
+              "trace_ms": 1.0162919970753137,
+              "eval_sync_ms": 12.02220900086104,
+              "total_ms": 13.038791999861132
+            },
+            {
+              "trace_ms": 1.0544169999775477,
+              "eval_sync_ms": 11.916708001081133,
+              "total_ms": 12.971249998372514
+            },
+            {
+              "trace_ms": 1.0111249976034742,
+              "eval_sync_ms": 11.922292000235757,
+              "total_ms": 12.933457997860387
+            },
+            {
+              "trace_ms": 1.24566600061371,
+              "eval_sync_ms": 11.986665998847457,
+              "total_ms": 13.232540997705655
+            },
+            {
+              "trace_ms": 1.1425000011513475,
+              "eval_sync_ms": 11.959542000113288,
+              "total_ms": 13.10212499811314
+            },
+            {
+              "trace_ms": 1.177374997496372,
+              "eval_sync_ms": 12.07491699824459,
+              "total_ms": 13.252541997644585
+            },
+            {
+              "trace_ms": 1.0566249984549358,
+              "eval_sync_ms": 11.899208999238908,
+              "total_ms": 12.955999998666812
+            },
+            {
+              "trace_ms": 1.0568750003585592,
+              "eval_sync_ms": 11.938875002670102,
+              "total_ms": 12.995875000342494
+            }
+          ],
+          "readback_ms": 1.6964999995252583,
+          "history_device_sum_ms": 11.915115956449881,
+          "history_entries": 13,
+          "shape": [
+            512,
+            512,
+            15
+          ],
+          "mode": "python_direct",
+          "trial": 2,
+          "process_wall_ms": 422.86545900060446,
+          "stderr": "jitc_llvm_init(): LLVM API initialization failed ..\n",
+          "output_max_abs_difference": 5.960464477539062e-07,
+          "output_rms_difference": 5.6764573881517775e-08
+        }
+      ],
+      "summary": {
+        "cpp": {
+          "warm_median_ms": 13.084083,
+          "trial_medians_ms": [
+            13.084083,
+            13.269834,
+            13.076125
+          ],
+          "initialize_median_ms": 9.549958,
+          "scene_load_median_ms": 10.46525,
+          "first_render_median_ms": 26.125,
+          "trace_median_ms": 1.120708,
+          "eval_sync_median_ms": 11.988625,
+          "history_device_sum_median_ms": 11.902577,
+          "readback_median_ms": 0.47575,
+          "ratio_to_cpp": 1.0,
+          "difference_from_cpp_ms": 0.0
+        },
+        "python_direct": {
+          "warm_median_ms": 13.058500000624917,
+          "trial_medians_ms": [
+            13.05841600333224,
+            13.058500000624917,
+            13.063709000562085
+          ],
+          "initialize_median_ms": 91.94241699879058,
+          "scene_load_median_ms": 12.181165999209043,
+          "first_render_median_ms": 26.1362499986717,
+          "trace_median_ms": 1.0618329979479313,
+          "eval_sync_median_ms": 11.963625001953915,
+          "history_device_sum_median_ms": 11.864702091086656,
+          "readback_median_ms": 1.6853749984875321,
+          "ratio_to_cpp": 0.9980447235488278,
+          "difference_from_cpp_ms": -0.025582999375082238
+        },
+        "python_public": {
+          "warm_median_ms": 13.131666000845144,
+          "trial_medians_ms": [
+            13.06937499975902,
+            13.131666000845144,
+            13.176915999792982
+          ],
+          "initialize_median_ms": 91.90766699975939,
+          "scene_load_median_ms": 11.618541997449938,
+          "first_render_median_ms": 26.15700000023935,
+          "trace_median_ms": 1.1240839994570706,
+          "eval_sync_median_ms": 11.988540998572716,
+          "history_device_sum_median_ms": 11.997536688577384,
+          "readback_median_ms": 1.5873329975875095,
+          "ratio_to_cpp": 1.0036367088809468,
+          "difference_from_cpp_ms": 0.047583000845143886
+        }
+      }
+    }
+  ],
+  "harness_sha256": {
+    "benchmarks/orchestration/run.py": "3ff178002304398698522ba6c2ca3d4779f1f1a50546cf94f6a48f73aeae0023",
+    "benchmarks/orchestration/CMakeLists.txt": "88316ca8024d27b78f6b6f9ed4b0383701f97262606782475d6f40ae157bae13",
+    "benchmarks/orchestration/python.py": "bea170f4225acf12c110a3d4e031252179e9cbed970f543bdc4d5357a25f9937",
+    "benchmarks/orchestration/README.txt": "0c01398b412e6f71d2f0c67660889e39806ee8211adf00ac90ad0c4d67d52432",
+    "benchmarks/orchestration/cpp.cpp": "b8cbce9c01f1bcde9048ca8ef17e0bd015a670eb6b98fce06cd7fb7864dd04e5",
+    "benchmarks/orchestration/scene.xml": "2948d3df1bad259c2b1d049df895579e06d10d77df15d39cc8b816ea044211e5"
+  },
+  "source_has_uncommitted_changes": true,
+  "gpu": "Apple M4 Max (verified during environment setup)"
+}

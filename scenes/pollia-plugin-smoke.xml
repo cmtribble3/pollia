@@ -1,0 +1,29 @@
+<scene version="3.0.0">
+    <default name="integrator" value="path"/>
+    <integrator type="stokes">
+        <integrator type="$integrator">
+            <integer name="max_depth" value="4"/>
+            <integer name="rr_depth" value="100"/>
+        </integrator>
+    </integrator>
+    <sensor type="perspective">
+        <transform name="to_world">
+            <lookat origin="0, 0, 5" target="0, 0, 0" up="0, 1, 0"/>
+        </transform>
+        <sampler type="independent">
+            <integer name="sample_count" value="4"/>
+        </sampler>
+        <film type="hdrfilm">
+            <integer name="width" value="32"/>
+            <integer name="height" value="32"/>
+        </film>
+    </sensor>
+    <emitter type="constant">
+        <rgb name="radiance" value="1, 0.8, 0.6"/>
+    </emitter>
+    <shape type="sphere">
+        <bsdf type="pollia_jarecki">
+            <rgb name="reflectance" value="0.6, 0.4, 0.2"/>
+        </bsdf>
+    </shape>
+</scene>
