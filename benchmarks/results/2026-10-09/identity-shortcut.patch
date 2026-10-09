@@ -1,0 +1,198 @@
+diff --git a/src/integrators/pollia_mueller.cpp b/src/integrators/pollia_mueller.cpp
+index e390aaa2..8192d64b 100644
+--- a/src/integrators/pollia_mueller.cpp
++++ b/src/integrators/pollia_mueller.cpp
+@@ -31,11 +31,32 @@ public:
+     using Jones = pollia::JonesMatrix<Float>;
+ 
+     PolliaMuellerIntegrator(const Properties &props) : Base(props) {
++        m_identity_shortcut = props.get<bool>("identity_shortcut", false);
+         if constexpr (!is_polarized_v<Spectrum> ||
+                       (!is_monochromatic_v<Spectrum> && !is_rgb_v<Spectrum>))
+             Throw("pollia_mueller requires a monochrome or RGB polarized variant");
+     }
+ 
++    static Stokes transported(const Mueller &matrix, const Stokes &source,
++                              Bool first, bool shortcut) {
++        if (!shortcut)
++            return matrix * source;
++        return dr::if_stmt(dr::make_tuple(matrix, source), first,
++            [](const Mueller &, const Stokes &input) { return input; },
++            [](const Mueller &m, const Stokes &input) { return m * input; },
++            "Mueller identity application");
++    }
++
++    static Mueller continued(const Mueller &matrix, const Mueller &surface,
++                             Bool first, bool shortcut) {
++        if (!shortcut)
++            return matrix * surface;
++        return dr::if_stmt(dr::make_tuple(matrix, surface), first,
++            [](const Mueller &, const Mueller &m) { return m; },
++            [](const Mueller &acc, const Mueller &m) { return acc * m; },
++            "Mueller identity composition");
++    }
++
+     std::pair<Spectrum, Bool> sample(const Scene *scene, Sampler *sampler,
+                                      const Ray3f &ray_, const Medium *,
+                                      Bool active) const override {
+@@ -95,6 +116,9 @@ public:
+                     SurfaceInteraction3f si = scene->compute_surface_interaction(
+                         s.ray, s.pi, +RayFlags::Default);
+                     EmitterPtr emitter = si.emitter(scene, s.vertex.ray_mask);
++                    // Only diffuse Jarecki hits are supported; depth zero has
++                    // no previous scattering or null event and transport is identity.
++                    Bool first = s.vertex.depth == 0;
+                     Bool hit_emitter = emitter != nullptr;
+                     s.valid_ray |= hit_emitter;
+                     if (dr::any_or<true>(hit_emitter)) {
+@@ -108,7 +132,7 @@ public:
+                         SpectralStokes source = pollia::source_stokes(emitter->eval(si));
+                         for (size_t c = 0; c < Channels; ++c) {
+                             Stokes input(source[0][c], source[1][c], source[2][c], source[3][c]);
+-                            Stokes output = s.polarization[c] * input;
++                            Stokes output = transported(s.polarization[c], input, first, m_identity_shortcut);
+                             for (int i = 0; i < 4; ++i)
+                                 s.result[i][c] += output[i] * s.beta[c] * mis;
+                         }
+@@ -158,7 +182,7 @@ public:
+                             Jones j = pollia::world_jones(eval, ds.d, wo_camera);
+                             Mueller m = pollia::mixture_mueller(j, eval.gamma);
+                             Stokes input(source[0][c], source[1][c], source[2][c], source[3][c]);
+-                            Stokes output = s.polarization[c] * (m * input);
++                            Stokes output = transported(s.polarization[c], m * input, first, m_identity_shortcut);
+                             for (int i = 0; i < 4; ++i)
+                                 dr::masked(s.result[i][c], active_em && eval.valid) += output[i];
+                         }
+@@ -174,7 +198,8 @@ public:
+                         auto eval = pollia::evaluate_jarecki(wi_light, wo_camera, normal, parameters[c]);
+                         Jones j = pollia::world_jones(eval, wi_light, wo_camera);
+                         Mueller m = pollia::mixture_mueller(j, eval.gamma);
+-                        s.polarization[c] = dr::select(eval.valid, s.polarization[c] * m,
++                        s.polarization[c] = dr::select(eval.valid,
++                            continued(s.polarization[c], m, first, m_identity_shortcut),
+                                                        dr::zeros<Mueller>());
+                         dr::masked(s.beta[c], !eval.valid) = 0.f;
+                     }
+@@ -206,6 +231,9 @@ public:
+                            m_max_depth, m_rr_depth);
+     }
+ 
++private:
++    bool m_identity_shortcut;
++public:
+     MI_DECLARE_CLASS(PolliaMuellerIntegrator)
+ };
+ 
+diff --git a/src/integrators/pollia_pis.cpp b/src/integrators/pollia_pis.cpp
+index b16858f1..687664ba 100644
+--- a/src/integrators/pollia_pis.cpp
++++ b/src/integrators/pollia_pis.cpp
+@@ -37,6 +37,7 @@ public:
+     using Jones = pollia::JonesMatrix<Float>;
+ 
+     PolliaPISIntegrator(const Properties &props) : Base(props) {
++        m_identity_shortcut = props.get<bool>("identity_shortcut", false);
+         if constexpr (!is_polarized_v<Spectrum> ||
+                       (!is_monochromatic_v<Spectrum> && !is_rgb_v<Spectrum>))
+             Throw("pollia_pis requires a monochrome or RGB polarized variant");
+@@ -49,12 +50,43 @@ public:
+         return dr::select(depolarized, depol, coherent);
+     }
+ 
++    static Stokes transported(const Stokes &a, const Stokes &b,
++                              Bool depolarized, const Stokes &source,
++                              Bool first, bool shortcut) {
++        if (!shortcut)
++            return emitted(a, b, depolarized, source);
++        return dr::if_stmt(dr::make_tuple(a, b, depolarized, source), first,
++            [](const Stokes &, const Stokes &, Bool, const Stokes &input) { return input; },
++            [](const Stokes &pa, const Stokes &pb, Bool depol, const Stokes &input) {
++                return emitted(pa, pb, depol, input);
++            }, "PIS identity application");
++    }
++
++    static auto continued(const Stokes &a, const Stokes &b, const Jones &j,
++                          Bool first, bool shortcut) {
++        auto general = [](const Stokes &pa, const Stokes &pb,
++                          const Stokes &j0, const Stokes &j1) {
++            Jones acc = pollia::unpack_jones(pa, pb);
++            Jones next = pollia::multiply(acc, pollia::unpack_jones(j0, j1));
++            return dr::make_tuple(pollia::pack_jones_row0(next),
++                                  pollia::pack_jones_row1(next),
++                                  pollia::jones_first_column(acc));
++        };
++        Stokes j0 = pollia::pack_jones_row0(j), j1 = pollia::pack_jones_row1(j);
++        if (!shortcut)
++            return general(a, b, j0, j1);
++        return dr::if_stmt(dr::make_tuple(a, b, j0, j1), first,
++            [](const Stokes &, const Stokes &, const Stokes &row0, const Stokes &row1) {
++                return dr::make_tuple(row0, row1, Stokes(1.f, 0.f, 0.f, 0.f));
++            }, general, "PIS identity composition");
++    }
++
+     static Stokes direct(const Stokes &a, const Stokes &b,
+                          Bool depolarized, const Jones &j, Float gamma,
+-                         const Stokes &source) {
++                         const Stokes &source, Bool first, bool shortcut) {
+         Stokes mixed = gamma * pollia::apply_jones(j, source);
+         mixed[0] += (1.f-gamma) * source[0];
+-        return emitted(a, b, depolarized, mixed);
++        return transported(a, b, depolarized, mixed, first, shortcut);
+     }
+ 
+     std::pair<Spectrum, Bool> sample(const Scene *scene, Sampler *sampler,
+@@ -123,6 +155,8 @@ public:
+                     SurfaceInteraction3f si = scene->compute_surface_interaction(
+                         s.ray, s.pi, +RayFlags::Default);
+                     EmitterPtr emitter = si.emitter(scene, s.vertex.ray_mask);
++                    // Supported paths scatter only at diffuse Jarecki hits.
++                    Bool first = s.vertex.depth == 0;
+                     Bool hit_emitter = emitter != nullptr;
+                     s.valid_ray |= hit_emitter;
+                     if (dr::any_or<true>(hit_emitter)) {
+@@ -136,7 +170,8 @@ public:
+                         SpectralStokes source = pollia::source_stokes(emitter->eval(si));
+                         for (size_t c = 0; c < Channels; ++c) {
+                             Stokes input(source[0][c], source[1][c], source[2][c], source[3][c]);
+-                            Stokes output = emitted(s.pol0[c], s.pol1[c], s.depolarized[c], input);
++                            Stokes output = transported(s.pol0[c], s.pol1[c], s.depolarized[c],
++                                                        input, first, m_identity_shortcut);
+                             for (int i = 0; i < 4; ++i)
+                                 s.result[i][c] += output[i] * s.beta[c] * mis;
+                         }
+@@ -187,7 +222,7 @@ public:
+                             Jones j = pollia::world_jones(eval, ds.d, wo_camera);
+                             Stokes input(source[0][c], source[1][c], source[2][c], source[3][c]);
+                             Stokes output = direct(s.pol0[c], s.pol1[c], s.depolarized[c], j,
+-                                                   eval.gamma, input);
++                                                   eval.gamma, input, first, m_identity_shortcut);
+                             for (int i = 0; i < 4; ++i)
+                                 dr::masked(s.result[i][c], active_em && eval.valid) += output[i];
+                         }
+@@ -210,12 +245,11 @@ public:
+                         Bool later_jones = eval.valid && s.depolarized[c] && draw_jones;
+                         Bool later_depolarizer = eval.valid && s.depolarized[c] && !draw_jones;
+ 
+-                        Jones acc = pollia::unpack_jones(s.pol0[c], s.pol1[c]);
+-                        Jones next = pollia::multiply(acc, j);
+-                        Stokes camera = pollia::jones_first_column(acc);
++                        auto [next0, next1, camera] = continued(
++                            s.pol0[c], s.pol1[c], j, first, m_identity_shortcut);
+                         Stokes adjoint = pollia::apply_jones_adjoint(j, s.pol1[c]);
+-                        dr::masked(s.pol0[c], coherent_jones) = pollia::pack_jones_row0(next);
+-                        dr::masked(s.pol1[c], coherent_jones) = pollia::pack_jones_row1(next);
++                        dr::masked(s.pol0[c], coherent_jones) = next0;
++                        dr::masked(s.pol1[c], coherent_jones) = next1;
+                         dr::masked(s.pol0[c], first_depolarizer) = camera;
+                         dr::masked(s.pol1[c], first_depolarizer) =
+                             Stokes(1.f, 0.f, 0.f, 0.f);
+@@ -253,6 +287,9 @@ public:
+                            m_max_depth, m_rr_depth);
+     }
+ 
++private:
++    bool m_identity_shortcut;
++public:
+     MI_DECLARE_CLASS(PolliaPISIntegrator)
+ };
+ 

@@ -1,0 +1,29 @@
+diff --git a/src/bsdfs/pollia_jarecki.cpp b/src/bsdfs/pollia_jarecki.cpp
+index 5ec18e0d..231f1358 100644
+--- a/src/bsdfs/pollia_jarecki.cpp
++++ b/src/bsdfs/pollia_jarecki.cpp
+@@ -25,6 +25,11 @@ public:
+         m_n_real = get_channels(props, "n_real", 1.26f);
+         m_n_imag = get_channels(props, "n_imag", .08f);
+         m_xi0_max = get_channels(props, "xi0_max", .26f);
++        // Temporary benchmark switch; default preserves production behavior.
++        bool opaque = props.get<bool>("opaque_parameters", true);
++        auto parameter = [opaque](ScalarFloat value) {
++            return opaque ? dr::opaque<Float>(value) : Float(value);
++        };
+         for (size_t c = 0; c < 3; ++c) {
+             if (!std::isfinite(m_a[c]) || !std::isfinite(m_b[c]) ||
+                 !std::isfinite(m_n_real[c]) || !std::isfinite(m_n_imag[c]) ||
+@@ -33,9 +38,9 @@ public:
+                 Throw("pollia_jarecki: invalid material parameters");
+             // Runtime data lets Dr.Jit share compiled BSDF code across materials.
+             m_parameters[c] = pollia::JareckiParams<Float>(
+-                dr::opaque<Float>(m_a[c]), dr::opaque<Float>(m_b[c]),
+-                dr::opaque<Float>(m_n_real[c]), dr::opaque<Float>(m_n_imag[c]),
+-                dr::opaque<Float>(m_xi0_max[c]));
++                parameter(m_a[c]), parameter(m_b[c]),
++                parameter(m_n_real[c]), parameter(m_n_imag[c]),
++                parameter(m_xi0_max[c]));
+         }
+         m_flags = BSDFFlags::DiffuseReflection | BSDFFlags::FrontSide;
+         m_components.push_back(m_flags);

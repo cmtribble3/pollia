@@ -1,0 +1,416 @@
+{
+  "hardware": {
+    "machine_name": "MacBook Pro",
+    "machine_model": "Mac16,6",
+    "chip_type": "Apple M4 Max",
+    "number_processors": "proc 16:12:4:0",
+    "physical_memory": "128 GB"
+  },
+  "variant": "metal_ad_mono_polarized",
+  "mitsuba_version": "3.10.0.dev1",
+  "base_commit": "417b66f2e9e4c5bc789bd4f4c67588efbeff5603",
+  "source_sha256": {
+    "src/integrators/pollia_mueller.cpp": "822917267210248d172b01eab252829f153dc274d3c4592fa4789f3d2f8cc4ca",
+    "src/integrators/pollia_pis.cpp": "38ab117fd1b6c6b914720de447395a2bc1742fdaf4a58c74642ef66f742bd4d5",
+    "rendering/pollia/materials.py": "efa3ed486370766c96dc6c1762cddd50b1387ae5df1554bd627896ffe6ef9dca",
+    "benchmarks/identity_probe.py": "367cafeb05b9128ea8801e02f70cfd440ae0fe7228f2ec6085c4506f46c16794"
+  },
+  "power": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22610019)\t100%; charged; 0:00 remaining present: true",
+  "protocol": {
+    "blocks": 4,
+    "repeats_per_block": 12,
+    "warmups": 3,
+    "order": "rotate by block and iteration; reverse alternating blocks",
+    "seeds": "same seed for all four configurations in each paired iteration",
+    "timing": "synchronized complete render; host readback and display excluded",
+    "jit_flags": "unchanged defaults",
+    "identity_shortcut_default": false
+  },
+  "correctness": [
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_mueller",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 1.1920928955078125e-07,
+      "max_intensity_scaled_difference": 5.9604616353681195e-08
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_mueller",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 2.384185791015625e-07,
+      "max_intensity_scaled_difference": 1.1920923270736239e-07
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_mueller",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 2.384185791015625e-07,
+      "max_intensity_scaled_difference": 1.1920923270736239e-07
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_mueller",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 1.1920928955078125e-07,
+      "max_intensity_scaled_difference": 5.9604616353681195e-08
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_pis",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 1.1920928955078125e-07,
+      "max_intensity_scaled_difference": 5.9604616353681195e-08
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_pis",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 1.1920928955078125e-07,
+      "max_intensity_scaled_difference": 5.9604616353681195e-08
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_pis",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 1.1920928955078125e-07,
+      "max_intensity_scaled_difference": 5.9604616353681195e-08
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_pis",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 1.1920928955078125e-07,
+      "max_intensity_scaled_difference": 5.9604616353681195e-08
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_mueller",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7467847612806509e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_mueller",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.6999686636154365e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_mueller",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7582179623332195e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_mueller",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.864942049678575e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_pis",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7758891601715732e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_pis",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7130612661730993e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_pis",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7582179623332195e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_pis",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.719293436508451e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_mueller",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.8489490116735396e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_mueller",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7573400157289143e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_mueller",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7398069473983924e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_mueller",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.4702908401886816e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_pis",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.9558136443720286e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_pis",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.6540688818622584e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_pis",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 2.2524363885167986e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_pis",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.5441652578829235e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_mueller",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 5.960464477539063e-08,
+      "max_intensity_scaled_difference": 1.4340149334657326e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_mueller",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.7652067185736087e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_mueller",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.8478246488484729e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_mueller",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.8648911748186947e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_pis",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.8746062835361954e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_pis",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.646898510898609e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_pis",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.6834644611662952e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_pis",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.6528406376892235e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_mueller",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.6570444927310746e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_mueller",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.4272335135956382e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_mueller",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.564191052239039e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_mueller",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.727212861624139e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_pis",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.5139721654122695e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_pis",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.605216795041997e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_pis",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.6546108838610962e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_pis",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7936544338681415e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_mueller",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 2.384185791015625e-07,
+      "max_intensity_scaled_difference": 1.6906254529658327e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_mueller",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 2.384185791015625e-07,
+      "max_intensity_scaled_difference": 1.681884498339059e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_mueller",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.716385185090985e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_mueller",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 2.384185791015625e-07,
+      "max_intensity_scaled_difference": 1.5595752245189942e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_pis",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 2.2659835963168007e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_pis",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 2.002625194563734e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_pis",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 2.384185791015625e-07,
+      "max_intensity_scaled_difference": 1.424937465799303e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_pis",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.8741442886494042e-07
+    }
+  ],
+  "cases": {}
+}

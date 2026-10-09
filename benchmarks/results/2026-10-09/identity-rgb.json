@@ -1,0 +1,2968 @@
+{
+  "hardware": {
+    "machine_name": "MacBook Pro",
+    "machine_model": "Mac16,6",
+    "chip_type": "Apple M4 Max",
+    "number_processors": "proc 16:12:4:0",
+    "physical_memory": "128 GB"
+  },
+  "variant": "metal_rgb_polarized",
+  "mitsuba_version": "3.10.0.dev1",
+  "base_commit": "417b66f2e9e4c5bc789bd4f4c67588efbeff5603",
+  "source_sha256": {
+    "src/integrators/pollia_mueller.cpp": "822917267210248d172b01eab252829f153dc274d3c4592fa4789f3d2f8cc4ca",
+    "src/integrators/pollia_pis.cpp": "38ab117fd1b6c6b914720de447395a2bc1742fdaf4a58c74642ef66f742bd4d5",
+    "rendering/pollia/materials.py": "efa3ed486370766c96dc6c1762cddd50b1387ae5df1554bd627896ffe6ef9dca",
+    "benchmarks/identity_probe.py": "367cafeb05b9128ea8801e02f70cfd440ae0fe7228f2ec6085c4506f46c16794"
+  },
+  "power": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22610019)\t100%; charged; 0:00 remaining present: true",
+  "protocol": {
+    "blocks": 4,
+    "repeats_per_block": 12,
+    "warmups": 3,
+    "order": "rotate by block and iteration; reverse alternating blocks",
+    "seeds": "same seed for all four configurations in each paired iteration",
+    "timing": "synchronized complete render; host readback and display excluded",
+    "jit_flags": "unchanged defaults",
+    "identity_shortcut_default": false
+  },
+  "correctness": [
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_mueller",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 2.384185791015625e-07,
+      "max_intensity_scaled_difference": 1.1920923270736239e-07
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_mueller",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 1.1920928955078125e-07,
+      "max_intensity_scaled_difference": 5.9604616353681195e-08
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_mueller",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 2.384185791015625e-07,
+      "max_intensity_scaled_difference": 1.1920923270736239e-07
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_mueller",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 1.1920928955078125e-07,
+      "max_intensity_scaled_difference": 5.9604616353681195e-08
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_pis",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 1.1920928955078125e-07,
+      "max_intensity_scaled_difference": 5.9604616353681195e-08
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_pis",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 2.384185791015625e-07,
+      "max_intensity_scaled_difference": 1.1920923270736239e-07
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_pis",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 2.384185791015625e-07,
+      "max_intensity_scaled_difference": 1.1920923270736239e-07
+    },
+    {
+      "scenario": "direct_emitter",
+      "engine": "pollia_pis",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 1.1920928955078125e-07,
+      "max_intensity_scaled_difference": 5.9604616353681195e-08
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_mueller",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.9205759826945723e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_mueller",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.9837806064515462e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_mueller",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.963787923386917e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_mueller",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.620997096551946e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_pis",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7447177924623247e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_pis",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 2.090828274958767e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_pis",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.8024334735855518e-07
+    },
+    {
+      "scenario": "direct_light",
+      "engine": "pollia_pis",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.8089120601416653e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_mueller",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 1.9073486328125e-06,
+      "max_intensity_scaled_difference": 1.772844342440294e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_mueller",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.685504855686304e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_mueller",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 1.9073486328125e-06,
+      "max_intensity_scaled_difference": 1.7906128846334468e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_mueller",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7622771508740698e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_pis",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7235275606708456e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_pis",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.862553489218044e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_pis",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.6926422574670141e-07
+    },
+    {
+      "scenario": "multi_bounce",
+      "engine": "pollia_pis",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.8482312214018748e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_mueller",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 2.1518131632092263e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_mueller",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.7472788726990984e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_mueller",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.8183438044161448e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_mueller",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 1.9073486328125e-06,
+      "max_intensity_scaled_difference": 1.783517831199788e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_pis",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 1.9073486328125e-06,
+      "max_intensity_scaled_difference": 2.1570002672888222e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_pis",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.6622242071662185e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_pis",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.8002543811235228e-07
+    },
+    {
+      "scenario": "depolarizer",
+      "engine": "pollia_pis",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.6540575131784863e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_mueller",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.689434725449246e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_mueller",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7196974511080043e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_mueller",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.7822580389292852e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_mueller",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.7173539390569204e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_pis",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.769753055214096e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_pis",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.8429463466418383e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_pis",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 2.2441784608417947e-07
+    },
+    {
+      "scenario": "divergent_channels",
+      "engine": "pollia_pis",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.6271778235932288e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_mueller",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7628603643515817e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_mueller",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 4.76837158203125e-07,
+      "max_intensity_scaled_difference": 1.898221881901918e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_mueller",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7395387885699165e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_mueller",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7165952215236757e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_pis",
+      "seed": 0,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 2.2602343108246714e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_pis",
+      "seed": 1,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 2.087364947556125e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_pis",
+      "seed": 2,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.9019473995740555e-07
+    },
+    {
+      "scenario": "roulette",
+      "engine": "pollia_pis",
+      "seed": 3,
+      "bit_identical": false,
+      "max_abs_difference": 9.5367431640625e-07,
+      "max_intensity_scaled_difference": 1.7447622724375833e-07
+    }
+  ],
+  "cases": {
+    "nylon_depth4": {
+      "settings": {
+        "size": 512,
+        "spp": 64,
+        "max_depth": 4
+      },
+      "samples_ms": {
+        "mueller_off": [
+          [
+            115.1377920032246,
+            118.39479099580785,
+            115.87062499893364,
+            115.99424999440089,
+            120.66316699929303,
+            113.48458299471531,
+            112.2038750036154,
+            119.04958299419377,
+            115.73825000232318,
+            112.73604100279044,
+            118.88895800075261,
+            120.26087500271387
+          ],
+          [
+            117.73062500287779,
+            112.73287499352591,
+            112.89716600003885,
+            119.71341600292362,
+            116.61050000111572,
+            114.56149999867193,
+            121.00712500250665,
+            112.94004099909216,
+            112.74808300368022,
+            118.36787500214996,
+            116.85600000055274,
+            112.42574999778299
+          ],
+          [
+            119.28016700403532,
+            112.96770899934927,
+            113.31220899592154,
+            121.38637500174809,
+            113.44924999866635,
+            112.52854200574802,
+            116.50858299981337,
+            116.26954100211151,
+            112.47670900047524,
+            115.3532919997815,
+            119.32620799780125,
+            114.35874999733642
+          ],
+          [
+            117.06666700047208,
+            115.31516700051725,
+            120.6306250023772,
+            117.48766699747648,
+            114.873708000232,
+            119.09283300337847,
+            116.49058400507784,
+            113.22800000198185,
+            119.2236250062706,
+            123.68254200555384,
+            115.22529200010467,
+            115.66674999630777
+          ]
+        ],
+        "mueller_on": [
+          [
+            122.29008400026942,
+            125.09008400229504,
+            131.28799999685725,
+            122.40770799689926,
+            125.76429199543782,
+            132.17691599857062,
+            122.21524999768008,
+            122.70566699589835,
+            130.81354199675843,
+            123.91283299803035,
+            128.20583400025498,
+            132.93220900231972
+          ],
+          [
+            122.23316699964926,
+            123.68037499982165,
+            131.0162079971633,
+            123.27775000449037,
+            128.25670900201658,
+            129.98316699668067,
+            123.82354199507972,
+            122.5983750045998,
+            128.27987499622395,
+            128.2322090046364,
+            122.6803329991526,
+            126.76733300031628
+          ],
+          [
+            126.22800000099232,
+            131.21737499750452,
+            122.39320799562847,
+            123.25412499922095,
+            130.53541699628113,
+            123.19291599851567,
+            127.70704099966679,
+            132.40845799737144,
+            123.75270800112048,
+            122.57758299529087,
+            128.33858299563872,
+            129.61841699871002
+          ],
+          [
+            125.89825000031851,
+            130.43354099499993,
+            126.50149999535643,
+            123.69249999755993,
+            129.47383400023682,
+            130.37674999941373,
+            123.19479200232308,
+            123.72179199883249,
+            133.4008339981665,
+            128.07041699852562,
+            124.46441700012656,
+            131.08487499994226
+          ]
+        ],
+        "pis_off": [
+          [
+            108.66629199881572,
+            108.56812499696389,
+            114.78591700142715,
+            111.29170799540589,
+            108.77166700083762,
+            111.58833400259027,
+            115.19375000352738,
+            108.68387499795062,
+            109.64179199800128,
+            115.86158299905946,
+            108.98874999838881,
+            110.85095800081035
+          ],
+          [
+            108.5049999965122,
+            115.32679200172424,
+            108.85499999858439,
+            108.65520800143713,
+            114.84916600602446,
+            112.1507499992731,
+            109.00070799834793,
+            111.70208400289994,
+            114.93258300470188,
+            108.77995800547069,
+            109.71295800118241,
+            115.92508299509063
+          ],
+          [
+            108.76120800094213,
+            112.36025000107475,
+            114.09658300544834,
+            108.95962499489542,
+            109.11229100020137,
+            114.67599999741651,
+            112.30387500108918,
+            110.85504199581919,
+            115.27991700131679,
+            109.16200000065146,
+            108.59112500475021,
+            114.60474999330472
+          ],
+          [
+            116.45233399758581,
+            114.34733400528785,
+            108.85862500435906,
+            112.05429200344952,
+            118.23400000139372,
+            109.67908400198212,
+            109.40395799843827,
+            117.10333300288767,
+            113.28508400038118,
+            113.69241699867416,
+            115.38045800261898,
+            115.72337499819696
+          ]
+        ],
+        "pis_on": [
+          [
+            120.63454199960688,
+            113.9690830023028,
+            117.25245799607364,
+            122.00729199685156,
+            113.73200000525685,
+            114.01545900298515,
+            117.76349999854574,
+            117.4696669986588,
+            113.54724999546306,
+            116.7290840021451,
+            119.77670800115447,
+            117.07441700127674
+          ],
+          [
+            120.32012500276323,
+            116.42566699447343,
+            113.11891700461274,
+            115.62195899750805,
+            119.72237499867333,
+            113.39612500160001,
+            116.08237500331597,
+            120.51104199781548,
+            113.35341600351967,
+            113.91920800087973,
+            122.07866700191516,
+            114.25216600036947
+          ],
+          [
+            113.63379099930171,
+            113.47654199926183,
+            119.80729200149653,
+            117.79512499924749,
+            113.35520899592666,
+            115.73183400469134,
+            120.51549999887357,
+            114.07770900405012,
+            115.26629100262653,
+            119.92054200527491,
+            113.92479200003436,
+            113.65041600220138
+          ],
+          [
+            120.70054200012237,
+            113.79729199688882,
+            114.25579199567437,
+            121.95066700223833,
+            115.20712500350783,
+            114.17987500317395,
+            120.64279200421879,
+            117.12533299578354,
+            117.0037499978207,
+            120.32724999880884,
+            120.11395800072933,
+            114.28266700386303
+          ]
+        ]
+      },
+      "summary": {
+        "mueller_off": {
+          "median_ms": 115.75921874828055,
+          "block_medians_ms": [
+            115.93243749666726,
+            115.58599999989383,
+            114.85602099855896,
+            116.77862550277496
+          ],
+          "block_range_ms": [
+            114.85602099855896,
+            116.77862550277496
+          ]
+        },
+        "mueller_on": {
+          "median_ms": 126.19735424959799,
+          "block_medians_ms": [
+            125.42718799886643,
+            125.295437497698,
+            126.96752050032956,
+            127.28595849694102
+          ],
+          "block_range_ms": [
+            125.295437497698,
+            127.28595849694102
+          ]
+        },
+        "pis_off": {
+          "median_ms": 111.14348975024768,
+          "block_medians_ms": [
+            110.24637499940582,
+            110.70752100204118,
+            111.57945849845419,
+            114.019875501981
+          ],
+          "block_range_ms": [
+            110.24637499940582,
+            114.019875501981
+          ]
+        },
+        "pis_on": {
+          "median_ms": 116.45835424860707,
+          "block_medians_ms": [
+            117.1634374986752,
+            115.85216700041201,
+            114.67200000333833,
+            117.06454149680212
+          ],
+          "block_range_ms": [
+            114.67200000333833,
+            117.1634374986752
+          ]
+        }
+      },
+      "shortcut_gains": {
+        "mueller": {
+          "throughput_gain_percent": -8.271279190744762,
+          "paired_block_gain_percent": [
+            -7.569930135310832,
+            -7.7492346822146345,
+            -9.539053337455039,
+            -8.254903461656049
+          ]
+        },
+        "pis": {
+          "throughput_gain_percent": -4.563746871275187,
+          "paired_block_gain_percent": [
+            -5.903772240676696,
+            -4.440698980065294,
+            -2.696858435183924,
+            -2.600843907037631
+          ]
+        }
+      },
+      "kernel_history": {
+        "mueller_off": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023739999160170555
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0029990000184625387
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002583000110462308
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002583000110462308
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023739999160170555
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 3932160,
+            "operation_count": 0,
+            "execution_time_ms": 0.03187499940395355
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0027489999774843454
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024580000899732113
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 760,
+            "operation_count": 0,
+            "execution_time_ms": 0.00583299994468689
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 16777216,
+            "operation_count": 4046,
+            "execution_time_ms": 119.47779083251953
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 3932160,
+            "operation_count": 4,
+            "execution_time_ms": 0.06412500143051147
+          }
+        ],
+        "mueller_on": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002208000048995018
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002623999956995249
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0027489999774843454
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024580000899732113
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024999999441206455
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002248999895527959
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 3932160,
+            "operation_count": 0,
+            "execution_time_ms": 0.03237500041723251
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022909999825060368
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002248999895527959
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 760,
+            "operation_count": 0,
+            "execution_time_ms": 0.003874999936670065
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 16777216,
+            "operation_count": 5015,
+            "execution_time_ms": 123.5938720703125
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 3932160,
+            "operation_count": 4,
+            "execution_time_ms": 0.0625
+          }
+        ],
+        "pis_off": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022909999825060368
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002623999956995249
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022499999031424522
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023739999160170555
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002208000048995018
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 3932160,
+            "operation_count": 0,
+            "execution_time_ms": 0.032999999821186066
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002707999898120761
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022499999031424522
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 760,
+            "operation_count": 0,
+            "execution_time_ms": 0.007666000165045261
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 16777216,
+            "operation_count": 4498,
+            "execution_time_ms": 108.42587280273438
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 3932160,
+            "operation_count": 4,
+            "execution_time_ms": 0.06466600298881531
+          }
+        ],
+        "pis_on": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002248999895527959
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0032500000670552254
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002248999895527959
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024580000899732113
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023739999160170555
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022909999825060368
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023330000694841146
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 3932160,
+            "operation_count": 0,
+            "execution_time_ms": 0.032999999821186066
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 760,
+            "operation_count": 0,
+            "execution_time_ms": 0.003748999908566475
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 16777216,
+            "operation_count": 5507,
+            "execution_time_ms": 113.87625122070312
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 3932160,
+            "operation_count": 4,
+            "execution_time_ms": 0.06291600316762924
+          }
+        ]
+      }
+    },
+    "nylon_depth8": {
+      "settings": {
+        "size": 512,
+        "spp": 64,
+        "max_depth": 8
+      },
+      "samples_ms": {
+        "mueller_off": [
+          [
+            240.67591699713375,
+            241.51412500214064,
+            247.3713340004906,
+            232.73266699834494,
+            245.5654580044211,
+            247.58983400533907,
+            251.09120800334495,
+            235.59779200149933,
+            248.26916700112633,
+            248.41504199866904,
+            253.3675000013318,
+            235.8873329940252
+          ],
+          [
+            250.28462500631576,
+            247.47754199779592,
+            249.4087090017274,
+            243.59295800240943,
+            249.24620900128502,
+            250.7335830014199,
+            247.8577919973759,
+            250.05912499909755,
+            245.5892079960904,
+            253.87887500255601,
+            245.23570799647132,
+            252.59162499423837
+          ],
+          [
+            252.75791699823458,
+            247.35825000243494,
+            236.30150000099093,
+            254.18162500136532,
+            243.03762500494486,
+            245.19116699957522,
+            242.71716699877288,
+            251.2095420024707,
+            245.07079199975124,
+            243.87412499345373,
+            243.00249999942025,
+            242.09170799440471
+          ],
+          [
+            247.61833399679745,
+            241.81250000401633,
+            250.0174170054379,
+            240.8398749976186,
+            246.1826660000952,
+            237.17683299764758,
+            247.697958999197,
+            237.89887499879114,
+            247.71683300059522,
+            238.90620799647877,
+            251.09850000444567,
+            261.902291997103
+          ]
+        ],
+        "mueller_on": [
+          [
+            273.50762500282144,
+            282.5936669978546,
+            283.96575000078883,
+            293.5187909970409,
+            282.03270800440805,
+            290.99262499948964,
+            281.0497089958517,
+            297.6503750032862,
+            283.7763330026064,
+            293.5961249968386,
+            287.1712080013822,
+            297.0052500022575
+          ],
+          [
+            282.5345000019297,
+            290.1212500000838,
+            297.3349589956342,
+            296.122915999149,
+            288.50645900092786,
+            287.73745900252834,
+            299.9472079973202,
+            293.8447089982219,
+            291.7290420009522,
+            288.67375000118045,
+            299.2253749980591,
+            289.6354170006816
+          ],
+          [
+            296.53645899816183,
+            290.4253750020871,
+            298.98954200325534,
+            287.7165409954614,
+            293.9356670030975,
+            290.63795899855904,
+            293.2236249980633,
+            289.37083300115773,
+            290.12212499947054,
+            291.5339169994695,
+            295.7407089998014,
+            296.0897919983836
+          ],
+          [
+            294.1869999995106,
+            288.1799999959185,
+            280.47566700115567,
+            287.27058300137287,
+            288.73404200567165,
+            286.1709580029128,
+            276.7530839992105,
+            284.4922090007458,
+            287.2250410000561,
+            282.92916700593196,
+            290.2795839981991,
+            306.4020840029116
+          ]
+        ],
+        "pis_off": [
+          [
+            229.75691700412426,
+            221.29829099867493,
+            240.30729099467862,
+            224.88516699377215,
+            234.33537500386592,
+            226.03420799714513,
+            242.18962500162888,
+            225.72341600607615,
+            236.49875000410248,
+            227.5718339951709,
+            243.46958399837604,
+            226.33387499809032
+          ],
+          [
+            235.50045899901306,
+            226.65083299943944,
+            238.83183400175767,
+            226.91616699739825,
+            234.3240410045837,
+            228.89233299792977,
+            236.44475000037346,
+            228.49254200264113,
+            229.12562500278,
+            233.45654199511046,
+            235.8748749975348,
+            233.88679200434126
+          ],
+          [
+            241.32625000493135,
+            233.62758299481357,
+            229.11200000089593,
+            235.25308299576864,
+            237.293458005297,
+            229.97524999664165,
+            231.92812500201399,
+            233.0554159998428,
+            237.20495900488459,
+            229.8404590037535,
+            237.21608299820218,
+            228.65749999618856
+          ],
+          [
+            237.18620800354984,
+            232.19529199559474,
+            233.30054200050654,
+            226.19933300302364,
+            239.74416699638823,
+            232.0747499979916,
+            232.2457500049495,
+            227.8299999961746,
+            238.02679099753732,
+            232.74737499741605,
+            243.38691599405138,
+            262.2377920051804
+          ]
+        ],
+        "pis_on": [
+          [
+            223.42700000444893,
+            236.65299999993294,
+            229.39758299617097,
+            241.76195800100686,
+            227.83441699721152,
+            240.73616600071546,
+            231.51525000139372,
+            244.22933300229488,
+            228.94891599571565,
+            240.6840839976212,
+            232.96154200215824,
+            244.38845900294837
+          ],
+          [
+            232.10966699843993,
+            237.7778330046567,
+            233.14208300143946,
+            246.006083994871,
+            235.04445899743587,
+            236.587999999756,
+            236.5499590014224,
+            243.54066700470867,
+            235.24983300012536,
+            231.7311669976334,
+            239.33383300027344,
+            240.08891599805793
+          ],
+          [
+            252.56508299935376,
+            237.6887499995064,
+            239.55299999943236,
+            244.91654099983862,
+            243.0158749994007,
+            237.03229099919554,
+            234.40283299714793,
+            238.90654199931305,
+            239.00041600427357,
+            238.7161670048954,
+            236.1777920013992,
+            235.21425000217278
+          ],
+          [
+            236.20358299376676,
+            242.4714579974534,
+            229.3768329982413,
+            238.13270800019382,
+            240.35174999880837,
+            244.85408399777953,
+            231.7051660065772,
+            237.84462500043446,
+            242.02495800273027,
+            246.24437500460772,
+            265.267082999344,
+            276.64345799712464
+          ]
+        ]
+      },
+      "summary": {
+        "mueller_off": {
+          "median_ms": 246.68444800045108,
+          "block_medians_ms": [
+            246.46839600245585,
+            249.3274590015062,
+            244.47245849660248,
+            246.90049999844632
+          ],
+          "block_range_ms": [
+            244.47245849660248,
+            249.3274590015062
+          ]
+        },
+        "mueller_on": {
+          "median_ms": 289.08647900061624,
+          "block_medians_ms": [
+            285.5684790010855,
+            290.925146000518,
+            292.3787709987664,
+            287.2478120007145
+          ],
+          "block_range_ms": [
+            285.5684790010855,
+            292.3787709987664
+          ]
+        },
+        "pis_off": {
+          "median_ms": 233.18272899814474,
+          "block_medians_ms": [
+            228.66437549964758,
+            233.67166699972586,
+            233.3414994973282,
+            233.0239584989613
+          ],
+          "block_range_ms": [
+            228.66437549964758,
+            233.67166699972586
+          ]
+        },
+        "pis_on": {
+          "median_ms": 237.6901670013467,
+          "block_medians_ms": [
+            234.8072710010456,
+            236.5689795005892,
+            238.81135450210422,
+            241.18835400076932
+          ],
+          "block_range_ms": [
+            234.8072710010456,
+            241.18835400076932
+          ]
+        }
+      },
+      "shortcut_gains": {
+        "mueller": {
+          "throughput_gain_percent": -14.667593983209004,
+          "paired_block_gain_percent": [
+            -13.692016407203344,
+            -14.298415785254159,
+            -16.385017400037583,
+            -14.04616861003899
+          ]
+        },
+        "pis": {
+          "throughput_gain_percent": -1.896350219307319,
+          "paired_block_gain_percent": [
+            -2.616143646322888,
+            -1.224722069216233,
+            -2.290450140522038,
+            -3.3850703677765437
+          ]
+        }
+      },
+      "kernel_history": {
+        "mueller_off": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002623999956995249
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0028750000055879354
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002624999964609742
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0028750000055879354
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002583000110462308
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002583000110462308
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 3932160,
+            "operation_count": 0,
+            "execution_time_ms": 0.032749999314546585
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002707999898120761
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 1032,
+            "operation_count": 0,
+            "execution_time_ms": 0.003957999870181084
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 16777216,
+            "operation_count": 4046,
+            "execution_time_ms": 259.3224182128906
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 3932160,
+            "operation_count": 4,
+            "execution_time_ms": 0.06424900144338608
+          }
+        ],
+        "mueller_on": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023739999160170555
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024580000899732113
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002623999956995249
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002623999956995249
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 3932160,
+            "operation_count": 0,
+            "execution_time_ms": 0.03362400084733963
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.00254100002348423
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024160000029951334
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 1032,
+            "operation_count": 0,
+            "execution_time_ms": 0.004207999911159277
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 16777216,
+            "operation_count": 5015,
+            "execution_time_ms": 284.91082763671875
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 3932160,
+            "operation_count": 4,
+            "execution_time_ms": 0.07820799946784973
+          }
+        ],
+        "pis_off": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002248999895527959
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024580000899732113
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023739999160170555
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002623999956995249
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024999999441206455
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022499999031424522
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 3932160,
+            "operation_count": 0,
+            "execution_time_ms": 0.032248999923467636
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023739999160170555
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 1032,
+            "operation_count": 0,
+            "execution_time_ms": 0.004000000189989805
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 16777216,
+            "operation_count": 4498,
+            "execution_time_ms": 238.7270050048828
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 3932160,
+            "operation_count": 4,
+            "execution_time_ms": 0.09825000166893005
+          }
+        ],
+        "pis_on": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.00216599996201694
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024160000029951334
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023330000694841146
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.00216599996201694
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002583000110462308
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002248999895527959
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 3932160,
+            "operation_count": 0,
+            "execution_time_ms": 0.03237500041723251
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022499999031424522
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024580000899732113
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 1032,
+            "operation_count": 0,
+            "execution_time_ms": 0.0036239998880773783
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 16777216,
+            "operation_count": 5507,
+            "execution_time_ms": 244.14712524414062
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 3932160,
+            "operation_count": 4,
+            "execution_time_ms": 0.04537399858236313
+          }
+        ]
+      }
+    },
+    "polarized_depth4": {
+      "settings": {
+        "size": 512,
+        "spp": 64,
+        "max_depth": 4,
+        "source_dop": 0.8,
+        "source_aolp": 31,
+        "source_ellipticity": -0.4
+      },
+      "samples_ms": {
+        "mueller_off": [
+          [
+            118.11012499674689,
+            125.33841600088635,
+            123.39683299796889,
+            120.36649999936344,
+            121.18337500578491,
+            125.69554099900415,
+            122.04958400252508,
+            120.97304199414793,
+            121.41587500082096,
+            127.76308300090022,
+            126.08862500201212,
+            122.97416699584574
+          ],
+          [
+            132.4161250013276,
+            126.32579199998872,
+            122.29775000014342,
+            130.406917000073,
+            130.2130420008325,
+            128.95749999734107,
+            118.94666700391099,
+            127.97424999735085,
+            134.23316700209398,
+            129.8530829953961,
+            124.66104100167286,
+            126.78354200033937
+          ],
+          [
+            128.56941700010793,
+            134.97554200148443,
+            132.16537499829428,
+            129.70562500413507,
+            126.77650000114227,
+            128.0877919998602,
+            134.85954199859407,
+            135.3967500035651,
+            125.27979199512629,
+            124.16224999469705,
+            128.12879199918825,
+            134.888458000205
+          ],
+          [
+            126.78445799974725,
+            126.3260830019135,
+            132.2258750005858,
+            134.38895799481543,
+            130.40695899690036,
+            125.36983299651183,
+            126.75545799720567,
+            131.8202080001356,
+            136.84775000001537,
+            137.95308399858186,
+            131.4496249979129,
+            130.99741600308334
+          ]
+        ],
+        "mueller_on": [
+          [
+            131.0702089976985,
+            131.15095799730625,
+            144.11358300276333,
+            133.20116700197104,
+            134.70724999933736,
+            132.34437499340856,
+            146.02587500121444,
+            138.12654100183863,
+            135.60100000177044,
+            132.50624999636784,
+            142.82549999916228,
+            140.54412500263425
+          ],
+          [
+            135.0705829972867,
+            133.68174999777693,
+            142.87779099686304,
+            142.17387499957113,
+            135.48616699699778,
+            134.89295800536638,
+            139.15575000282843,
+            144.21520799805876,
+            137.9879579981207,
+            134.07675000053132,
+            140.6859170019743,
+            143.0101250007283
+          ],
+          [
+            136.8123749998631,
+            137.5987920037005,
+            145.40575000137324,
+            143.34883300034562,
+            134.91291700483998,
+            135.80508399900282,
+            136.58041699818568,
+            145.7331659985357,
+            143.65912500215927,
+            134.3143330013845,
+            137.11479099583812,
+            141.13158299733186
+          ],
+          [
+            139.21945800393587,
+            146.98637500259792,
+            147.9440409966628,
+            139.126791000308,
+            137.9358330013929,
+            136.26400000066496,
+            145.22108399978606,
+            144.9533750055707,
+            145.87879199825693,
+            142.4509160060552,
+            138.8006659981329,
+            144.39137499721255
+          ]
+        ],
+        "pis_off": [
+          [
+            117.6043750019744,
+            118.25987500196788,
+            117.64420899999095,
+            121.772416998283,
+            119.52579199714819,
+            116.72612499387469,
+            117.22812499647262,
+            125.49020900041796,
+            121.09800000325777,
+            121.2072909984272,
+            118.69266699795844,
+            125.46541600022465
+          ],
+          [
+            116.55674999929033,
+            119.50054199405713,
+            121.54537499736762,
+            119.4485000014538,
+            117.91062500560656,
+            116.43650000041816,
+            121.88333299855003,
+            117.14620800194098,
+            116.44341699866345,
+            113.66679200000362,
+            122.58866699994542,
+            121.71262500487501
+          ],
+          [
+            121.4262920038891,
+            121.85399999725632,
+            122.18541699985508,
+            128.81762500182958,
+            127.77787500090199,
+            124.85649999871384,
+            123.08858300093561,
+            122.6639580054325,
+            128.56454199936707,
+            128.17324999923585,
+            125.47954200272216,
+            126.21124999714084
+          ],
+          [
+            132.8897909988882,
+            129.75591700524092,
+            123.72462499479298,
+            125.785750002251,
+            126.16887500189478,
+            130.06041700282367,
+            126.30258299759589,
+            124.00258299749112,
+            124.07870800234377,
+            125.15441700088559,
+            130.78608400246594,
+            131.88433300092584
+          ]
+        ],
+        "pis_on": [
+          [
+            124.87516699911794,
+            121.22279099276057,
+            121.07849999301834,
+            123.70070899487473,
+            125.19979199714726,
+            120.10224999539787,
+            119.44908300210955,
+            124.41166700591566,
+            125.37104100192664,
+            124.11283399706008,
+            122.6287500030594,
+            123.1675000017276
+          ],
+          [
+            125.78758299787296,
+            126.20337499538437,
+            121.6955829950166,
+            127.04700000176672,
+            122.66591599473031,
+            125.95733300258871,
+            121.48641699604923,
+            124.03216699749464,
+            121.03162499988684,
+            128.22687500010943,
+            125.45095800305717,
+            126.79358399327612
+          ],
+          [
+            133.50666699989233,
+            128.2082499965327,
+            129.9490829987917,
+            129.11424999765586,
+            133.49304199800827,
+            134.43512500089128,
+            133.4291250022943,
+            128.83833299565595,
+            125.57070799812209,
+            130.49404099729145,
+            135.51012500101933,
+            133.34049999684794
+          ],
+          [
+            131.44583399844123,
+            129.21762500627665,
+            129.02612499601673,
+            132.49058299697936,
+            136.28649999736808,
+            130.25783299963223,
+            127.04766699607717,
+            128.0138750007609,
+            132.63254200137453,
+            139.55579200410284,
+            135.6192919993191,
+            133.37708300241502
+          ]
+        ]
+      },
+      "summary": {
+        "mueller_off": {
+          "median_ms": 128.80169799973373,
+          "block_medians_ms": [
+            122.51187549918541,
+            128.46587499734596,
+            129.1375210021215,
+            131.22352050049813
+          ],
+          "block_range_ms": [
+            122.51187549918541,
+            131.22352050049813
+          ]
+        },
+        "mueller_on": {
+          "median_ms": 137.96432275012194,
+          "block_medians_ms": [
+            135.1541250005539,
+            138.57185400047456,
+            137.35679149976932,
+            143.42114550163387
+          ],
+          "block_range_ms": [
+            135.1541250005539,
+            143.42114550163387
+          ]
+        },
+        "pis_off": {
+          "median_ms": 122.13862524913566,
+          "block_medians_ms": [
+            119.10922949755332,
+            118.67956250353018,
+            125.168021000718,
+            126.23572899974533
+          ],
+          "block_range_ms": [
+            118.67956250353018,
+            126.23572899974533
+          ]
+        },
+        "pis_on": {
+          "median_ms": 128.76827049876738,
+          "block_medians_ms": [
+            123.43410449830117,
+            125.61927050046506,
+            131.9172704970697,
+            131.9682084977103
+          ],
+          "block_range_ms": [
+            123.43410449830117,
+            131.9682084977103
+          ]
+        }
+      },
+      "shortcut_gains": {
+        "mueller": {
+          "throughput_gain_percent": -6.641300133066541,
+          "paired_block_gain_percent": [
+            -9.353950167127111,
+            -7.292952148200305,
+            -5.983883583697147,
+            -8.504760548713364
+          ]
+        },
+        "pis": {
+          "throughput_gain_percent": -5.1485084205547205,
+          "paired_block_gain_percent": [
+            -3.5037925849799256,
+            -5.524397625688482,
+            -5.11627436720018,
+            -4.343833687841892
+          ]
+        }
+      },
+      "kernel_history": {
+        "mueller_off": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0032500000670552254
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0027489999774843454
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0027910000644624233
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024160000029951334
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002583000110462308
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022909999825060368
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 3932160,
+            "operation_count": 0,
+            "execution_time_ms": 0.03312399983406067
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.00849900022149086
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002583000110462308
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 835,
+            "operation_count": 0,
+            "execution_time_ms": 0.004290999844670296
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 16777216,
+            "operation_count": 3958,
+            "execution_time_ms": 128.35653686523438
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 3932160,
+            "operation_count": 4,
+            "execution_time_ms": 0.073123998939991
+          }
+        ],
+        "mueller_on": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0031659998930990696
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002623999956995249
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.00254100002348423
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024160000029951334
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002707999898120761
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 3932160,
+            "operation_count": 0,
+            "execution_time_ms": 0.03375000134110451
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002707999898120761
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 835,
+            "operation_count": 0,
+            "execution_time_ms": 0.004916000179946423
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 16777216,
+            "operation_count": 4927,
+            "execution_time_ms": 135.43417358398438
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 3932160,
+            "operation_count": 4,
+            "execution_time_ms": 0.06316599994897842
+          }
+        ],
+        "pis_off": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0032909999135881662
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0027489999774843454
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002623999956995249
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024160000029951334
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002208000048995018
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 3932160,
+            "operation_count": 0,
+            "execution_time_ms": 0.03449900075793266
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002749999985098839
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024580000899732113
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 835,
+            "operation_count": 0,
+            "execution_time_ms": 0.00849900022149086
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 16777216,
+            "operation_count": 4410,
+            "execution_time_ms": 124.0242919921875
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 3932160,
+            "operation_count": 4,
+            "execution_time_ms": 0.07370799779891968
+          }
+        ],
+        "pis_on": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002623999956995249
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.00925000011920929
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.00254100002348423
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023739999160170555
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024160000029951334
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024580000899732113
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0027489999774843454
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 3932160,
+            "operation_count": 0,
+            "execution_time_ms": 0.03374899923801422
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002248999895527959
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 835,
+            "operation_count": 0,
+            "execution_time_ms": 0.004623999819159508
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 16777216,
+            "operation_count": 5419,
+            "execution_time_ms": 134.0453338623047
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 3932160,
+            "operation_count": 4,
+            "execution_time_ms": 0.06562499701976776
+          }
+        ]
+      }
+    },
+    "preview_depth4": {
+      "settings": {
+        "size": 256,
+        "spp": 4,
+        "max_depth": 4
+      },
+      "samples_ms": {
+        "mueller_off": [
+          [
+            4.929583003104199,
+            6.131290996563621,
+            6.532917002914473,
+            5.266958003630862,
+            5.109083002025727,
+            4.99037500412669,
+            4.88279099954525,
+            5.000750003091525,
+            4.960999998729676,
+            5.154666003363673,
+            5.038584000431001,
+            4.408458000398241
+          ],
+          [
+            4.351916002633516,
+            4.700541998317931,
+            4.989290995581541,
+            4.338582999480423,
+            4.71737499901792,
+            4.7707080011605285,
+            4.883832996711135,
+            4.885708993242588,
+            4.944250002154149,
+            4.994041999452747,
+            4.740165997645818,
+            4.767792001075577
+          ],
+          [
+            4.747541999677196,
+            4.797458001121413,
+            5.632917003822513,
+            4.409041001053993,
+            5.198124999878928,
+            5.009082997275982,
+            4.887125003733672,
+            4.971083995769732,
+            4.380333004519343,
+            4.880999993474688,
+            4.3007920030504465,
+            4.81683300313307
+          ],
+          [
+            4.861958994297311,
+            4.920291998132598,
+            4.770874998939689,
+            4.845750001550186,
+            4.8834580011316575,
+            4.892750002909452,
+            4.952709001372568,
+            4.9881669983733445,
+            4.717124997114297,
+            4.696374999184627,
+            4.348624999693129,
+            4.2729580018203706
+          ]
+        ],
+        "mueller_on": [
+          [
+            5.348667000362184,
+            6.943708001927007,
+            6.427667001844384,
+            5.868374995770864,
+            5.536625001695938,
+            5.288917003781535,
+            5.270875000860542,
+            5.374291999032721,
+            4.826291995414067,
+            4.706790998170618,
+            4.754542002046946,
+            5.535083997529
+          ],
+          [
+            5.495709003298543,
+            5.3816660001757555,
+            5.293125002935994,
+            5.220458006078843,
+            5.345124998711981,
+            5.464125002617948,
+            5.320542004483286,
+            5.145584000274539,
+            5.319290998158976,
+            5.301875004079193,
+            5.290166001941543,
+            5.33095900027547
+          ],
+          [
+            5.332916996849235,
+            5.416416999651119,
+            4.803499999979977,
+            4.748667000967544,
+            5.332417000317946,
+            4.7850830014795065,
+            4.709166998509318,
+            5.501250001543667,
+            5.714833001547959,
+            5.586582999967504,
+            5.334792003850453,
+            5.310249995090999
+          ],
+          [
+            5.278582997561898,
+            5.331832995580044,
+            5.247917004453484,
+            5.231208000623155,
+            5.3595830031554215,
+            5.38300000334857,
+            5.305291997501627,
+            5.419959001301322,
+            4.776125002535991,
+            5.227249996096361,
+            4.8362500019720756,
+            5.122249996929895
+          ]
+        ],
+        "pis_off": [
+          [
+            5.0250409985892475,
+            6.297957996139303,
+            6.320916996628512,
+            5.363541997212451,
+            5.166709001059644,
+            5.786791996797547,
+            4.970499998307787,
+            4.3260000020381995,
+            5.238666002696846,
+            5.027541999879759,
+            4.470624997338746,
+            4.916124998999294
+          ],
+          [
+            4.524582996964455,
+            4.398625002068002,
+            4.929082999296952,
+            4.901624997728504,
+            4.9625000028754584,
+            4.80704200163018,
+            4.98404199606739,
+            5.01254200207768,
+            4.923166998196393,
+            4.957916993589606,
+            4.905457994027529,
+            4.753250002977438
+          ],
+          [
+            4.776833004143555,
+            4.452207998838276,
+            4.989125001884531,
+            5.044749996159226,
+            4.857667001488153,
+            5.2531670007738285,
+            4.999625001801178,
+            4.72812500083819,
+            4.76104200060945,
+            4.8390829979325645,
+            4.8421669998788275,
+            4.993333997845184
+          ],
+          [
+            4.797333000169601,
+            4.955458003678359,
+            4.79391599947121,
+            4.404083003464621,
+            4.975875002855901,
+            4.972875001840293,
+            4.824540999834426,
+            4.919416998745874,
+            4.739958007121459,
+            4.9130410043289885,
+            4.832458005694207,
+            4.748958002892323
+          ]
+        ],
+        "pis_on": [
+          [
+            5.135457999131177,
+            6.618750005145557,
+            6.566333002410829,
+            6.012707999616396,
+            5.299500000546686,
+            5.073291998996865,
+            5.1230409953859635,
+            4.710332999820821,
+            5.092291998153087,
+            4.780750001373235,
+            4.973415998392738,
+            5.071207997389138
+          ],
+          [
+            4.59579199377913,
+            4.9513339981785975,
+            5.034332993091084,
+            5.066499994427431,
+            5.21787500474602,
+            5.152790996362455,
+            5.1336250035092235,
+            4.983250000805128,
+            4.984583996701986,
+            4.987332999007776,
+            5.126999996718951,
+            5.166458999156021
+          ],
+          [
+            5.098916997667402,
+            5.154291000508238,
+            5.209292001381982,
+            5.174041994905565,
+            4.690624999057036,
+            4.785584002092946,
+            4.585041002428625,
+            4.6284579948405735,
+            5.14179200399667,
+            5.218334001256153,
+            5.548791996261571,
+            5.00533300510142
+          ],
+          [
+            5.229874994256534,
+            5.201833999308292,
+            5.190083997149486,
+            4.99666699761292,
+            4.961167003784794,
+            5.149167001945898,
+            5.150083998159971,
+            5.0069999997504056,
+            4.992624999431428,
+            5.188666000321973,
+            5.183249995752703,
+            5.129541998030618
+          ]
+        ]
+      },
+      "summary": {
+        "mueller_off": {
+          "median_ms": 4.851385498113814,
+          "block_medians_ms": [
+            5.019667001761263,
+            4.769250001118053,
+            4.848916498303879,
+            4.853854497923749
+          ],
+          "block_range_ms": [
+            4.769250001118053,
+            5.019667001761263
+          ]
+        },
+        "mueller_on": {
+          "median_ms": 5.326291749952361,
+          "block_medians_ms": [
+            5.361479499697452,
+            5.319916501321131,
+            5.332666998583591,
+            5.263250001007691
+          ],
+          "block_range_ms": [
+            5.263250001007691,
+            5.361479499697452
+          ]
+        },
+        "pis_off": {
+          "median_ms": 4.882114748397726,
+          "block_medians_ms": [
+            5.097125500469701,
+            4.914312496111961,
+            4.84991700068349,
+            4.828499502764316
+          ],
+          "block_range_ms": [
+            4.828499502764316,
+            5.097125500469701
+          ]
+        },
+        "pis_on": {
+          "median_ms": 5.114010498800781,
+          "block_medians_ms": [
+            5.107666496769525,
+            5.050416493759258,
+            5.120354500832036,
+            5.1496255000529345
+          ],
+          "block_range_ms": [
+            5.050416493759258,
+            5.1496255000529345
+          ]
+        }
+      },
+      "shortcut_gains": {
+        "mueller": {
+          "throughput_gain_percent": -8.916264337994528,
+          "paired_block_gain_percent": [
+            -6.375339082346166,
+            -10.35103652597419,
+            -9.071455247593752,
+            -7.778378435483024
+          ]
+        },
+        "pis": {
+          "throughput_gain_percent": -4.534518465643234,
+          "paired_block_gain_percent": [
+            -0.206375970445416,
+            -2.6949064065405093,
+            -5.281616733853111,
+            -6.235909723635579
+          ]
+        }
+      },
+      "kernel_history": {
+        "mueller_off": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0031250000465661287
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.00254100002348423
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022909999825060368
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.00254100002348423
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.00254100002348423
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.00254100002348423
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 983040,
+            "operation_count": 0,
+            "execution_time_ms": 0.009999999776482582
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 1032,
+            "operation_count": 0,
+            "execution_time_ms": 0.005874999798834324
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 262144,
+            "operation_count": 4046,
+            "execution_time_ms": 2.203125
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 983040,
+            "operation_count": 4,
+            "execution_time_ms": 0.014290999621152878
+          }
+        ],
+        "mueller_on": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022499999031424522
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.003000000026077032
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022499999031424522
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.00254100002348423
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0691239982843399
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.05341599881649017
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.016248999163508415
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 983040,
+            "operation_count": 0,
+            "execution_time_ms": 0.009790999814867973
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023739999160170555
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024580000899732113
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 1032,
+            "operation_count": 0,
+            "execution_time_ms": 0.004000000189989805
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 262144,
+            "operation_count": 5015,
+            "execution_time_ms": 2.430000066757202
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 983040,
+            "operation_count": 4,
+            "execution_time_ms": 0.011749999597668648
+          }
+        ],
+        "pis_off": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022499999031424522
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023330000694841146
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002248999895527959
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024999999441206455
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023330000694841146
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002374999923631549
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 983040,
+            "operation_count": 0,
+            "execution_time_ms": 0.009583000093698502
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0035830000415444374
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002208000048995018
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 1032,
+            "operation_count": 0,
+            "execution_time_ms": 0.004540999885648489
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 262144,
+            "operation_count": 4498,
+            "execution_time_ms": 2.4517080783843994
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 983040,
+            "operation_count": 4,
+            "execution_time_ms": 0.012498999945819378
+          }
+        ],
+        "pis_on": [
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022909999825060368
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0028750000055879354
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0020830000285059214
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0023739999160170555
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024160000029951334
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.002498999936506152
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0024160000029951334
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 983040,
+            "operation_count": 0,
+            "execution_time_ms": 0.009998999536037445
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0035409999545663595
+          },
+          {
+            "type": "KernelType.Memset",
+            "size": 1,
+            "operation_count": 0,
+            "execution_time_ms": 0.0022909999825060368
+          },
+          {
+            "type": "KernelType.Aggregate",
+            "size": 1032,
+            "operation_count": 0,
+            "execution_time_ms": 0.0062500000931322575
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 262144,
+            "operation_count": 5507,
+            "execution_time_ms": 2.2219159603118896
+          },
+          {
+            "type": "KernelType.JIT",
+            "size": 983040,
+            "operation_count": 4,
+            "execution_time_ms": 0.011123999953269958
+          }
+        ]
+      }
+    }
+  }
+}

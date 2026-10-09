@@ -1,0 +1,43 @@
+Opaque versus literal Jarecki parameters — 2026-10-09
+
+Baseline: 417b66f2e9e4c5bc789bd4f4c67588efbeff5603
+Temporary BSDF switch removed after measurement. Current source restored to baseline.
+Archived experiment patch: opaque-parameters.patch; benchmark: benchmarks/opaque_probe.py.
+
+Environment: Apple M4 Max, MacBook Pro Mac16,6, 128 GB, AC power.
+Metal RGB polarized; full RGB nylon White/Green/Red40 Cornell materials.
+512x512, 64 spp, max depth 4, rr_depth 100, unpolarized source.
+Four blocks, twelve renders/configuration/block, three warmups; rotating order with
+alternating reversal; same seed for all four configurations per iteration.
+GPU-synchronized warmed render timing; host readback and display excluded.
+Reported median: median of four block medians.
+
+Engine         Opaque ms    Literal ms    Opaque throughput gain
+mueller          108.689       110.556                     1.72%
+pis              104.783       107.182                     2.29%
+
+Every paired timing block favored opaque parameters; gains are small (about 1–2%).
+A quick benchmark on this workload supports retaining the existing implementation;
+it does not establish a general speedup across scenes or devices.
+
+Correctness: 32 seeded off/on image comparisons passed.
+Maximum absolute pixel difference: 1.90734863e-06.
+Cases: multibounce, polarized source, Russian roulette, and channel-divergent histories.
+Both modes used the same coefficients and shared RGB ray path.
+
+Main JIT kernel operation counts:
+mueller: opaque 3325, literal 3325.
+pis: opaque 3788, literal 3788.
+The operation counts are equal in these custom integrators. Their Jarecki arithmetic
+runs in the integrator after querying material attributes, unlike stock Mitsuba path
+which evaluates each material BSDF. Thus this experiment does not reproduce the large
+graph-size reduction reported for stock path; similar IR counts do not imply identical
+generated machine code or memory behavior.
+
+Production sources and compiled BSDF are restored; all eight rendering/worker tests
+passed after restoration. No commit made. Raw timings, image checks, hardware,
+kernel metadata and experimental source hashes are preserved in opaque-rgb.json.
+
+Reproduction: apply opaque-parameters.patch to an isolated baseline checkout, rebuild
+pollia_jarecki, source scripts/pollia-env.sh, export PYTHONPATH="$PWD/rendering:$PYTHONPATH",
+then run python benchmarks/opaque_probe.py --output /tmp/opaque-rgb.json.

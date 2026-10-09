@@ -1,0 +1,64 @@
+First-hit identity shortcut experiment — 2026-10-09
+
+Baseline commit: 417b66f2e9e4c5bc789bd4f4c67588efbeff5603
+Shortcut removed from both engines after user approval. Production sources match the
+committed baseline. The experimental code is preserved in identity-shortcut.patch.
+
+Recommendation: do not retain this implementation as a performance optimization.
+Both engines were slower with the shortcut in every tested block and workload.
+
+Environment: Apple M4 Max, MacBook Pro Mac16,6, 128 GB, AC power.
+Backend: Dr.Jit Metal, metal_rgb_polarized, default JIT flags.
+Scene: full RGB Cornell nylon materials; white/green/red40; red3 remains unused.
+Protocol: four blocks, twelve timed renders per configuration per block, three warmups.
+Configuration order rotates within each block and reverses in alternating blocks.
+Each four-way iteration uses the same seed. Timings synchronize GPU completion.
+Reported time: median of four block medians; compilation, host readback, display excluded.
+Russian roulette depth 100 for timing cases.
+
+Median render times (ms; lower is better):
+Case                     Mueller off  Mueller on    PIS off     PIS on
+nylon_depth4                 115.759     126.197     111.143     116.458
+nylon_depth8                 246.684     289.086     233.183     237.690
+polarized_depth4             128.802     137.964     122.139     128.768
+preview_depth4                 4.851       5.326       4.882       5.114
+
+Throughput change from enabling shortcut (negative means slower):
+nylon_depth4: Mueller -8.27%; PIS -4.56%
+nylon_depth8: Mueller -14.67%; PIS -1.90%
+polarized_depth4: Mueller -6.64%; PIS -5.15%
+preview_depth4: Mueller -8.92%; PIS -4.53%
+
+Settings: depth4/depth8 512x512, 64 spp; preview 256x256, 4 spp.
+Polarized depth4 source: DoP .8, AoLP 31 degrees, ellipticity -.4.
+
+Correctness:
+RGB: 48 seeded off/on comparisons passed; max absolute pixel difference 1.90734863e-06.
+monochrome: 48 seeded off/on comparisons passed; max absolute pixel difference 9.53674316e-07.
+Checks cover directly visible polarized emission, direct lighting, multiple bounces,
+depolarization, channel-divergent histories (RGB), and Russian roulette.
+Outputs are numerically equivalent within the rounding tolerance, not bit-identical.
+Existing rendering/worker regression suite: all 8 tests passed after the experiment.
+Source whitespace check: git diff --check passed.
+
+Implementation:
+Mueller skips initial identity applications to source Stokes vectors and the first
+identity x surface Mueller product. PIS skips initial identity Jones state applications
+and the first identity x surface Jones product. Both use Dr.Jit conditional control flow.
+
+Kernel evidence (RGB nylon depth4 main JIT kernel operation counts):
+Mueller: 4046 off -> 5015 on; PIS: 4498 off -> 5507 on.
+Extra conditional control flow/intermediates enlarge the generated graph. This is
+consistent with the timing regression; operation counts alone do not isolate its cause.
+
+Scope: evidence applies to this conditional implementation on this Metal/Dr.Jit setup.
+These are equal-SPP timings, not an equal-error comparison between the two estimators.
+Raw per-render times, per-block medians, kernel records, and source hashes are in identity-rgb.json.
+
+Historical reproduction (apply identity-shortcut.patch to baseline 417b66f2 in an
+isolated checkout, then rebuild pollia_mueller and pollia_pis before running):
+The benchmark requires that patch; the current integrators no longer accept the flag.
+source scripts/pollia-env.sh
+export PYTHONPATH="$PWD/rendering:$PYTHONPATH"
+python benchmarks/identity_probe.py --output benchmarks/results/2026-10-09/identity-rgb.json
+python benchmarks/identity_probe.py --variant metal_ad_mono_polarized --verify-only --output benchmarks/results/2026-10-09/identity-mono-check.json
