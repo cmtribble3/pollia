@@ -22,6 +22,9 @@ public:
     MI_IMPORT_BASE(MonteCarloIntegrator, m_max_depth, m_rr_depth)
     MI_IMPORT_TYPES(Scene, Sampler, Medium, Emitter, EmitterPtr, BSDF, BSDFPtr)
 
+    static constexpr size_t Channels = dr::size_v<UnpolarizedSpectrum>;
+    using Polarization = dr::Array<MuellerMatrix<Float>, Channels>;
+    using Parameters = dr::Array<pollia::JareckiParams<Float>, Channels>;
     using Stokes = pollia::StokesVector<Float>;
     using SpectralStokes = pollia::StokesVector<UnpolarizedSpectrum>;
     using Mueller = MuellerMatrix<Float>;
@@ -65,7 +68,7 @@ public:
             struct LoopState {
                 Ray3f ray;
                 PreliminaryIntersection3f pi;
-                Mueller polarization;
+                Polarization polarization;
                 SpectralStokes result;
                 UnpolarizedSpectrum beta;
                 Bool valid_ray;
@@ -78,7 +81,7 @@ public:
 
             LoopState ls {
                 ray_, dr::zeros<PreliminaryIntersection3f>(),
-                dr::identity<Mueller>(), dr::zeros<SpectralStokes>(), UnpolarizedSpectrum(1.f), false,
+                Polarization(dr::identity<Mueller>()), dr::zeros<SpectralStokes>(), UnpolarizedSpectrum(1.f), false,
                 Vertex { dr::zeros<Interaction3f>(), 1.f, true, 0,
                          +RayMask::Primary },
                 active, sampler
@@ -103,8 +106,12 @@ public:
                                 s.vertex.si, ds, !s.vertex.delta);
                         Float mis = pollia::mis_weight(s.vertex.pdf, em_pdf);
                         SpectralStokes source = pollia::source_stokes(emitter->eval(si));
-                        s.result += (s.polarization * source) *
-                                    dr::full<SpectralStokes>(s.beta * mis);
+                        for (size_t c = 0; c < Channels; ++c) {
+                            Stokes input(source[0][c], source[1][c], source[2][c], source[3][c]);
+                            Stokes output = s.polarization[c] * input;
+                            for (int i = 0; i < 4; ++i)
+                                s.result[i][c] += output[i] * s.beta[c] * mis;
+                        }
                     }
 
                     if (dr::none_or<false>(si.is_valid())) {
@@ -120,7 +127,9 @@ public:
                         return;
                     }
 
-                    auto jareckiParams = pollia::jarecki_parameters(bsdf, si);
+                    Parameters parameters;
+                    for (size_t c = 0; c < Channels; ++c)
+                        parameters[c] = pollia::jarecki_parameters(bsdf, si, c);
                     UnpolarizedSpectrum reflectance = bsdf->eval_attribute(
                         std::string("pollia_reflectance"), si);
                     Vector3f wo_camera = si.to_world(si.wi);
@@ -139,18 +148,20 @@ public:
                     active_em &= cos_em > 0.f;
                     Float pdf_em_bsdf = warp::square_to_cosine_hemisphere_pdf(local_em);
                     if (dr::any_or<true>(active_em)) {
-                        auto eval = pollia::evaluate_jarecki(
-                            ds.d, wo_camera, normal,
-                            jareckiParams);
-                        Jones j = pollia::world_jones(eval, ds.d, wo_camera);
-                        Mueller m = pollia::mixture_mueller(j, eval.gamma);
                         Float mis = dr::select(ds.delta, 1.f,
                                                pollia::mis_weight(ds.pdf, pdf_em_bsdf));
                         UnpolarizedSpectrum scalar = reflectance * dr::InvPi<Float> * cos_em;
                         SpectralStokes source = pollia::source_stokes(em_weight) *
                                                dr::full<SpectralStokes>(s.beta * scalar * mis);
-                        dr::masked(s.result, active_em && eval.valid) +=
-                            s.polarization * (m * source);
+                        for (size_t c = 0; c < Channels; ++c) {
+                            auto eval = pollia::evaluate_jarecki(ds.d, wo_camera, normal, parameters[c]);
+                            Jones j = pollia::world_jones(eval, ds.d, wo_camera);
+                            Mueller m = pollia::mixture_mueller(j, eval.gamma);
+                            Stokes input(source[0][c], source[1][c], source[2][c], source[3][c]);
+                            Stokes output = s.polarization[c] * (m * input);
+                            for (int i = 0; i < 4; ++i)
+                                dr::masked(s.result[i][c], active_em && eval.valid) += output[i];
+                        }
                     }
 
                     (void) s.sampler->next_1d(); // Match BSDF lobe draw.
@@ -158,13 +169,15 @@ public:
                     Vector3f local_light = warp::square_to_cosine_hemisphere(sample2);
                     Float bsdf_pdf = warp::square_to_cosine_hemisphere_pdf(local_light);
                     Vector3f wi_light = si.to_world(local_light);
-                    auto eval = pollia::evaluate_jarecki(
-                        wi_light, wo_camera, normal,
-                        jareckiParams);
-                    Jones j = pollia::world_jones(eval, wi_light, wo_camera);
-                    Mueller m = pollia::mixture_mueller(j, eval.gamma);
-                    (void) s.sampler->next_1d(); // Match PIS event draw.
-                    s.polarization = s.polarization * m;
+                    (void) s.sampler->next_1d(); // Match the shared PIS event draw.
+                    for (size_t c = 0; c < Channels; ++c) {
+                        auto eval = pollia::evaluate_jarecki(wi_light, wo_camera, normal, parameters[c]);
+                        Jones j = pollia::world_jones(eval, wi_light, wo_camera);
+                        Mueller m = pollia::mixture_mueller(j, eval.gamma);
+                        s.polarization[c] = dr::select(eval.valid, s.polarization[c] * m,
+                                                       dr::zeros<Mueller>());
+                        dr::masked(s.beta[c], !eval.valid) = 0.f;
+                    }
                     s.beta *= reflectance;
 
                     s.ray = si.spawn_ray(wi_light);
@@ -176,7 +189,7 @@ public:
                     Bool rr_active = s.vertex.depth >= m_rr_depth;
                     Bool rr_continue = s.sampler->next_1d() < rr_prob;
                     dr::masked(s.beta, rr_active) *= dr::rcp(dr::detach(rr_prob));
-                    s.active = active_next && eval.valid && bsdf_pdf > 0.f &&
+                    s.active = active_next && bsdf_pdf > 0.f &&
                                dr::max(s.beta) > 0.f && (!rr_active || rr_continue);
                     s.pi = scene->ray_intersect_preliminary(
                         s.ray, false, s.vertex.ray_mask, s.active,

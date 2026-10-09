@@ -100,7 +100,17 @@ Custom Cornell RGB transport
   # metal_rgb_polarized returns H x W x 15: RGB plus four RGB Stokes groups.
   # Use integrator="pollia_pis" for the Jones/depolarizer estimator.
   Both integrators evaluate source radiance and material reflectance per color
-  while sharing ray samples and the current achromatic polarization model.
+  while sharing ray samples. Jarecki parameters, Mueller products, PIS Jones/
+  depolarizer states and mixture probabilities are channel-specific. PIS uses
+  one uniform event draw with each channel's own probability, preserving each
+  marginal distribution. RGB carries 24 PIS polarization scalars (8 per channel)
+  versus 48 Mueller scalars (16 per channel), plus state flags and radiometry.
+  materials.py contains the complete PolRAY nylonWhite, nylonGreen, nylonRed40
+  and nylonRed3 RGB presets. Cornell's red wall uses nylonRed40; nylonRed3 is
+  retained in the library but unused. Monochrome presets explicitly use the
+  green model channel; jarecki_material(channel=0/1/2) selects another channel.
+  Parameters are opaque Dr.Jit data so compiled BSDF code can be shared across
+  materials. No first-hit identity shortcut is implemented.
   Monochrome remains supported via metal_ad_mono_polarized in a fresh process.
 
 Shared polarization and sampling math

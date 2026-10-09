@@ -4,6 +4,7 @@ import sys
 import numpy as np
 from pollia import RenderSession
 from pollia.scenes import build_scene
+from pollia.materials import jarecki_material
 
 session = RenderSession(sys.argv[1])
 mi, dr = session.mi, session.dr
@@ -72,14 +73,17 @@ for bad in (dict(dop=1.01), dict(ellipticity=-1.01), dict(aolp=91), dict(dop=flo
     else:
         raise AssertionError('Invalid source accepted')
 
-# The custom Cornell uses exactly the stock geometry and color values.
+# The custom Cornell keeps stock geometry and uses all PolRAY nylon coefficients.
 stock, custom = mi.cornell_box(), build_scene(mi, size=32)
 for key in stock:
     if isinstance(stock[key], dict) and stock[key].get('type') in ('cube', 'rectangle'):
         assert str(stock[key]['to_world']) == str(custom[key]['to_world'])
 for name in ('white', 'red', 'green'):
     assert custom[name]['type'] == 'pollia_jarecki'
-    assert stock[name]['reflectance'] == custom[name]['reflectance']
+    preset = {'white': 'nylonWhite', 'red': 'nylonRed40', 'green': 'nylonGreen'}[name]
+    reference = jarecki_material(mi, preset)
+    for key in reference:
+        assert str(custom[name][key]) == str(reference[key])
 
 # Check direct lighting against the stock Mitsuba Path integrator.
 images = {}
@@ -89,14 +93,24 @@ for integrator in ('path', 'pollia_mueller', 'pollia_pis'):
     images[integrator] = session.render(spp=128, seed=7, output='full').pixels
     assert np.isfinite(images[integrator]).all()
 np.testing.assert_allclose(images['path'], images['pollia_mueller'], rtol=2e-4, atol=2e-5)
-# Q/U/V may approach zero through cancellation. Bound their error relative
-# to the corresponding S0, rather than relative to a vanishing component.
-channel_count = 3 if 'rgb' in mi.variant() else 1
-intensity = np.tile(np.abs(images['pollia_mueller'][..., :channel_count]), (1, 1, 5))
-error = np.abs(images['pollia_pis'] - images['pollia_mueller'])
-assert np.all(error <= 2e-4 * intensity + 2e-6), float(error.max())
-print('Direct PIS/Mueller maximum error relative to S0:',
-      float((error / (intensity + 1e-6)).max()))
+# At depth two, a continuation ray can hit the light. PIS has already drawn
+# its coherent/depolarizing event on that segment, so full images differ by
+# estimator variance even though the NEE contribution is deterministic.
+# Test paired image means over independent seeds rather than requiring noisy
+# pixel equality. The scalar-channel oracle separately checks complete paths.
+differences = []
+for seed in range(12):
+    values = []
+    for integrator in ('pollia_mueller', 'pollia_pis'):
+        session.load_preset(size=32, max_depth=2, integrator=integrator,
+                            source_dop=.8, source_aolp=31, source_ellipticity=-.4)
+        image = session.render(spp=128, seed=seed, output='full').pixels
+        values.append(image.mean(axis=(0, 1)))
+    differences.append(values[1] - values[0])
+diffs = np.asarray(differences)
+assert np.all(np.abs(diffs.mean(axis=0)) <
+    6*diffs.std(axis=0, ddof=1)/math.sqrt(len(diffs)) + 2e-6), diffs
+print('Direct-light paired PIS/Mueller mean differences:', diffs.mean(axis=0))
 # Pure depolarizers give deterministic equality through arbitrary bounces.
 # A larger coherent mixture exercises Jones products and source adjoints.
 for xi in (.25, 1.):

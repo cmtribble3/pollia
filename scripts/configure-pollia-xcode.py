@@ -101,7 +101,8 @@ def navigator(root, build):
     integrators = group("Integrators", [file(Path("..") / p) for p in (
         "src/integrators/pollia_pis.cpp", "src/integrators/pollia_mueller.cpp")], "pollia-integrators")
     materials = group("Materials", [file(Path("..") / p) for p in (
-        "src/bsdfs/pollia_jarecki.cpp", "include/mitsuba/render/pollia_jarecki.h")], "pollia-materials")
+        "src/bsdfs/pollia_jarecki.cpp", "include/mitsuba/render/pollia_jarecki.h",
+        "rendering/pollia/materials.py")], "pollia-materials")
     scene_examples = [str(path.relative_to(root)) for path in sorted((root / "scenes").glob("*.xml"))]
     scenes = functional_group("Scenes", [
         "rendering/pollia/scenes.py", "swift/Sources/PolliaRendering/SceneSettings.swift",

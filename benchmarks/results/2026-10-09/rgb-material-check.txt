@@ -1,0 +1,44 @@
+Full RGB Jarecki material and transport verification — 2026-10-09
+
+All four PolRAY presets are present: nylonWhite, nylonGreen, nylonRed40,
+nylonRed3. Their 72 values (RGB albedo, a, b, n_real, n_imag, xi0_max) were
+checked against Packages/PolRayMaterials/Sources/PolRayMaterials/Material.swift.
+Cornell's red wall uses nylonRed40. nylonRed3 is available but unused.
+The existing Mitsuba Cornell geometry and source configuration are retained.
+Monochrome presets explicitly select the green model channel; callers can
+select red/green/blue through jarecki_material(channel=0/1/2).
+
+Stock BSDF and both custom integrators consume each channel's parameters.
+Parameters are opaque runtime data, adapting Abhiman's shared-code change.
+Mueller carries three 16-scalar products. PIS carries three eight-scalar states
+and three depolarization flags. Each channel compares the shared uniform draw
+with its own gamma; geometry, light/direction samples and roulette are shared.
+No first-hit identity shortcut was implemented in either engine.
+
+Command-line builds of pollia_jarecki, pollia_mueller, pollia_pis and
+pollia_polarized passed in the app's configured RelWithDebInfo backend.
+Metal backend: Apple M4 Max; metal_rgb_polarized and metal_ad_mono_polarized.
+
+Python rendering/worker suite: 8 tests passed.
+Command: source scripts/pollia-env.sh; export PYTHONPATH="$PWD/rendering:$PYTHONPATH";
+         python -m unittest discover -s rendering/tests -v
+
+New checks compare all four RGB BSDFs and attributes with each preset's
+scalar-channel inputs. Invalid values outside channel zero are rejected,
+and monochrome rejects RGB parameter triplets.
+Complete 24x24, depth-five, 128-SPP RGB Mueller/PIS paths match three separate
+monochrome channel renders (seed 17, RR disabled; atol 3e-6, rtol 3e-4).
+The green material uses xi0_max=(0.25, 1.0, 0.75) to exercise divergent
+channel-specific PIS histories, including a deterministic depolarizer.
+Existing checks cover stock-path/Mueller agreement, multiple-seed PIS/Mueller
+means, pure depolarizers, coherent transport, polarized source conventions,
+channel isolation, early roulette, and worker frame delivery/lifecycle.
+
+The former single-image PIS/Mueller pixel equality test at depth two was
+replaced with a 12-seed paired-mean check: continuation emitter hits already
+include a sampled PIS event and therefore have estimator variance. Deterministic
+depolarizer equality remains checked. This is correctness validation, not an
+equal-error benchmark or a measured speed claim for the new RGB state.
+Release Swift app build and staging passed. The staged materials.py and
+scenes.py match the source files byte for byte.
+No source changes were committed. Xcode was not launched.

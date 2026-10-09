@@ -13,3 +13,9 @@ class PolarizedEmitterTests(unittest.TestCase):
     def test_metal_rgb(self):
         subprocess.run([sys.executable, str(Path(__file__).with_name('polarized_check.py')),
                         'metal_rgb_polarized'], check=True, timeout=180)
+
+
+class RGBMaterialTests(unittest.TestCase):
+    def test_channel_specific_materials_and_states(self):
+        subprocess.run([sys.executable, str(Path(__file__).with_name('rgb_material_check.py'))],
+                       check=True, timeout=600)

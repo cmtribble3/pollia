@@ -41,6 +41,32 @@ struct DisplayCheck {
                 try require(scalar[2].isNaN, "Dark pixels must be undefined for polarization ratios/angles")
             }
         }
+        // Non-unit, channel-specific I catches missing normalization, use of
+        // another channel's denominator, or division by the film's base RGB.
+        let normalizedPixels: [Float] = [20, 40, 80, 2, 4, 8,
+                                         0.6, -1, 1, -0.4, 0.8, 2, 1, 0.4, -4]
+        var normalizedFields = fields
+        normalizedFields["shape"] = [1, 1, 15]
+        normalizedFields["bytes"] = normalizedPixels.count * 4
+        let normalizedMetadata = try JSONDecoder().decode(FrameMetadata.self,
+            from: JSONSerialization.data(withJSONObject: normalizedFields))
+        let normalizedFrame = RenderFrame(metadata: normalizedMetadata,
+            pixels: normalizedPixels.withUnsafeBytes { Data($0) })
+        let normalizedCases: [(DisplayFilter, [Float])] = [
+            (.q, [0.3, -0.25, 0.125]), (.u, [-0.2, 0.2, 0.25]), (.v, [0.5, 0.1, -0.5])]
+        for (filter, expected) in normalizedCases {
+            settings.filter = filter
+            settings.exposureEV = 5 // Polarization ratios must ignore exposure.
+            for channel in 0..<3 {
+                settings.channel = channel
+                let output = try await engine.display(frame: normalizedFrame, settings: settings)
+                let value = output.scalarValues.contents().load(as: Float.self)
+                try require(abs(value - expected[channel]) < 2e-6,
+                            "Wrong \(filter.title) normalization in channel \(channel): \(value)")
+            }
+        }
+        settings = DisplaySettings()
+        print("PASS: Q/I, U/I and V/I use each channel's non-unit Stokes I and ignore exposure")
         try require(DisplayFilter.aolp.title == "AoLP [°]" &&
                     DisplayFilter.ellipticity.title == "Ellipticity" &&
                     DisplayFilter.ellipticity.defaultRange == -1...1,

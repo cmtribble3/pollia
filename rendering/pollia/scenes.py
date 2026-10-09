@@ -1,5 +1,6 @@
 """Editable scene presets for the Pollia app and Python experiments."""
 import math
+from .materials import jarecki_material
 
 
 def build_scene(mi, *, preset="cornell", size=512, max_depth=4, rr_depth=8,
@@ -25,10 +26,11 @@ def build_scene(mi, *, preset="cornell", size=512, max_depth=4, rr_depth=8,
     T = mi.ScalarTransform4f
     if preset == "cornell":
         scene = mi.cornell_box()
-        # Preserve Mitsuba's Cornell geometry, transforms and reflectance colors.
+        # Preserve Mitsuba's Cornell geometry; use the full PolRAY nylon materials.
         # Every surface, including the emitter shape, uses our material type.
-        for name in ("white", "green", "red"):
-            scene[name]["type"] = "pollia_jarecki"
+        for name, material in (("white", "nylonWhite"), ("green", "nylonGreen"),
+                               ("red", "nylonRed40")):
+            scene[name] = jarecki_material(mi, material)
         scene["light"]["emitter"].update(type="pollia_polarized", dop=source_dop,
                                       aolp=source_aolp, ellipticity=source_ellipticity)
         scene["light"]["emitter"]["radiance"]["value"] = [18.387 * light_scale, 13.9873 * light_scale, 6.75357 * light_scale]
@@ -36,7 +38,7 @@ def build_scene(mi, *, preset="cornell", size=512, max_depth=4, rr_depth=8,
     else:
         material = {"glass": dict(type="dielectric", int_ior=1.5),
                     "conductor": dict(type="roughconductor", material="Al", alpha=0.1),
-                    "jarecki": dict(type="pollia_jarecki", reflectance=dict(type="rgb", value=[0.6, 0.4, 0.2]))}[preset]
+                    "jarecki": jarecki_material(mi, "nylonWhite")}[preset]
         scene = dict(type="scene", sphere=dict(type="sphere", bsdf=material),
                      environment=dict(type="constant", radiance=dict(type="rgb", value=[light_scale, 0.8 * light_scale, 0.6 * light_scale])))
         radius, target = 5 * distance, [0, 0, 0]

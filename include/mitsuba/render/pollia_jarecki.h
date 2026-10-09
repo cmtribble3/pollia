@@ -8,12 +8,13 @@ NAMESPACE_BEGIN(pollia)
 /// Packed material parameters: [a, b, n, kappa, xi0_max].
 template <typename Float> using JareckiParams = dr::Array<Float, 5>;
 
-/// Mitsuba's BSDF attributes expose one or three values. Assemble the two
-/// native attribute queries into the same five-value array for both integrators.
+/// Assemble two native attributes into one channel's five Jarecki values.
+/// Both custom integrators request every channel, retaining shared geometry.
 template <typename BSDFPtr, typename SurfaceInteraction>
-auto jarecki_parameters(const BSDFPtr &bsdf, const SurfaceInteraction &si) {
-    auto parameters = bsdf->eval_attribute_3(std::string("pollia_jarecki_params"), si);
-    auto opticalConstants = bsdf->eval_attribute_3(std::string("pollia_optical_constants"), si);
+auto jarecki_parameters(const BSDFPtr &bsdf, const SurfaceInteraction &si, size_t channel = 0) {
+    const std::string suffix = "_" + std::to_string(channel);
+    auto parameters = bsdf->eval_attribute_3("pollia_jarecki_params" + suffix, si);
+    auto opticalConstants = bsdf->eval_attribute_3("pollia_optical_constants" + suffix, si);
     using Float = dr::value_t<decltype(parameters)>;
     return JareckiParams<Float>(parameters[0], parameters[1],
                                 opticalConstants[0], opticalConstants[1], parameters[2]);

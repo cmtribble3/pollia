@@ -14,13 +14,13 @@ NAMESPACE_BEGIN(mitsuba)
  * Experimental Jones / ideal-depolarizer path tracer for pollia_jarecki.
  *
  * This is deliberately a narrow feasibility probe: monochrome and RGB polarized
- * variants, polarized emission, and diffuse Jarecki surfaces only. Each path
+ * variants, polarized emission, and diffuse Jarecki surfaces only. Each channel
  * carries eight polarization scalars. Before the first sampled depolarizer
  * they encode a 2x2 complex Jones product; afterwards they encode the frozen
  * camera Stokes column and a source-side Stokes adjoint. The scalar throughput
  * and ray/vertex state are stored separately. RGB channels share geometry and
- * the achromatic Jones/depolarizer event, retaining independent radiometric
- * throughput and Stokes results.
+ * an event random draw, with independent Jones/depolarizer states, mixture
+ * probabilities, throughput and Stokes results.
  */
 template <typename Float, typename Spectrum>
 class PolliaPISIntegrator final : public MonteCarloIntegrator<Float, Spectrum> {
@@ -28,6 +28,10 @@ public:
     MI_IMPORT_BASE(MonteCarloIntegrator, m_max_depth, m_rr_depth)
     MI_IMPORT_TYPES(Scene, Sampler, Medium, Emitter, EmitterPtr, BSDF, BSDFPtr)
 
+    static constexpr size_t Channels = dr::size_v<UnpolarizedSpectrum>;
+    using Polarization = dr::Array<pollia::StokesVector<Float>, Channels>;
+    using ChannelMask = dr::Array<Bool, Channels>;
+    using Parameters = dr::Array<pollia::JareckiParams<Float>, Channels>;
     using Stokes = pollia::StokesVector<Float>;
     using SpectralStokes = pollia::StokesVector<UnpolarizedSpectrum>;
     using Jones = pollia::JonesMatrix<Float>;
@@ -38,36 +42,19 @@ public:
             Throw("pollia_pis requires a monochrome or RGB polarized variant");
     }
 
-    static SpectralStokes emitted(const Stokes &a, const Stokes &b,
-                                  Bool depolarized, const SpectralStokes &source) {
-        SpectralStokes result;
-        // The current material's Jones operator is achromatic. Apply the same
-        // operator separately to each channel's complete emission vector.
-        for (size_t channel = 0; channel < dr::size_v<UnpolarizedSpectrum>; ++channel) {
-            Stokes input(source[0][channel], source[1][channel],
-                         source[2][channel], source[3][channel]);
-            Stokes coherent = pollia::apply_jones(pollia::unpack_jones(a, b), input);
-            Stokes depol = a * dr::dot(b, input);
-            Stokes output = dr::select(depolarized, depol, coherent);
-            for (int i = 0; i < 4; ++i)
-                result[i][channel] = output[i];
-        }
-        return result;
+    static Stokes emitted(const Stokes &a, const Stokes &b,
+                          Bool depolarized, const Stokes &source) {
+        Stokes coherent = pollia::apply_jones(pollia::unpack_jones(a, b), source);
+        Stokes depol = a * dr::dot(b, source);
+        return dr::select(depolarized, depol, coherent);
     }
 
-    static SpectralStokes direct(const Stokes &a, const Stokes &b,
-                                 Bool depolarized, const Jones &j, Float gamma,
-                                 const SpectralStokes &source) {
-        SpectralStokes mixed_source;
-        for (size_t channel = 0; channel < dr::size_v<UnpolarizedSpectrum>; ++channel) {
-            Stokes input(source[0][channel], source[1][channel],
-                         source[2][channel], source[3][channel]);
-            Stokes mixed = gamma * pollia::apply_jones(j, input);
-            mixed[0] += (1.f-gamma) * input[0];
-            for (int i = 0; i < 4; ++i)
-                mixed_source[i][channel] = mixed[i];
-        }
-        return emitted(a, b, depolarized, mixed_source);
+    static Stokes direct(const Stokes &a, const Stokes &b,
+                         Bool depolarized, const Jones &j, Float gamma,
+                         const Stokes &source) {
+        Stokes mixed = gamma * pollia::apply_jones(j, source);
+        mixed[0] += (1.f-gamma) * source[0];
+        return emitted(a, b, depolarized, mixed);
     }
 
     std::pair<Spectrum, Bool> sample(const Scene *scene, Sampler *sampler,
@@ -105,11 +92,11 @@ public:
             struct LoopState {
                 Ray3f ray;
                 PreliminaryIntersection3f pi;
-                // The only persistent polarization payload: two float4s.
-                Stokes pol0, pol1;
+                // Two float4s per channel, with a channel-specific depolarization flag.
+                Polarization pol0, pol1;
                 SpectralStokes result;
                 UnpolarizedSpectrum beta;
-                Bool depolarized;
+                ChannelMask depolarized;
                 Bool valid_ray;
                 Vertex vertex;
                 Bool active;
@@ -120,9 +107,9 @@ public:
 
             LoopState ls {
                 ray_, dr::zeros<PreliminaryIntersection3f>(),
-                Stokes(1.f, 0.f, 0.f, 0.f),
-                Stokes(0.f, 0.f, 1.f, 0.f),
-                dr::zeros<SpectralStokes>(), UnpolarizedSpectrum(1.f), false, false,
+                Polarization(Stokes(1.f, 0.f, 0.f, 0.f)),
+                Polarization(Stokes(0.f, 0.f, 1.f, 0.f)),
+                dr::zeros<SpectralStokes>(), UnpolarizedSpectrum(1.f), ChannelMask(false), false,
                 Vertex { dr::zeros<Interaction3f>(), 1.f, true, 0,
                          +RayMask::Primary },
                 active, sampler
@@ -147,8 +134,12 @@ public:
                                 s.vertex.si, ds, !s.vertex.delta);
                         Float mis = pollia::mis_weight(s.vertex.pdf, em_pdf);
                         SpectralStokes source = pollia::source_stokes(emitter->eval(si));
-                        s.result += emitted(s.pol0, s.pol1, s.depolarized,
-                                            source * dr::full<SpectralStokes>(s.beta * mis));
+                        for (size_t c = 0; c < Channels; ++c) {
+                            Stokes input(source[0][c], source[1][c], source[2][c], source[3][c]);
+                            Stokes output = emitted(s.pol0[c], s.pol1[c], s.depolarized[c], input);
+                            for (int i = 0; i < 4; ++i)
+                                s.result[i][c] += output[i] * s.beta[c] * mis;
+                        }
                     }
 
                     if (dr::none_or<false>(si.is_valid())) {
@@ -164,7 +155,9 @@ public:
                         return;
                     }
 
-                    auto jareckiParams = pollia::jarecki_parameters(bsdf, si);
+                    Parameters parameters;
+                    for (size_t c = 0; c < Channels; ++c)
+                        parameters[c] = pollia::jarecki_parameters(bsdf, si, c);
                     UnpolarizedSpectrum reflectance = bsdf->eval_attribute(
                         std::string("pollia_reflectance"), si);
                     Vector3f wo_camera = si.to_world(si.wi);
@@ -184,18 +177,20 @@ public:
                     active_em &= cos_em > 0.f;
                     Float pdf_em_bsdf = warp::square_to_cosine_hemisphere_pdf(local_em);
                     if (dr::any_or<true>(active_em)) {
-                        auto eval = pollia::evaluate_jarecki(
-                            ds.d, wo_camera, normal,
-                            jareckiParams);
-                        Jones j = pollia::world_jones(eval, ds.d, wo_camera);
                         Float mis = dr::select(ds.delta, 1.f,
                                                pollia::mis_weight(ds.pdf, pdf_em_bsdf));
                         UnpolarizedSpectrum scalar = reflectance * dr::InvPi<Float> * cos_em;
                         SpectralStokes source = pollia::source_stokes(em_weight) *
                                                dr::full<SpectralStokes>(s.beta * scalar * mis);
-                        dr::masked(s.result, active_em && eval.valid) +=
-                            direct(s.pol0, s.pol1, s.depolarized, j,
-                                   eval.gamma, source);
+                        for (size_t c = 0; c < Channels; ++c) {
+                            auto eval = pollia::evaluate_jarecki(ds.d, wo_camera, normal, parameters[c]);
+                            Jones j = pollia::world_jones(eval, ds.d, wo_camera);
+                            Stokes input(source[0][c], source[1][c], source[2][c], source[3][c]);
+                            Stokes output = direct(s.pol0[c], s.pol1[c], s.depolarized[c], j,
+                                                   eval.gamma, input);
+                            for (int i = 0; i < 4; ++i)
+                                dr::masked(s.result[i][c], active_em && eval.valid) += output[i];
+                        }
                     }
 
                     // Cosine sampling cancels the Lambertian cos/pi factor.
@@ -204,29 +199,32 @@ public:
                     Vector3f local_light = warp::square_to_cosine_hemisphere(sample2);
                     Float bsdf_pdf = warp::square_to_cosine_hemisphere_pdf(local_light);
                     Vector3f wi_light = si.to_world(local_light);
-                    auto eval = pollia::evaluate_jarecki(
-                        wi_light, wo_camera, normal,
-                        jareckiParams);
-                    Jones j = pollia::world_jones(eval, wi_light, wo_camera);
-                    Bool draw_jones = s.sampler->next_1d() < eval.gamma;
-                    Bool coherent_jones = !s.depolarized && draw_jones;
-                    Bool first_depolarizer = !s.depolarized && !draw_jones;
-                    Bool later_jones = s.depolarized && draw_jones;
-                    Bool later_depolarizer = s.depolarized && !draw_jones;
+                    // One uniform draw, each channel's own mixture probability/history.
+                    Float event = s.sampler->next_1d();
+                    for (size_t c = 0; c < Channels; ++c) {
+                        auto eval = pollia::evaluate_jarecki(wi_light, wo_camera, normal, parameters[c]);
+                        Jones j = pollia::world_jones(eval, wi_light, wo_camera);
+                        Bool draw_jones = event < eval.gamma;
+                        Bool coherent_jones = eval.valid && !s.depolarized[c] && draw_jones;
+                        Bool first_depolarizer = eval.valid && !s.depolarized[c] && !draw_jones;
+                        Bool later_jones = eval.valid && s.depolarized[c] && draw_jones;
+                        Bool later_depolarizer = eval.valid && s.depolarized[c] && !draw_jones;
 
-                    Jones acc = pollia::unpack_jones(s.pol0, s.pol1);
-                    Jones next = pollia::multiply(acc, j);
-                    Stokes camera = pollia::jones_first_column(acc);
-                    Stokes adjoint = pollia::apply_jones_adjoint(j, s.pol1);
-                    dr::masked(s.pol0, coherent_jones) = pollia::pack_jones_row0(next);
-                    dr::masked(s.pol1, coherent_jones) = pollia::pack_jones_row1(next);
-                    dr::masked(s.pol0, first_depolarizer) = camera;
-                    dr::masked(s.pol1, first_depolarizer) =
-                        Stokes(1.f, 0.f, 0.f, 0.f);
-                    dr::masked(s.pol1, later_jones) = adjoint;
-                    dr::masked(s.pol1, later_depolarizer) =
-                        Stokes(s.pol1[0], 0.f, 0.f, 0.f);
-                    s.depolarized |= first_depolarizer;
+                        Jones acc = pollia::unpack_jones(s.pol0[c], s.pol1[c]);
+                        Jones next = pollia::multiply(acc, j);
+                        Stokes camera = pollia::jones_first_column(acc);
+                        Stokes adjoint = pollia::apply_jones_adjoint(j, s.pol1[c]);
+                        dr::masked(s.pol0[c], coherent_jones) = pollia::pack_jones_row0(next);
+                        dr::masked(s.pol1[c], coherent_jones) = pollia::pack_jones_row1(next);
+                        dr::masked(s.pol0[c], first_depolarizer) = camera;
+                        dr::masked(s.pol1[c], first_depolarizer) =
+                            Stokes(1.f, 0.f, 0.f, 0.f);
+                        dr::masked(s.pol1[c], later_jones) = adjoint;
+                        dr::masked(s.pol1[c], later_depolarizer) =
+                            Stokes(s.pol1[c][0], 0.f, 0.f, 0.f);
+                        s.depolarized[c] |= first_depolarizer;
+                        dr::masked(s.beta[c], !eval.valid) = 0.f;
+                    }
                     s.beta *= reflectance;
 
                     s.ray = si.spawn_ray(wi_light);
@@ -238,7 +236,7 @@ public:
                     Bool rr_active = s.vertex.depth >= m_rr_depth;
                     Bool rr_continue = s.sampler->next_1d() < rr_prob;
                     dr::masked(s.beta, rr_active) *= dr::rcp(dr::detach(rr_prob));
-                    s.active = active_next && eval.valid && bsdf_pdf > 0.f &&
+                    s.active = active_next && bsdf_pdf > 0.f &&
                                dr::max(s.beta) > 0.f && (!rr_active || rr_continue);
                     s.pi = scene->ray_intersect_preliminary(
                         s.ray, false, s.vertex.ray_mask, s.active,
